@@ -1,0 +1,30 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+    <title>quaad.net</title>
+    <link rel="icon" href= "{% static '/img/circled-q-blk.png' %}" />
+    <link rel="stylesheet" href= "{% static '/css/main_styles.css' %}" />
+    <script type="module" src= "{% static '/script/quaad.js' %}"></script>
+    {% block addstyles %}
+    {% endblock %}
+  </head>
+  <div class="nav">
+    <span>
+      <a href= "{% url 'index' %}" class="logo">
+        <img 
+          src= "{% static '/img/circled-q-blk.svg' %}" 
+          alt="logo"
+          height="35px"
+        />
+      </a> 
+    </span>
+  </div>
+  <div class="divider"></div>
+  {% block mycontent %}
+  {% endblock %}
+  <br/>
+  <div class="footer">© quaad.net 2024</div>
+</html>

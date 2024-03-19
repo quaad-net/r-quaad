@@ -1,0 +1,187 @@
+section.large {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-height: 300px;
+}
+section.large div{ /*block area with headshot*/
+  margin: 5px;
+  background-color: white;
+  border-radius: 5px;
+  flex: 1;
+  padding: 5px; 
+}
+
+.snapshot-grid{
+  float: left;
+  margin-right: 5px; 
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.snapshot-grid img{
+  max-width: 100px;
+  max-height: 133px;
+  border-radius: 100%;
+  grid-column: 1;
+  grid-row:1;
+}
+
+
+.snapshot-grid .two{ /*first row of text below headshot*/
+  grid-column: 1;
+  grid-row:2;
+}
+
+.snapshot-grid .two span{ 
+  font-weight: bold;
+}
+
+.snapshot-grid .three{ /*second row of text below headshot*/
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.contact{ /*footer*/
+  grid-column: 1/3;
+  grid-row: 4;
+}
+
+.cntct-btn{
+  background-color: transparent;
+  border: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: left;
+}
+
+.cntct-btn:hover, .cntct-btn:focus{
+  background-color: transparent;
+  border: 0; 
+}
+
+.email{
+  font-size: smaller;
+}
+
+.snapshot-grid .four{ /*content to the right of text*/ 
+  grid-column: 2/4;
+  grid-row: 1/4;
+  padding: 5px;
+}
+
+.snapshot-grid .four span{
+  font-weight: bold;
+}
+
+.networking-icons{
+  text-decoration: none;
+}
+
+.opps{
+  font-style: italic;
+}
+
+section.large div:nth-child(2){ /*about area*/
+  flex: 1.75;
+  padding: 5px; 
+}
+
+.projects{
+  display: flex;
+
+}
+
+.projects h2{
+  flex: 1;
+  text-align: left;
+  padding-left: 5px;
+}
+
+.projects h2 span{
+  font-weight: normal;
+}
+
+.red-detail{
+  color: gray;
+}
+
+.project div{
+  flex: 3;
+  padding-left: 5px;
+}
+
+section.medium {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+section.medium div{
+  min-height: 200px;
+  margin: 5px;
+  background-color: white;
+  border-radius: 5px;
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+
+.list-itms{
+  list-style: square;
+  text-align: left;
+}
+
+.skillhead{
+  font-weight: bold;
+  color: palevioletred;
+}
+
+.skilltext{
+  color:black;
+}
+
+.icon{
+  display: block;
+  position: relative;
+  top: 25px;
+}
+
+
+/*-------------------------------------------------- MOBILE SCREENS---------------------------------------------------*/
+@media (max-width:780px){
+  section.large {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  section.large div{
+    margin: 5px;
+    background-color: white;
+    border-radius: 5px;
+    flex: 1;
+    flex-wrap: wrap; 
+  }
+
+  .projects{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    min-width: 1;
+  }
+  
+  section.medium {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  
+  section.medium div{
+    margin: 5px;
+    background-color: white;
+    border-radius: 5px;
+    flex: 1;
+  }
+
+}
+
+

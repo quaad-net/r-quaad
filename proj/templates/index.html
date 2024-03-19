@@ -1,0 +1,90 @@
+{% extends "profile_generic.html" %}
+{% load static %}
+
+{% block profile_pic_src %}
+    src= "{% static '/img/20220111_125810.jpg' %}"
+{% endblock%}
+{%block profile_pic_alt%}
+    alt="Etoro Ukoh"
+{% endblock %}
+{% block name_and_title %}
+    <div class="two"><span>Etoro A. Ukoh</span><br/>Developer-Analyst</div>
+{% endblock %}
+{% block Specialization %}
+    <ul>
+        <li>Computational and statistical programming</li>
+        <li>Quantitative data visualization</li>
+        <li>Task automation</li>
+    </ul>
+{% endblock %}
+{% block networking_links %}
+    <a href="https://linkedin.com" class="networking-icons">
+        <img alt="LinkedIn" src= "{% static '/img/icons8-linkedin-50.png' %}" width="25px"/>
+    </a>
+    <a href="https://upwork.com" class="networking-icons">
+        <img alt="upwork" src= "{% static '/img/icons8-upwork-50.png' %}" width="25px"/>
+    </a>
+    <a href="https://fiverr.com" class="networking-icons">
+        <img alt="fiver" src= "{% static '/img/icons8-fiverr-50.png' %}" width="25px"/>
+    </a>
+{% endblock %}
+{% block headline_quotes %}
+    <h2>
+    Firm believer in putting an end to excessive work meetings.
+    <span>Strong preference for actually getting things done.</span>
+    <span class="red-detail">If I'm awake, I'm programming.</span>
+    </h2>
+{% endblock %}
+{% block profile_sum %}
+    <div>
+    I believe the best approach given a potential project is to get a firm
+    understanding of its goals and then identify the best tools 
+    to get the job completed. As a result, I've accumulated experience with a hodgepodge of
+    <span class="link" id="prog-lang">programming languages and software</span> and 
+    have utilized these tools to create a wide range of <span class="link" id="sols">solutions</span>.
+    <br/><br/>
+    <span class="opps">
+    Open to full/part-time, temp contract, and pay-per-project opportunities. 
+    Free consultation and sample solutions for your current needs.
+    </span>  
+    </div>
+{% endblock %}
+{% block skillset_one %}
+    <img src= "{% static '/img/icons8-add-subnode-48.png' %}" alt="icon" width="35px" height="35px" class="icon"/>
+        <span class= "skillhead">
+        Programming <br/>Languages<br/>--<br/><br/>
+            <span class="skilltext">
+                HTML + CSS + Javascript |
+                Python |</br>
+                T-SQL |
+                PowerShell |
+                Visual Basic |
+                R
+        </span>
+    </span><br/>
+{% endblock %}
+{% block skillset_two %}
+    <img src= "{% static '/img/icons8-web-analytics-48.png' %}" alt="icon" width="35px" height="35px" class="icon"/>
+    <span class = "skillhead">
+    Other Dev & <br/>Analytical Tools<br/>--</br></br>
+        <span class="skilltext">
+            Excel |
+            Power BI |
+            Django
+        </span>
+    </span><br/>
+{% endblock %}
+{% block skillset_three %}
+    <img src= "{% static '/img/icons8-workflow-48.png' %}" alt="icon" width="35px" height="35px" class="icon"/>
+    <span class= "skillhead">
+        Recent Solutions <br/>Include<br/>--<br/><br/>
+        <span class="skilltext" id= "sk3">
+            Algorithms for order automation |
+            Creating and automating HTML emails |
+            Custom data dashboards |
+            Web scrapping |
+            Database development |
+            View recent</br> <a title="Project Snippets" href= "{% url 'projects' %}">project samples</a>.
+        </span>
+    </span><br/>
+{% endblock %}

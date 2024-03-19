@@ -1,0 +1,168 @@
+{% extends "main.html" %}
+{% load static %}
+{% block addstyles %}
+  <link rel="stylesheet" href= "{% static '/css/projects_styles.css' %}" />
+{% endblock%}
+
+{% block mycontent %}
+  <div class="container">{% comment%} proj1  {% endcomment %}
+    <aside>
+      <br/><img src= "{% static 'img/icons8-stack-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
+      <h2 class="overview-header"><br/></h2>
+      <p class="ov-items">
+        <span>Lang:<br/></span>
+          Powershell(PS)<br/>
+          .Net<br/>
+          Visual Basic(VB)<br/>
+        <span>Solution Type:<br/></span>Project Mgmt</br>
+      </p>
+    </aside>
+    <article>
+      <span class="proj-snip">Solution</span>
+      <h1>Plan-O-Gram</h1>
+      <p>
+        I was tasked with creating an application that would produce a simple plan-o-gram (a layout used for setup) of items 
+        optimally positioned on shelves given various product and shelf dimensions. The product dimensions were stored in a data
+        table while shelf levels and dimensions where taken in the form of user input(this would vary as desired by clients). 
+        The plan-o-gram would then be used as a guide for the initial setup of products at the client's location. Since the application only 
+        needed to be accessible in-network to a few individuals within a small department, I developed the application with PowerShell as this 
+        was readily available in their desktop environment, required no additional setup, and would therefore help deliver their application quickly. 
+        The program asks the user to point to a file containing a clients desired products (which typically ranges from hundreds to thousands),
+        then also takes the client's shelf dimensions. Given those sets of data, it outputs the plan-o-gram.
+      </p>
+  
+      <p>
+        This application exemplifies that fact that there are many ways to go about developing any particular solution. It utilizes a PowerShell 
+        console and scripts, including a number of methods from the .Net library, and outputs data which is then formatted into an Excel 
+        Workbook with Visual Basic.
+      </p>
+    </article>
+  </div>
+  <div class="container">
+    <aside class="asd-script">
+      <br/><img src= "{% static 'img/icons8-code-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
+      <h2><br/></h2>
+      <p>
+      </p>
+    </aside>
+    <article class="art-script">
+      <h1 class="script-header">Outline</h1>
+      <p>
+        <Ul>
+          <li>Application takes user input for dimensions and products file.</li>
+          <li>Sets products on shelves optimally given product and shelf dimensions.</li>
+          <li>Outputs data for plan-o-gram.</li>
+          <li>Places and styles finished plan-o-gram in an Excel workbook.</li>
+          <li>View a completed <a href="https://1drv.ms/x/s!Ar6VAGa9JiSk_h78GEh5uWEQZMoh?e=ldo4Ig">plan-o-gram.</a></li>
+        </Ul>
+      </p>
+  
+      <p>
+      </p>
+    </article>
+  </div>
+  <div class="container">{% comment%} proj2  {% endcomment %}
+    <aside>
+      <br/><img src= "{% static 'img/icons8-stack-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
+      <h2 class="overview-header"><br/></h2>
+      <p class="ov-items">
+        <span>Lang:<br/></span>
+          HTML + CSS + JavaScript<br/>
+          Python<br/>
+          SQL<br/>
+        <span>Solution Type:<br/></span>Web App</br>
+      </p>
+    </aside>
+    <article>
+      <span class="proj-snip">Solution</span>
+      <h1>Data Dashboard</h1>
+      <p>
+        Here is a work in progress of a web dashboard utilizing some data published by various departments of the U.S. Government.
+        The front-end is written in JavaScript and the back-end in python. Data is stored in an Azure sql database and
+        fetched through sql and python view functions.
+      </p>
+  
+      <p>
+        Soon to be added: scenarios, forecasts, and new datasets.
+      </p>
+    </article>
+  </div>
+  <div class="container">
+    <aside class="asd-script">
+      <br/><img src= "{% static 'img/icons8-code-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
+      <h2><br/></h2>
+      <p>
+      </p>
+    </aside>
+    <article class="art-script">
+      <h1 class="script-header">Outline</h1>
+      <p>
+        <Ul>
+          <li>Data is programmatically fetched from sources and stored in database.</li>
+          <li>Database views are utilized to format data and to make it easier to work with.</li>
+          <li>Python view functions fetch data as demanded and sends an http response.</li>
+          <li>JavaScript parses the http response and formats data to be charted with HTML and CSS</li>
+          <li>View <a href="{% url 'fiscal' %}">dashboard</a>.</li>
+        </Ul>
+      </p>
+  
+      <p>
+      </p>
+    </article>
+  </div>
+  <div class="container">{% comment%} proj3  {% endcomment %}
+    <aside>
+      <br/><img src= "{% static 'img/icons8-stack-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
+      <h2 class="overview-header"><br/></h2>
+      <p class="ov-items">
+        <span>Lang:<br/></span>
+          SQL<br/>
+        <span>Solution Type:<br/></span>Database Operations</br>
+      </p>
+    </aside>
+    <article>
+      <span class="proj-snip">Solution</span>
+      <h1>SQL Views</h1>
+      <p>
+        SQL views are basically functions which operate on data stored in the database to produce
+        resulting datasets that meet some need. I find it particularly useful for analyzing data by filtering
+        larger sets of data on certain conditions and/or by combining data from various tables that meet those conditions.
+        Though the view function is stored in the database, the resulting datasets are not. This involves a trade-off
+        between better performance (stored database tables) vs less storage needs (views). 
+        However, issues with performance, in my experience, aren't very noticeable unless the datasets are extremely large. 
+      </p>
+  
+      <p>
+        These SQL views are associated with the data dashboard project above. Also included are the original data files which 
+        help give an idea of the operations being accomplished by the views.
+      </p>
+    </article>
+  </div>
+  <div class="container">
+    <aside class="asd-script">
+      <br/><img src= "{% static 'img/icons8-code-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
+      <h2><br/></h2>
+      <p>
+      </p>
+    </aside>
+    <article class="art-script">
+      <h1 class="script-header">Outline</h1>
+      <p>
+        <Ul>
+          <li>
+            The SQL views provide a quick and efficient way to pre-process data within the server before it gets sent over 
+            to be handled on the front-end by JavaScript where it gets processed for charting in the application.
+          </li>
+          <li>
+            <a href="https://github.com/tukoh/fiscal-sql">SQL views</a> for data dashboard.
+          </li>
+            Original <a href="https://1drv.ms/f/s!Ar6VAGa9JiSkg51OqbcLxwiSpBLiGg?e=sxxzOn">data files</a> 
+            fetched from various sources pre-database operations.
+        </Ul>
+      </p>
+  
+      <p>
+      </p>
+    </article>
+  </div>
+{% endblock %}
