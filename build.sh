@@ -6,9 +6,9 @@ set -o errexit
 pip install -r requirements.txt
 
 # for py odbc with linux
-apt-get install python-dev
-apt-get install unixodbc-dev
-apt-get install python-pip
+sudo apt-get install python-dev
+sudo apt-get install unixodbc-dev
+sudo apt-get install python-pip
 pip install pyodbc
 
 # convert our static asset files on Render
