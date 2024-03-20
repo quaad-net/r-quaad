@@ -54,7 +54,7 @@ DEBUG = True
 if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = [ "mysite-a9mq.onrender.com" ]
+    ALLOWED_HOSTS = [ "mysite-a9mq.onrender.com", "127.0.0.1" ]
 
 
 # Application definition
@@ -106,7 +106,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "gettingstarted.wsgi.application"
+WSGI_APPLICATION = "mysite.wsgi.application"
 
 
 # Database
