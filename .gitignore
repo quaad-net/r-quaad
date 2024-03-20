@@ -1,2 +1,15 @@
+#python files
 __pycache__
 venv
+xsettings
+
+# Django files
+staticfiles/
+db.sqlite3
+
+# macOS files
+.DS_Store
+
+#other 
+build.sh
+
