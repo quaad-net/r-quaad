@@ -33,6 +33,7 @@ hyperlink==21.0.0
 idna==3.6
 incremental==22.10.0
 jinxed==1.2.1
+mssql-django==1.4
 numpy==1.26.4
 packaging==24.0
 pandas==2.2.1
@@ -44,6 +45,7 @@ pyasn1-modules==0.3.0
 pycparser==2.21
 Pygments==2.17.2
 pyjnius==1.6.1
+pymssql==2.2.11
 pyodbc==5.1.0
 pyOpenSSL==24.0.0
 python-dateutil==2.8.2
