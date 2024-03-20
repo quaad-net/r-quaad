@@ -53,7 +53,7 @@ if not IS_HEROKU_APP:
 if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = [ "mysite-a9mq.onrender.com" ]
 
 
 # Application definition
