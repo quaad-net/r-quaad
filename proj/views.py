@@ -4,8 +4,7 @@ from pathlib import Path
 from django.http import JsonResponse, HttpResponse
 
 #connect to sql db
-#import pyodbc
-from pyodbc import pyodbc
+import pyodbc
 import pandas as pd
 import sqlalchemy
 server = 'uqnt.database.windows.net'
