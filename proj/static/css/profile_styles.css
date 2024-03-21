@@ -57,6 +57,7 @@ section.large div{ /*block area with headshot*/
 .cntct-btn:hover, .cntct-btn:focus{
   background-color: transparent;
   border: 0; 
+  cursor: pointer;
 }
 
 .email{
