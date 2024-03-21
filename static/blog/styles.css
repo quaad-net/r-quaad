@@ -1,0 +1,145 @@
+html{
+  background-color: rgb(230, 229, 229);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.logo{
+  text-decoration: none;
+}
+
+.nav img{
+  position: relative;
+  left: 10px;
+}
+
+.nav {
+  position: fixed;
+  left: 0px;
+  background-color: aquamarine;
+  top: 0px;
+  width: 100vw;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.divider{
+  margin: 5px;
+  height: 30px;
+  width: 100vw;
+}
+
+.container {
+  display: flex;
+  flex-direction: row; 
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  max-height: auto;
+}
+
+.proj-snip{
+  font-size: small;
+  color:gray;
+  padding: 0%;
+  margin: 0%;
+}
+
+h2{
+  font-size: medium;
+  color: palevioletred;
+}
+
+p span{
+  color: palevioletred;
+}
+
+aside {
+  flex: 1;
+  border-right: 5px solid rgb(230, 229, 229);
+  padding-left: 5px;
+
+}
+
+aside img, aside h2{
+  display: inline;
+}
+
+.overview-header{
+  position: relative;
+  bottom: 10px;
+  align-items: center;
+}
+
+
+.underline{
+  tab-size:8; 
+}
+
+article{
+  flex: 3;
+  padding-left: 5px;
+}
+
+/*misaligned divider effect + yellow background for program outline*/
+.asd-script{
+  flex: 1.5;
+  background-color: rgb(240, 224, 136);
+}
+.art-script{
+  flex: 2.5;
+  background-color: rgb(240, 224, 136);
+}
+
+.script-header{
+  font-size: medium;
+}
+
+aside:hover, article:hover{
+  padding: 2em;
+}
+
+.footer{
+  text-align: center;
+}
+
+
+/*---------------------------------------------------FOR MOBILE SCREENS---------------------------------------------------*/
+@media (max-width:780px){
+  
+  aside {
+    border-right: 5px solid rgb(230, 229, 229);
+    padding-left: 5px;
+    flex: auto;
+  
+  }
+  
+  article{
+    padding-left: 5px;
+    flex:auto;
+  }
+  
+  .asd-script{
+    flex: 1;
+    background-color: rgb(240, 224, 136);
+  }
+  .art-script{
+    flex: 3;
+    background-color: rgb(240, 224, 136);
+  }
+
+  aside:hover, article:hover{
+    padding-right: 5em;
+
+  }
+
+  article:hover{
+    padding-left: 0;
+    left: 0%;
+  }
+
+  .footer{
+    font-size: smaller;
+  }
+
+}
+
