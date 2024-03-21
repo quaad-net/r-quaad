@@ -1,6 +1,7 @@
 #python files
 __pycache__
 venv
+.env
 xsettings
 
 # Django files
@@ -9,7 +10,4 @@ db.sqlite3
 
 # macOS files
 .DS_Store
-
-#other 
-build.sh
 

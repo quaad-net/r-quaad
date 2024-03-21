@@ -5,21 +5,8 @@ from django.http import JsonResponse, HttpResponse
 import pandas as pd
 
 import sqlalchemy as db
-# server = 'uqnt.database.windows.net'
-# database = 'uqnt'
-# username = 'eukoh'
-# password = '{1Cartoon!}'   
-# driver= '{ODBC Driver 17 for SQL Server}'
-# multipleActiveResultSets = True
-# integratedsecurity= 'SSPI'
-
 engine = db.create_engine("mssql+pymssql://eukoh:1Cartoon!@uqnt.database.windows.net:1433/uqnt")
 cnxn = engine.connect()
-
-# Connection
-# myCnStr = f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password};MultipleActiveResultSets={multipleActiveResultSets};Integrated Security={integratedsecurity}'
-# cnxn = pyodbc.connect(myCnStr)
-# cursor = cnxn.cursor()
 
 def index(request):
     """Returns current home page"""
@@ -72,6 +59,3 @@ async def price_index(request, startDate, endDate):
     price_index_jsn = price_index_df.to_json(orient='records')
     allObjs = [price_index_jsn]
     return JsonResponse(allObjs, safe=False)
-
-# def test(request):
-#     return render(request, 'fiscalquery.html')
