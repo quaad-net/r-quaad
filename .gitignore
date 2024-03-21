@@ -2,7 +2,8 @@
 __pycache__
 venv
 .env
-xsettings
+qdev.py
+xxviews.py
 
 # Django files
 staticfiles/
@@ -10,4 +11,7 @@ db.sqlite3
 
 # macOS files
 .DS_Store
+
+# windows
+qdev.bat
 
