@@ -3,7 +3,7 @@ __pycache__
 venv
 .env
 qdev.py
-xxviews.py
+xviews.py
 
 # Django files
 staticfiles/
@@ -15,3 +15,8 @@ db.sqlite3
 # windows
 qdev.bat
 
+# JavaScript
+xfiscalquery.js
+
+#debugging
+.vscode
