@@ -3,9 +3,16 @@ from django.shortcuts import render
 from pathlib import Path
 from django.http import JsonResponse, HttpResponse
 import pandas as pd
-from . import uqntdb as udb
+import os
+devEnv = False
+if(os.getenv('QUAAD_DEV')):
+        devEnv = True
+        from . import uqntdb as udb
 import sqlalchemy as db
-engine = db.create_engine(f'mssql+pymssql://{udb.UQNT_USER}:{udb.UQNT_PASS}@{udb.UQNT_SERVER}:1433/{udb.UQNT_DB}')
+if devEnv == True:
+    engine = db.create_engine(f'mssql+pymssql://{udb.UQNT_USER}:{udb.UQNT_PASS}@{udb.UQNT_SERVER}:1433/{udb.UQNT_DB}')
+else:
+    engine = db.create_engine(f'mssql+pymssql://{os.environ.get('UQNT_USER')}:{os.environ.get('UQNT_PASS')}@{os.environ.get('UQNT_SERVER')}:1433/{os.environ.get('UQNT_DB')}')
 
 def index(request):
     """Returns current home page"""

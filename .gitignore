@@ -3,6 +3,7 @@ __pycache__
 venv
 .env
 qdev.py
+uqntdb.py
 xviews.py
 
 # Django files
