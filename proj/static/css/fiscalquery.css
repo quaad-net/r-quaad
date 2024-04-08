@@ -19,7 +19,6 @@ html{
     "SdBr MSeries"
     "SdBr Aux1 Aux2"
     "SdBr Aux1 Aux3"
-    "SdBr price_idx"
     ;
 }
 .logo, .icon-logo{
@@ -48,13 +47,17 @@ html{
     height: 25px;
 }
 .sidebar{
+    z-index: 1;
     grid-area: SdBr;
-    position: absolute;
+    position: fixed;
     box-sizing: border-box;
+    top: 0px;
+    left: 0px;
     width: 250px; 
     height: 100rem;
     background-color: rgb(23, 23, 54);
     border-radius: 10px;
+    border-top-right-radius: 0px;
 }
 
 .field {
@@ -315,7 +318,7 @@ input{
 .modal {
     display: none; 
     position: fixed; 
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%; 
@@ -411,29 +414,13 @@ input{
     border: 0;
 }
 
-#price-idx{
-    grid-area: price_idx;
-    position: absolute;
-    top: 1435px;
-    left: 275px;
-}
-
-/*
-.price-idx-title{ 
-    position: relative;
-    top: 1400px;
-    left: 275px;
+.left-sidebar{
+    position: fixed;
+    top: 0px;
+    left: 95vw;
     box-sizing: border-box;
-    width: 400px;
-    height: 100px;
-    background-color: transparent;
-    border: 3px solid white; 
-    border-radius: 10px;
-    border-top-width: 0px;
-    border-right-width: 0px;
-    text-align: bottom; 
-    font-size: larger;
-    font-weight: bold;
+    width: 5vw;
+    height: 100vw;
+    background-color: rgb(23, 23, 54);
+    border-radius: 5px;
 }
-*/
-

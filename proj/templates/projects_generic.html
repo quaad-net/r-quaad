@@ -11,9 +11,9 @@
       <h2 class="overview-header"><br/></h2>
       <p class="ov-items">
         <span>Lang:<br/></span>
-          Powershell(PS)<br/>
+          Powershell<br/>
           .Net<br/>
-          Visual Basic(VB)<br/>
+          Visual Basic<br/>
         <span>Solution Type:<br/></span>Project Mgmt</br>
       </p>
     </aside>
@@ -21,7 +21,7 @@
       <span class="proj-snip">Solution</span>
       <h1>Plan-O-Gram</h1>
       <p>
-        I was tasked with creating an application that would produce a simple plan-o-gram (a layout used for setup) of items 
+        I was tasked with creating an application that would produce a simple plan-o-gram (a visual layout) of items 
         optimally positioned on shelves given various product and shelf dimensions. The product dimensions were stored in a data
         table while shelf levels and dimensions where taken in the form of user input(this would vary as desired by clients). 
         The plan-o-gram would then be used as a guide for the initial setup of products at the client's location. Since the application only 
@@ -53,7 +53,7 @@
           <li>Sets products on shelves optimally given product and shelf dimensions.</li>
           <li>Outputs data for plan-o-gram.</li>
           <li>Places and styles finished plan-o-gram in an Excel workbook.</li>
-          <li>View a completed <a href="https://1drv.ms/x/s!Ar6VAGa9JiSk_h78GEh5uWEQZMoh?e=ldo4Ig">plan-o-gram.</a></li>
+          <li><a href="https://1drv.ms/x/s!Ar6VAGa9JiSkiagWpt1jMquVOWwUqQ?e=2xuFCu">Plan-o-gram</a></li>
         </Ul>
       </p>
   
@@ -67,7 +67,9 @@
       <h2 class="overview-header"><br/></h2>
       <p class="ov-items">
         <span>Lang:<br/></span>
-          HTML, CSS, &#38 JavaScript<br/>
+          HTML</br>
+          CSS</br>
+          JavaScript<br/>
           Python<br/>
           SQL<br/>
         <span>Solution Type:<br/></span>Web App</br>
@@ -102,7 +104,57 @@
           <li>Database views are utilized to format data and to make it easier to work with.</li>
           <li>Python view functions fetch data as demanded and sends an http response.</li>
           <li>JavaScript parses the response and formats data to be charted with HTML and CSS</li>
-          <li>View <a href="{% url 'fiscal' %}">dashboard</a>.</li>
+          <li><a href="{% url 'fiscal' %}">Dashboard</a></li>
+        </Ul>
+      </p>
+  
+      <p>
+      </p>
+    </article>
+  </div>
+  <div class="container">{% comment%} proj3  {% endcomment %}
+    <aside>
+      <br/><img src= "{% static 'img/icons8-stack-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
+      <h2 class="overview-header"><br/></h2>
+      <p class="ov-items">
+        <span>Lang:<br/></span>
+          VBA<br/>
+        <span>Solution Type:<br/></span>Pre-Processing</br>
+      </p>
+    </aside>
+    <article>
+      <span class="proj-snip">Solution</span>
+      <h1>Data Pre-Processing</h1>
+      <p>
+        Sometimes data is received in a format that isn’t very useful for your needs. 
+        This was the case when a third-party vendor would send updated price lists on a weekly basis. 
+        Its format was unsuitable for loading into a data table to compare prices with other vendors.       
+      </p>
+  
+      <p>
+        In this project, the price list is formatted using algorithms that identify patterns within the original file 
+        then modify data as needed.  
+      </p>
+    </article>
+  </div>
+  <div class="container">
+    <aside class="asd-script">
+      <br/><img src= "{% static 'img/icons8-code-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
+      <h2><br/></h2>
+      <p>
+      </p>
+    </aside>
+    <article class="art-script">
+      <h1 class="script-header">Outline</h1>
+      <p>
+        <Ul>
+          <li>File is fetched and transformed using Power Query.</li>
+          <li>VBA is used to format and clean data.</li>
+          <li>Formatted file is stored and saved for further use.</li>
+          <li><a href="https://github.com/tukoh/format-price-list.git">Source code</a> | 
+            <a href="https://1drv.ms/x/s!Ar6VAGa9JiSki-EnX7D5wKXFHm3CdA?e=OVjUSV">Original price list</a> | 
+            <a href= "https://1drv.ms/u/s!Ar6VAGa9JiSki-Ep_NeVnm_qTQ6rdA?e=BrkDZt"> Modified price list</a>
+          </li>
         </Ul>
       </p>
   

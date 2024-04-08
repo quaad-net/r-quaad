@@ -20,8 +20,6 @@ const curYr =  dt.getFullYear();
 const myStartYr = curYr - 6;
 const myEndYr = curYr - 1; 
 const myUrlStr = getBaseURL + 'q-' + myStartYr + '/' + myEndYr;
-let ErrSec = document.querySelector("#myerr");
-// http://127.0.0.1:8000/fiscal/
 function captureStartDate(e) {
   startDate = e.target.value;
 }
@@ -116,13 +114,11 @@ function extractContent(textcontent) {
 
 function formatJSN(myJSNStr, start){
 
-    let cls_desc = [], outly_amt = [], sbarArr = [];
-    let main_econ, cbo, gov_outlays, sbarDataLabels;
+    let cls_desc = [], outly_amt = [];
+    let main_econ, gov_outlays;
     const myData = JSON.parse(myJSNStr);
     main_econ = JSON.parse(myData[0]);
-    cbo = JSON.parse(myData[1]);
-    gov_outlays = JSON.parse(myData[2]);
-    sbarDataLabels = JSON.parse(myData[3]);
+    gov_outlays = JSON.parse(myData[1]);
 
     let gov_expd = [], yr = [];
     for (const idx in main_econ){
@@ -130,18 +126,17 @@ function formatJSN(myJSNStr, start){
       yr.push(main_econ[idx]['yr']);
     };
 
+    //select top 10 into array (qry returns result desc by 'amt')
     let topTen = 0; 
     let otherOtlyTtls = 0;
     let idxCount = 0;
     let OutlayTtls = 0;
-
     for(const idx in gov_outlays){
       OutlayTtls += gov_outlays[idx]['amt'];
     }
-
     for (const idx in gov_outlays){
       idxCount += 1;
-      if(topTen < 9){ //selects into array top 10 (qry returns result desc by 'amt')
+      if(topTen < 9){ 
         cls_desc.push((gov_outlays[idx]['clsdesc']).replace('Total--', '')); //class description
         outly_amt.push(Math.round((gov_outlays[idx]['amt'] / OutlayTtls) * 100));
         topTen += 1;
@@ -235,7 +230,9 @@ function createMainSeries(category, yrs, vals) {
       {
         type: 'line',
         options: {
-          animation: false,
+          animation: {
+            duration: 3000,
+          },
           interaction: { 
             mode: 'x', //used for interactions based on x coord
           },
@@ -250,7 +247,7 @@ function createMainSeries(category, yrs, vals) {
               },
               title: {
                 display: false,
-                text: "Federal Gov't Spending (Nominal)",
+                text: "",
                 font: {
                   size: 20,
                   weight: 'bold',
@@ -703,7 +700,6 @@ function SideLblListn(){
 //   const p_idx = JSON.parse(myData[0]);
 //   const idxdataSet = []
 
-//   //ErrSec.textContent = p_idx;
 
 //   for(const idx in p_idx){
 //     let rw = [];
@@ -739,5 +735,3 @@ function SideLblListn(){
 //   entr.textContent = '';
 //   entr2.textContent = '';
 // };
-
-

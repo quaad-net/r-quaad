@@ -89,7 +89,7 @@ section.large div:nth-child(2){ /*about area*/
 
 .projects{
   display: flex;
-
+  background: url("../img/qa2.PNG") no-repeat left;
 }
 
 .projects h2{
@@ -179,8 +179,13 @@ section.medium div{
   section.medium div{
     margin: 5px;
     background-color: white;
+
     border-radius: 5px;
     flex: 1;
+  }
+
+  .projects{
+    background: url("../img/qa3.PNG") no-repeat right;
   }
 
 }

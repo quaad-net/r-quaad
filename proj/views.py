@@ -1,5 +1,4 @@
 from django.shortcuts import render
-#from django.views import generic
 from pathlib import Path
 from django.http import JsonResponse, HttpResponse
 import pandas as pd
@@ -26,24 +25,18 @@ def fiscal(request):
     return render(request, 'fiscal_generic.html')
 
 async def fiscalquery(request, startDate, endDate):
+    
     cnxn = engine.connect()
+
     mainEcon = f'select round(ttl_gov_expend, 1) as ttl_gov_expend, yr from main_econ_measures where yr between {startDate} and {endDate} order by yr;'
     mainEcon_df = pd.read_sql(mainEcon, cnxn)
     mainEcon_jsn = mainEcon_df.to_json(orient='records')
-
-    cbo = f'select * from cbo_measures where date between {startDate} and {endDate} order by date;'
-    cbo_df = pd.read_sql(cbo, cnxn)
-    cbo_jsn = cbo_df.to_json(orient='records')
 
     gov_outlays = f'select fiscal_year, classification_description as clsdesc, current_fiscal_year_to_date_gross_outlays_amount as amt from gov_outlays_by_class where fiscal_year = {startDate} and current_fiscal_year_to_date_gross_outlays_amount > 0 order by current_fiscal_year_to_date_gross_outlays_amount desc;'
     gov_outlays_df = pd.read_sql(gov_outlays, cnxn)
     gov_outlays_jsn = gov_outlays_df.to_json(orient='records')
 
-    side_bar_lbls = f"select * from gov_expend_plus_headers where not column_name ='year' and not column_name = 'gov_expend' order by column_name;"
-    side_bar_lbls_df = pd.read_sql(side_bar_lbls, cnxn)
-    side_bar_lbls_jsn = side_bar_lbls_df.to_json(orient='records')
-
-    allObjs = [mainEcon_jsn, cbo_jsn, gov_outlays_jsn, side_bar_lbls_jsn]
+    allObjs = [mainEcon_jsn, gov_outlays_jsn]
     cnxn.close()
     return JsonResponse(allObjs, safe= False)
     
