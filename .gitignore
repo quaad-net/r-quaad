@@ -7,7 +7,7 @@ uqntdb.py
 xviews.py
 
 # Django files
-staticfiles/
+#staticfiles/
 db.sqlite3
 
 # macOS files
