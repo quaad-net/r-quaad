@@ -5,6 +5,7 @@ venv
 qdev.py
 uqntdb.py
 xviews.py
+xsettings.py
 
 # Django files
 staticfiles/

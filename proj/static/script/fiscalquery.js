@@ -29,6 +29,22 @@ function caputureEndDate(e){
 let fetchobj = [];
 let dataForChts;
 const qryBtn = document.querySelector("#qryBtn");
+const mobileMenu = document.querySelector(".mb-icon-menu");
+const sideBar = document.querySelector(".sidebar");
+const mobileHeader = document.querySelector(".mobile-header");
+const sidebarLbl = document.querySelectorAll(".sidebar-lbl"); 
+const sidebarDataHd = document.querySelector(".datasets-list");
+const sidebarClose = document.querySelector(".sidebar-close");
+
+mobileMenu.addEventListener("click", function(){
+  mobileHeader.style.display = "none";
+  sideBar.style.display = "block";
+})
+
+sidebarClose.addEventListener("click", function(){
+  sideBar.style.display = "none";
+  mobileHeader.style.display = "block";
+})
 
 qryBtn.addEventListener("click", async function(){
   let userinp1 = Number(firstInput.value) ;
@@ -91,16 +107,14 @@ qryBtn.addEventListener("click", async function(){
         update_outlayModal(myYears);
       
         //add selected datasets in sidebar to array for query
-        const sidebarLbl = document.querySelectorAll(".sidebar-lbl"); 
         let myCat = [] //array of category names
         for (const lbl of sidebarLbl){
             if (lbl.style.backgroundColor == 'rgb(13, 13, 230)'){
               myCat.push(extractContent(lbl.textContent));
             }
         }
-    
         getGovExpendPlus(myCat, getStartYr, getEndYr);
-        //getPriceIdx();
+        sidebarClose.click();
       }
   }
   
@@ -219,7 +233,7 @@ const plugin = {
 
 function createMainSeries(category, yrs, vals) {
   
-    Chart.defaults.font.family = "Georgia, 'Times New Roman', Times, serif";
+    Chart.defaults.font.family = "poppins, sans-serif"; //"Times, 'Times New Roman', serif, Georgia";
     Chart.defaults.font.size = 16;
     Chart.defaults.elements.line.tension = 0.4;
     Chart.defaults.color = 'white';
@@ -231,7 +245,7 @@ function createMainSeries(category, yrs, vals) {
         type: 'line',
         options: {
           animation: {
-            duration: 3000,
+            duration: 2000,
           },
           interaction: { 
             mode: 'x', //used for interactions based on x coord
@@ -540,12 +554,8 @@ function initialDataSets(){
   SideLblListn();
   firstInput.value = myStartYr;
   secInput.value = myEndYr;
-  const sidebarLbl = document.querySelectorAll(".sidebar-lbl");
   sidebarLbl.forEach((s)=>{
     switch (s.textContent){
-      case 'federal debt':
-        s.style.backgroundColor = 'rgb(13, 13, 230)';
-        break;
       case 'personal savings':
         s.style.backgroundColor = 'rgb(13, 13, 230)';
         break;
@@ -674,7 +684,6 @@ function mySeriesColor(category){
 }
 
 function SideLblListn(){
-  const sidebarLbl = document.querySelectorAll(".sidebar-lbl");
   for (const lbl of sidebarLbl){
     lbl.addEventListener('click', function(){
       if (lbl.style.backgroundColor != 'rgb(13, 13, 230)'){

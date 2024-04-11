@@ -1,0 +1,233 @@
+@media (max-width:1050px){
+
+    .icon-logo{
+
+    }
+
+    .logo{
+   
+    }
+
+    .mobile-header{
+        visibility: visible;
+    }
+
+    .mb-icon-logo{
+ 
+    }
+
+    .mb-icon-menu:hover{
+
+    }
+
+    .dash-sections{
+        
+    }
+
+    
+    .divider{
+
+    }
+
+    .sidebar{
+        display: none;
+    }
+    
+    
+      .textInputWrapper .textInput:focus,
+      .textInputWrapper .textInput:active {
+
+      }
+      
+      .textInputWrapper:focus-within .textInput,
+      .textInputWrapper .textInput:focus,
+      .textInputWrapper .textInput:active {
+
+      }
+      
+      .textInputWrapper:focus-within .textInput::placeholder {
+
+      }
+      
+    input{
+
+    }
+    
+    #input-1{
+
+    }
+    
+    #input-1:focus{
+
+    }
+    
+    #input-2{
+
+    }
+    
+    #input-2:focus{
+
+    }
+    
+    ::placeholder{
+
+    }
+    
+    
+    #qry-icon-1{
+
+    }
+    
+    #qryBtn{
+        display: none;
+    }
+    
+    #qryBtn:hover, #qryBtn:focus{
+
+    }
+    
+    .datasets-list{
+        display: none;
+    }
+    
+    .sidebar-lbl{
+        display: none;
+    }
+    
+    .sidebar-lbl:nth-of-type(odd){ 
+
+    }
+    
+    .sidebar-lbl:hover{
+
+    }
+    
+    .main-title{
+        left: 1%;
+        top: 50px;
+        border: 0;
+    }
+    
+    .subtitle{
+  
+    }
+    
+    .main-title-icon{
+
+    }
+
+    .mb-main-title-line{
+        position: relative;
+        display: block;
+        top: 15px;
+        margin-bottom: 5px;
+        width: 1200px;
+        height: 3px;
+        background-color: white;
+    }
+    
+    .chartcontainer{
+        left: 1%;
+        height: 300px;
+        width: 550px;
+        top: 140px;
+    }
+    
+    .outlays-container{
+        left: 1%;
+        height: 275px;
+        width: 275px;
+    }
+
+    .outlays-cht{
+        height: 260px;
+        width: 260px;
+    }
+    
+    .outlays-yr{
+
+    }
+    
+    .aux1-title-bar{ /*expenditures by class*/
+        left: 575px;
+    }
+    
+    .aux1-table{
+        left: 600px;
+    }
+    
+    .aux1-table > div:nth-child(even) {
+
+    }
+    
+    
+    .title-btn{
+
+    }
+    
+    .title-btn:hover, .title-btn:focus{
+
+    }
+    
+    #tb2{
+        left: 850px;
+    }
+    
+    .modal {
+
+    }
+    
+    
+    .options-modal-content {
+
+    }
+    
+    .modal-icon{
+
+    }
+    
+    .close {
+
+    }
+    
+    .close:hover,
+    .close:focus {
+
+    }
+    
+    .modal-header {
+
+    }
+    
+    .modal-header-text{
+
+    }
+    
+    .modal-subtitle{
+
+    }
+      
+    .modal-body {
+
+    }
+    
+    .modal-body button, .modal-body p{
+
+    }
+    
+    .modal-body button:hover, .modal-body button:focus{
+
+    }
+    
+    .modal-footer {
+
+    }
+    
+    .modal-body .outlay-yrs-btn-modal{
+ 
+    }
+    
+    .right-sidebar{
+        display: none;
+    }
+}

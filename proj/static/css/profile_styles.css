@@ -82,7 +82,7 @@ section.large div{ /*block area with headshot*/
   font-style: italic;
 }
 
-section.large div:nth-child(2){ /*about area*/
+section.large div:nth-child(2){
   flex: 1.75;
   padding: 5px; 
 }
@@ -96,6 +96,7 @@ section.large div:nth-child(2){ /*about area*/
   flex: 1;
   text-align: left;
   padding-left: 5px;
+  margin-top: 5px;
 }
 
 .projects h2 span{
