@@ -1,233 +1,495 @@
-@media (max-width:1050px){
-
-    .icon-logo{
-
-    }
-
-    .logo{
-   
-    }
-
-    .mobile-header{
-        visibility: visible;
-    }
-
-    .mb-icon-logo{
- 
-    }
-
-    .mb-icon-menu:hover{
-
-    }
-
-    .dash-sections{
-        
-    }
-
-    
-    .divider{
-
-    }
-
-    .sidebar{
-        display: none;
-    }
-    
-    
-      .textInputWrapper .textInput:focus,
-      .textInputWrapper .textInput:active {
-
-      }
-      
-      .textInputWrapper:focus-within .textInput,
-      .textInputWrapper .textInput:focus,
-      .textInputWrapper .textInput:active {
-
-      }
-      
-      .textInputWrapper:focus-within .textInput::placeholder {
-
-      }
-      
-    input{
-
-    }
-    
-    #input-1{
-
-    }
-    
-    #input-1:focus{
-
-    }
-    
-    #input-2{
-
-    }
-    
-    #input-2:focus{
-
-    }
-    
-    ::placeholder{
-
-    }
-    
-    
-    #qry-icon-1{
-
-    }
-    
-    #qryBtn{
-        display: none;
-    }
-    
-    #qryBtn:hover, #qryBtn:focus{
-
-    }
-    
-    .datasets-list{
-        display: none;
-    }
-    
-    .sidebar-lbl{
-        display: none;
-    }
-    
-    .sidebar-lbl:nth-of-type(odd){ 
-
-    }
-    
-    .sidebar-lbl:hover{
-
-    }
-    
-    .main-title{
-        left: 1%;
-        top: 50px;
-        border: 0;
-    }
-    
-    .subtitle{
+:root {
+    --sidebar-purple: rgb(23, 23, 54);
+    --secondary-purple: rgb(36, 36, 82);
+    --dark-gray: rgb(32, 32, 32);
+    --aux1-start-pos-left: 850px;
+    --aux1-start-pos-top: 750px;
+  }
   
-    }
-    
-    .main-title-icon{
 
-    }
+html{
+    background-color: rgb(32, 32, 32); 
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position: relative;
+}
 
-    .mb-main-title-line{
-        position: relative;
-        display: block;
-        top: 15px;
-        margin-bottom: 5px;
-        width: 1200px;
-        height: 3px;
-        background-color: white;
-    }
-    
-    .chartcontainer{
-        left: 1%;
-        height: 300px;
-        width: 550px;
-        top: 140px;
-    }
-    
-    .outlays-container{
-        left: 1%;
-        height: 275px;
-        width: 275px;
-    }
+@keyframes slide-left {
+    from {left: 100vw;}
+    to {left: 0vw;}
+  }
 
-    .outlays-cht{
-        height: 260px;
-        width: 260px;
-    }
-    
-    .outlays-yr{
+.mobile-header{
+    z-index: 1;
+    display: block;
+    position: fixed;
+    box-sizing: border-box;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    background-color:rgb(23, 23, 54);
+    animation-name: slide-left;
+    animation-duration: 0.5s;
+}
 
-    }
-    
-    .aux1-title-bar{ /*expenditures by class*/
-        left: 575px;
-    }
-    
-    .aux1-table{
-        left: 600px;
-    }
-    
-    .aux1-table > div:nth-child(even) {
+.mb-icon-menu:hover{
+    border-radius: 5px;
+    background-color: rgb(32, 32, 32);
+    cursor: pointer;
+}
 
-    }
-    
-    
-    .title-btn{
+.dash-sections{
+    display: grid;
+    grid-template-areas:
+    "MTitle"
+    "MSeries"
+    "Aux1 Aux2"
+    "Aux1 Aux3"
+    ;
+}
+.logo, .icon-logo{
+    display: inline;
+}
 
-    }
-    
-    .title-btn:hover, .title-btn:focus{
+.icon-logo{
+    position: relative;
+    top: 5px;
+    left: 10px; 
+}
 
-    }
-    
-    #tb2{
-        left: 850px;
-    }
-    
-    .modal {
+.logo{
+    box-sizing: border-box;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    text-wrap: wrap;
+    border-bottom: 1px solid white;
+}
 
-    }
-    
-    
-    .options-modal-content {
+.divider{
+    box-sizing: border-box;
+    width: 100%;
+    height: 25px;
+}
 
-    }
-    
-    .modal-icon{
+@keyframes slide-down {
+    from {top: -100vw;}
+    to {top: 0vw;}
+  }
 
-    }
-    
-    .close {
+.sidebar{
+    display: none;
+    z-index: 1;
+    position: fixed;
+    box-sizing: border-box;
+    top: 0px;
+    left: 0px;
+    width: 250px; 
+    height: 100rem;
+    background-color: rgb(23, 23, 54);
+    animation-name: slide-down;
+    animation-duration: 0.5s;
+}
 
-    }
-    
-    .close:hover,
-    .close:focus {
+.sidebar-close{
+    display: inline;
+    color: rgb(36, 36, 82);
+    position: sticky;
+    float: right;
+    margin-right: 10px;
+    top: 5px;
+    font-size: 28px;
+    font-weight: bolder;
+}
 
-    }
-    
-    .modal-header {
+.sidebar-close:hover{
+    color: black;
+    cursor: pointer;
+}
 
-    }
-    
-    .modal-header-text{
+.field {
+    position: relative;
+    left: 30px;
+    padding-top: 20px;
+    width: 175px;
+}
 
-    }
-    
-    .modal-subtitle{
 
-    }
-      
-    .modal-body {
+  .textInputWrapper .textInput:focus,
+  .textInputWrapper .textInput:active {
+    outline: none;
+  }
+  
+  .textInputWrapper:focus-within .textInput,
+  .textInputWrapper .textInput:focus,
+  .textInputWrapper .textInput:active {
+    background-color: #353535;
+  }
+  
+  .textInputWrapper:focus-within .textInput::placeholder {
+    opacity: 0;
+  }
+  
+input{
+    text-rendering: auto;
+    color: fieldtext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline;
+    text-align: start;
+    appearance: auto;
+    cursor: text;
+    margin: 0em;
+    padding: 1px 0px;
+    border: 0;
+    border-radius: 5px;
+    background-color: rgb(32, 32, 32);
+    padding-block: 1px;
+    padding-inline: 2px;
+    padding-left: 3px;
+    color: white;
+    height: 35px;
+    margin-bottom: 2px;
+}
 
-    }
-    
-    .modal-body button, .modal-body p{
+#input-1{
+    padding-right: 25px;
+    background: url("../img/icons8-calendar.svg") no-repeat right;
+    background-size: 20px;
+    background-color: rgb(32, 32, 32);
+    width: 50px;
+}
 
-    }
-    
-    .modal-body button:hover, .modal-body button:focus{
+#input-1:focus{
+    background-color: #353535;
+}
 
-    }
-    
-    .modal-footer {
+#input-2{
+    padding-right: 25px;
+    background: url("../img/icons8-date-to.svg") no-repeat right;
+    background-size: 20px;
+    background-color: rgb(32, 32, 32);
+    width: 50px;
+    position: relative;
+    left: 80px;
+    bottom: 39px;
+}
 
-    }
+#input-2:focus{
+    background-color: #353535;
+}
+
+::placeholder{
+    color:white;
+}
+
+
+#qry-icon-1{
+    position: absolute;
+    left: 0px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+#qryBtn{
+    position: relative;
+    top: 50px;
+    left: 25px;
+    box-sizing: border-box;
+    min-width: 100px;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid white;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#qryBtn:hover, #qryBtn:focus{
+    background: linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0));
+    margin-top: 3px;
+}
+
+.hidden{
+    position: relative;
+    top: 75px;
+    box-sizing: border-box;
+    height: 1px;
+}
+
+.datasets-list{
+    position: relative;
+    left: 25px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 175px;
+    overflow-x: hidden;
+}
+
+.sidebar-lbl{
+    position: relative;
+    left: 25px;
+    background-color: rgb(36, 36, 82);
+    background-color: transparent;
+    border-bottom: 1px solid rgb(33, 33, 33);
+    font-weight: 100;
+    width: 175px;
+}
+
+.sidebar-lbl:nth-of-type(odd){ 
+    background-color: rgb(36, 36, 82);
+}
+
+.sidebar-lbl:hover{
+    background-color: rgb(32, 32, 32);
+    cursor: pointer;
+}
+
+.main-title{
+    grid-area: MTitle;
+    position: absolute;
+    box-sizing: border-box;
+    height: 100px;
+    width: 1200px;
+    text-align: left;
+    font-size: larger;
+    font-weight: bold;
+    left: 1%;
+    top: 50px;
+    border: 0;
+}
+
+.subtitle{
+    color: lightcoral;
+}
+
+.main-title-icon{
+    float: right;
+    position: relative;
+    right: 825px;
+    bottom: 25px;
+    border-top: 1px solid white;
+    border-radius: 25px;
+}
+
+.mb-main-title-line{
+    position: relative;
+    display: block;
+    top: 15px;
+    margin-bottom: 5px;
+    width: 1200px;
+    height: 3px;
+    background-color: white;
+}
+
+.chartcontainer{
+    grid-area: MSeries;
+    position: absolute;
+    left: 1%;
+    height: 300px;
+    width: 550px;
+    top: 140px;
+}
+
+.outlays-container{
+    grid-area: Aux1;
+    position: absolute;
+    top: 750px;
+    left: 1%;
+    height: 275px;
+    width: 275px;
+
+}
+
+.outlays-cht{
+    height: 260px;
+    width: 260px;
+}
+
+.outlays-yr{
+    position: absolute;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.aux1-title-bar{ /*expenditures by class*/
+    grid-area: Aux2;
+    box-sizing: border-box;
+    position: absolute;
+    left: 575px;
+    top: 750px;
+    width: 400px;
+    height: 100px;
+    background-color: transparent;
+    border: 3px solid white; 
+    border-radius: 10px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    text-align: bottom; 
+    font-size: larger;
+    font-weight: bold;
+}
+
+.aux1-table{
+    grid-area: Aux3;
+    position: absolute;
+    left: 600px;
+    top: 900px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 400px;
+    font-size: large;
     
-    .modal-body .outlay-yrs-btn-modal{
- 
-    }
-    
-    .right-sidebar{
-        display: none;
-    }
+}
+
+.aux1-table > div:nth-child(even) {
+    padding-left: 10px;
+    background-color: rgb(47, 47, 47);
+    border-radius: 5px;
+}
+
+
+.title-btn{
+    box-sizing: border-box;
+    min-width: 100px;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    background: transparent;
+    border-radius: 5px;
+    border: 1px solid white;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.title-btn:hover, .title-btn:focus{
+    background: linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0));
+    margin-top: 3px;
+}
+
+#tb2{
+    position: absolute;
+    left: 850px;
+    top: 775px;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: rgb(32, 32, 32); 
+    background-color: rgba(11, 11, 11, 0.4); 
+}
+
+
+.options-modal-content {
+    position: relative;
+    background-color: rgb(32, 32, 32); 
+    border: 2px solid transparent;
+    border-radius: 5px;
+    width: 80%;
+    margin: auto;
+    padding: 0;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+.modal-icon{
+    float: left;
+    position: relative;
+    top:19px;
+}
+
+.close {
+  color: rgb(47, 47, 47);
+  float: right;
+  font-size: 28px;
+  font-weight:bolder;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: rgb(23, 23, 54);
+    margin-bottom: 25px;
+}
+
+.modal-header-text{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+
+}
+
+.modal-subtitle{
+    color: lightcoral;
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+  
+.modal-body {
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 0px;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(32, 32, 32);
+}
+
+.modal-body button, .modal-body p{
+    font-size: large;
+    text-align: left;
+    background-color: transparent;
+    color: white;
+}
+
+.modal-body button:hover, .modal-body button:focus{
+    background-color: rgb(26, 26, 26);
+    border: 0px;
+}
+
+.modal-footer {
+    box-sizing: border-box;
+    height: 10px;
+    width: 100%;
+    background-color: transparent;
+}
+
+.modal-body .outlay-yrs-btn-modal{
+    border: 0;
+}
+
+.right-sidebar{
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 95vw;
+    box-sizing: border-box;
+    width: 5vw;
+    height: 100rem;
+    background-color: rgb(23, 23, 54);
+    border-radius: 5px;
 }
