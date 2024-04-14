@@ -450,6 +450,11 @@ function outlayYearModal(){
   var btn = document.getElementById("tb2"); //year button @ outlays by class chart
   var span = document.getElementsByClassName("close")[0];
   btn.onclick = function() {
+    if(window.screen.width<=600){
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+    }
     modal.style.display = "block";
   }
 

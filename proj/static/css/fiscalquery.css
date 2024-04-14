@@ -324,10 +324,6 @@ input{
     width: 950px;
 }
 
-.outlays-container{ /*contains title, subtitile, and chart*/
-
-}
-
 .outlays-cht-container{
     height: 525px;
     width: 525px;
@@ -388,10 +384,6 @@ input{
 
 .title-btn:hover, .title-btn:focus{
     background: linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0));
-}
-
-#tb2{
-
 }
 
 .modal {
@@ -544,6 +536,14 @@ input{
 
 @media(max-width:600px) {
 
+    .mobile-header{
+        width: 100vw;
+    }
+
+    .sidebar{
+        height: 100%;
+    }
+
     .main-title-icon{
         width: 40px;
         right: 850px;
@@ -634,8 +634,8 @@ input{
         margin: auto;
     }
 
-    .hidden{
-
+    html{
+        overflow-x: hidden;
     }
 
 }
