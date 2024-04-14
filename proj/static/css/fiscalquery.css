@@ -38,15 +38,45 @@ html{
     cursor: pointer;
 }
 
-.dash-sections{
-    display: grid;
-    grid-template-areas:
-    "MTitle"
-    "MSeries"
-    "Aux1 Aux2"
-    "Aux1 Aux3"
-    ;
+.flex-sections{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
+
+.box-dividers{
+    box-sizing: border-box;
+    width: 90%;
+    height: 1px;
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#bx-div-2{
+    width: 0%;
+}
+
+#flex1{
+    flex: 1;
+    margin-top: 50px;
+    min-height: 550px;
+    max-width: 1150px;
+    top: 200px;
+}
+
+#flex2, #flex3{
+    flex: 1;
+    margin-top: 50px;
+    min-height: 550px;
+    min-width: 550px;
+}
+
+#flex3{
+    border-left: 1px solid white;
+    padding-left: 25px;
+}
+
 .logo, .icon-logo{
     display: inline;
 }
@@ -95,7 +125,7 @@ html{
 
 .sidebar-close{
     display: inline;
-    color: rgb(36, 36, 82);
+    color: white;
     position: sticky;
     float: right;
     margin-right: 10px;
@@ -199,8 +229,8 @@ input{
 
 #qryBtn{
     position: relative;
-    top: 50px;
-    left: 25px;
+    top: 25px;
+    left: 50px;
     box-sizing: border-box;
     min-width: 100px;
     text-align: center;
@@ -241,13 +271,16 @@ input{
     left: 25px;
     background-color: rgb(36, 36, 82);
     background-color: transparent;
-    border-bottom: 1px solid rgb(33, 33, 33);
     font-weight: 100;
     width: 175px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    padding-left: 5px;
 }
 
+
 .sidebar-lbl:nth-of-type(odd){ 
-    background-color: rgb(36, 36, 82);
+    /*background-color: rgb(36, 36, 82);*/
 }
 
 .sidebar-lbl:hover{
@@ -255,16 +288,21 @@ input{
     cursor: pointer;
 }
 
+.core-items{
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: auto; 
+}
+
 .main-title{
-    grid-area: MTitle;
-    position: absolute;
+    position: relative;
     box-sizing: border-box;
     height: 100px;
     width: 1200px;
     text-align: left;
     font-size: larger;
     font-weight: bold;
-    left: 1%;
     top: 50px;
     border: 0;
 }
@@ -287,47 +325,32 @@ input{
     display: block;
     top: 15px;
     margin-bottom: 5px;
-    width: 1200px;
+    width: 1000px;
     height: 3px;
     background-color: white;
 }
 
 .chartcontainer{
-    grid-area: MSeries;
-    position: absolute;
-    left: 1%;
-    height: 300px;
-    width: 550px;
-    top: 140px;
+    height: 525px;
+    width: 950px;
 }
 
-.outlays-container{
-    grid-area: Aux1;
-    position: absolute;
-    top: 750px;
-    left: 1%;
-    height: 275px;
-    width: 275px;
+.outlays-container{ /*contains title, subtitile, and chart*/
 
 }
 
-.outlays-cht{
-    height: 260px;
-    width: 260px;
+.outlays-cht-container{
+    height: 525px;
+    width: 525px;
 }
 
 .outlays-yr{
-    position: absolute;
     font-size: larger;
     font-weight: bold;
 }
 
 .aux1-title-bar{ /*expenditures by class*/
-    grid-area: Aux2;
     box-sizing: border-box;
-    position: absolute;
-    left: 575px;
-    top: 750px;
     width: 400px;
     height: 100px;
     background-color: transparent;
@@ -338,19 +361,15 @@ input{
     text-align: bottom; 
     font-size: larger;
     font-weight: bold;
+    margin-bottom: 25px
 }
 
 .aux1-table{
-    grid-area: Aux3;
-    position: absolute;
-    left: 600px;
-    top: 900px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     width: 400px;
     font-size: large;
-    
 }
 
 .aux1-table > div:nth-child(even) {
@@ -358,7 +377,6 @@ input{
     background-color: rgb(47, 47, 47);
     border-radius: 5px;
 }
-
 
 .title-btn{
     box-sizing: border-box;
@@ -373,15 +391,18 @@ input{
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+#tb2{
+    position: relative;
+    bottom: 75px;
+    left: 275px;
+}
+
 .title-btn:hover, .title-btn:focus{
     background: linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0));
-    margin-top: 3px;
 }
 
 #tb2{
-    position: absolute;
-    left: 850px;
-    top: 775px;
+
 }
 
 .modal {
@@ -389,7 +410,7 @@ input{
     position: fixed; 
     z-index: 2;
     left: 0;
-    top: 0;
+    top: 25px;
     width: 100%; 
     height: 100%; 
     overflow: auto;
@@ -397,18 +418,18 @@ input{
     background-color: rgba(11, 11, 11, 0.4); 
 }
 
-
 .options-modal-content {
     position: relative;
-    background-color: rgb(32, 32, 32); 
+    background-color: rgb(23, 23, 54);
     border: 2px solid transparent;
     border-radius: 5px;
     width: 80%;
     margin: auto;
     padding: 0;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);*/
     animation-name: animatetop;
     animation-duration: 0.4s;
+    border: 2px solid white;
 }
 
 .modal-icon{
@@ -418,7 +439,7 @@ input{
 }
 
 .close {
-  color: rgb(47, 47, 47);
+  color: white;
   float: right;
   font-size: 28px;
   font-weight:bolder;
@@ -435,12 +456,16 @@ input{
     padding: 2px 16px;
     background-color: rgb(23, 23, 54);
     margin-bottom: 25px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom: 2px solid white;
+
 }
 
 .modal-header-text{
     margin-bottom: 0px;
     padding-bottom: 0px;
-
+    background-color: rgb(23, 23, 54);
 }
 
 .modal-subtitle{
@@ -457,7 +482,7 @@ input{
     margin-bottom: 0px;
     display: flex;
     flex-direction: column;
-    background-color: rgb(32, 32, 32);
+    background-color: rgb(23, 23, 54);
 }
 
 .modal-body button, .modal-body p{
@@ -476,26 +501,14 @@ input{
     box-sizing: border-box;
     height: 10px;
     width: 100%;
-    background-color: transparent;
+    background-color: rgb(23, 23, 54);
 }
 
 .modal-body .outlay-yrs-btn-modal{
     border: 0;
 }
 
-.right-sidebar{
-    display: none;
-    position: fixed;
-    top: 0px;
-    left: 95vw;
-    box-sizing: border-box;
-    width: 5vw;
-    height: 100rem;
-    background-color: rgb(23, 23, 54);
-    border-radius: 5px;
-}
-
-@media (max-height:700px){
+@media (max-height:800px){
     .sidebar{
         height: 100vh;
         overflow-y: scroll;
@@ -503,32 +516,125 @@ input{
 
 }
 
-@media (min-width:1050px){
-    .main-title{
-        margin-left: 200px;
+@media(max-width:1125px){
+    .chartcontainer{
+        width: 475px;
+    }
+
+    .outlays-cht-container{
+        width: 475px;
+        height: 475px;
+    }
+
+    .core-items{
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .mb-main-title-line{
+        width: 480px;
+    }
+
+    .box-dividers{
+        width: 480px;
+    }
+
+    #bx-div-2{
+        width: 480px;
+    }
+
+    #flex3{
+        margin-left: 25px;
+        border-left: none;
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .main-title-icon{
+        width: 40px;
+        right: 850px;
+        bottom: 15px;
+    }
+
+    .mb-main-title-line{
+        width: 380px;
     }
 
     .chartcontainer{
-        margin-left: 200px;
+        width: 350px;
+        height: 250px;
     }
 
-    .outlays-container{
-        margin-left: 200px;
+    .outlays-cht-container{
+        width: 350px;
+        height: 250px;
     }
 
-    .aux1-title-bar{
-        margin-left: 200px;
+    .core-items{
+        max-width: 400px;
+        margin: auto;
     }
 
-    .aux1-table{
-        margin-left: 200px;
+    .box-dividers{
+        width: 370px;
+    }
+
+    #bx-div-2{
+        width: 370px;
+    }
+
+    .aux1-title-bar{ /*expenditures by class*/
+        width: 350px;
+        height: 100px;
+        background-color: transparent;
+        border: 3px solid white; 
+        border-radius: 10px;
+        border-top-width: 0px;
+        border-right-width: 0px;
+        text-align: bottom; 
+        font-size: larger;
+        font-weight: bold;
+        margin-bottom: 25px;
+        top: 0%;
+        bottom: 100px;
     }
 
     #tb2{
-        margin-left: 200px;
+        left: 225px;
     }
-}
 
-@media(max-width:780px) {
+    .aux1-table{
+        width: 300px;
+        margin-left: 25px;
+    }
+    
+    .flex-sections{
+        display: block;
+    }
+
+    #flex2{
+        position: relative;
+        bottom: 300px;
+    }
+
+    #flex1, #flex2{
+        max-height: 400px;
+        max-width: 400px;
+    }
+
+    #flex3{
+        position: relative;
+        max-width: 400px;
+        margin-left: 0;
+        padding-left: 0;
+        margin-top: 0%;
+        bottom: 500px;
+    }
+
+    .modal{
+
+    }
     
 }

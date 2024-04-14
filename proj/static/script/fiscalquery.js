@@ -234,7 +234,7 @@ const plugin = {
 function createMainSeries(category, yrs, vals) {
   
     Chart.defaults.font.family = "poppins, sans-serif"; //"Times, 'Times New Roman', serif, Georgia";
-    Chart.defaults.font.size = 16;
+    Chart.defaults.font.size = 13;
     Chart.defaults.elements.line.tension = 0.4;
     Chart.defaults.color = 'white';
     Chart.defaults.elements.point.radius = 5;
@@ -244,6 +244,8 @@ function createMainSeries(category, yrs, vals) {
       {
         type: 'line',
         options: {
+          maintainAspectRatio: false,
+          responsive: true,
           animation: {
             duration: 2000,
           },
@@ -346,6 +348,8 @@ function createOutlays(mylabels, mydata) {
           ]
         },
         options: {
+          maintainAspectRatio: false,
+          responsive: true,
           plugins: {
             legend: {
               //align: 'left',
@@ -382,6 +386,8 @@ function createOutlays(mylabels, mydata) {
           ]
         },
         options: {
+          maintainAspectRatio: false,
+          responsive: true,
           plugins: {
             legend: {
               //align: 'left',

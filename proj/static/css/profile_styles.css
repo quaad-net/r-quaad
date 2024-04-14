@@ -186,7 +186,8 @@ section.medium div{
   }
 
   .projects{
-    background: url("../img/qa3.PNG") no-repeat right;
+    background-image: none;
+    /*background: url("../img/qa3.PNG") no-repeat right;*/
   }
 
 }

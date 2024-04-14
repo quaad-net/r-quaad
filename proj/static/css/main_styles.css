@@ -3,6 +3,7 @@ html{
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+/*
 html::after{
 
   content: "";
@@ -16,6 +17,7 @@ html::after{
   z-index: -1;   
 
 }
+*/
 
 .logo{
   text-decoration: none;

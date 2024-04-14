@@ -26,7 +26,7 @@ html{
     box-sizing: border-box;
     top: 0px;
     left: 0px;
-    width: 100vw;
+    width: 100%;
     background-color:rgb(23, 23, 54);
     animation-name: slide-left;
     animation-duration: 0.5s;
@@ -38,6 +38,7 @@ html{
     cursor: pointer;
 }
 
+/*
 .dash-sections{
     display: grid;
     grid-template-areas:
@@ -47,6 +48,8 @@ html{
     "Aux1 Aux3"
     ;
 }
+*/
+
 .logo, .icon-logo{
     display: inline;
 }
@@ -86,10 +89,11 @@ html{
     top: 0px;
     left: 0px;
     width: 250px; 
-    height: 100rem;
+    height: 100%;
     background-color: rgb(23, 23, 54);
     animation-name: slide-down;
     animation-duration: 0.5s;
+    border-bottom-right-radius: 5px;
 }
 
 .sidebar-close{
@@ -115,21 +119,20 @@ html{
     width: 175px;
 }
 
+.textInputWrapper .textInput:focus,
+.textInputWrapper .textInput:active {
+outline: none;
+}
 
-  .textInputWrapper .textInput:focus,
-  .textInputWrapper .textInput:active {
-    outline: none;
-  }
-  
-  .textInputWrapper:focus-within .textInput,
-  .textInputWrapper .textInput:focus,
-  .textInputWrapper .textInput:active {
-    background-color: #353535;
-  }
-  
-  .textInputWrapper:focus-within .textInput::placeholder {
-    opacity: 0;
-  }
+.textInputWrapper:focus-within .textInput,
+.textInputWrapper .textInput:focus,
+.textInputWrapper .textInput:active {
+background-color: #353535;
+}
+
+.textInputWrapper:focus-within .textInput::placeholder {
+opacity: 0;
+}
   
 input{
     text-rendering: auto;
@@ -255,7 +258,7 @@ input{
 }
 
 .main-title{
-    grid-area: MTitle;
+    /*grid-area: MTitle;*/
     position: absolute;
     box-sizing: border-box;
     height: 100px;
@@ -291,8 +294,12 @@ input{
     background-color: white;
 }
 
+.db{
+    display: flex;
+    flex-direction: column;
+}
 .chartcontainer{
-    grid-area: MSeries;
+    /*grid-area: MSeries;*/
     position: absolute;
     left: 1%;
     height: 300px;
@@ -300,20 +307,22 @@ input{
     top: 140px;
 }
 
-.outlays-container{
-    grid-area: Aux1;
+.outlays-container{ /*codemark*/
+    /*grid-area: Aux1;*/
     position: absolute;
     top: 750px;
-    left: 1%;
+    /*
     height: 275px;
     width: 275px;
-
+    */
 }
 
+/*
 .outlays-cht{
     height: 260px;
     width: 260px;
 }
+*/
 
 .outlays-yr{
     position: absolute;
@@ -322,7 +331,7 @@ input{
 }
 
 .aux1-title-bar{ /*expenditures by class*/
-    grid-area: Aux2;
+    /*grid-area: Aux2;*/
     box-sizing: border-box;
     position: absolute;
     left: 575px;
@@ -340,7 +349,7 @@ input{
 }
 
 .aux1-table{
-    grid-area: Aux3;
+    /*grid-area: Aux3;*/
     position: absolute;
     left: 600px;
     top: 900px;
@@ -492,4 +501,48 @@ input{
     height: 100rem;
     background-color: rgb(23, 23, 54);
     border-radius: 5px;
+}
+
+@media (max-height:700px){
+    .sidebar{
+        height: 100vh;
+        overflow-y: scroll;
+    }
+
+}
+
+@media (min-width:1050px){
+    .main-title{
+        margin-left: 200px;
+    }
+
+    .chartcontainer{
+        margin-left: 200px;
+
+    }
+
+    .outlays-container{
+    }
+
+    .aux1-title-bar{
+        margin-left: 200px;
+    }
+
+    .aux1-table{
+        margin-left: 200px;
+    }
+
+    #tb2{
+        margin-left: 200px;
+    }
+}
+
+@media(max-width:780px) {
+    .chartcontainer{
+        left: 15%;
+    }
+
+    .outlays-container{ /*codemark*/
+
+    }
 }

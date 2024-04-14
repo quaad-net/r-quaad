@@ -3,7 +3,7 @@
 <HTML lang="en">
     <head>
         <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width,  initial-scale=1"/>
         <title>FiscalQuery</title>
         <link rel="icon" href= "{% static '/img/icons8-us-dollar-32.png' %}" />
         <link rel= "stylesheet" href= "{% static '/css/fiscalquery.css' %}"/>
@@ -14,7 +14,7 @@
     </head>
     <span class="mobile-header">
         <img class= "mb-icon-logo" src= "{% static '/img/icons8-us-dollar.svg' %}" width= 30px></img>
-        <img class= "mb-icon-menu" src= "{% static '/img/icons8-whitemenu.svg' %}" width= 30px></img>
+        <img class= "mb-icon-menu" src= "{% static '/img/icons8-menu.svg' %}" width= 30px></img>
     </span>
     <div class="dash-sections">
         <div class="sidebar">
@@ -58,40 +58,31 @@
                 <div class='hidden'></div >
             </span>
         </div>
-        <div class="core-items">
-            <div class= "main-title"></br>U.S. GOV'T EXPENDITURES</br>
-                <span class= "subtitle">in billions | nominal</span>
-                <img class= "main-title-icon" src= "{% static '/img/icons8-government.svg' %}" width=60px />
-                <span class="mb-main-title-line"></span>
-            </div>
-            <div class="flex-sections">
-                <div class="flex-box" id="flex1">
-                    <div class= "chartcontainer">
-                        <canvas id="MainSeriesCht"></canvas>
-                    </div>
-                    <div class="box-dividers"></div>
+        <div class= "main-title"></br>U.S. GOV'T EXPENDITURES</br>
+            <span class= "subtitle">in billions | nominal</span>
+            <img class= "main-title-icon" src= "{% static '/img/icons8-government.svg' %}" width=60px />
+            <span class="mb-main-title-line"></span>
+        </div>
+        <div class="db">
+            <div class="db-sect">
+                <div class= "chartcontainer" style="height:55vh; width:60vw;"> <!--"height:600px; width:1100px"-->
+                    <canvas id="MainSeriesCht"></canvas>
                 </div>
             </div>
-            <div class="flex-sections">
-                <div class="flex-box" id="flex2"><!--flex width:550px-->
-                    <div class= "outlays-container"> 
-                        <span class="outlays-yr">Year</br>
-                            <span class="subtitle">percentages</span>
-                        </span>
-                        <div class="outlays-cht-container">
-                            <canvas id="outlays-cht"></canvas>
-                        </div>
-                    </div>
-                    <div class="box-dividers" id="bx-div-2"></div>
+            <div class="db-sect">
+                <span class="outlays-yr">Year</br>
+                    <span class="subtitle">percentages</span>
+                </span>
+                <div class= "outlays-container" style="height:50vh; width:50vw;">
+                        <canvas id="outlays-cht"></canvas>
                 </div>
-                <div class="flex-box" id="flex3">
-                    <div class= "aux1-title-bar"><br/>&#160&#160EXPENDITURES<br/>
-                        <span class= "subtitle">&#160&#160by class</span>
-                    </div>
-                    <button type="button" class="title-btn" id= "tb2">Year</button>
-                    <div class= "aux1-table">
-                    </div>
+            </div>
+            <div class="db-sect">
+                <div class= "aux1-title-bar"><br/>&#160&#160EXPENDITURES<br/>
+                    <span class= "subtitle">&#160&#160by class</span>
                 </div>
+                <div class= "aux1-table"></div>
+                <button type="button" class= "title-btn" id= "tb2">Year</button>
             </div>
         </div>
     </div>
