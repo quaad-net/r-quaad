@@ -1,5 +1,11 @@
 const firstInput = document.querySelector('#input-1');
 const secInput = document.querySelector('#input-2');
+firstInput.addEventListener('click', function(){
+  firstInput.value = "";
+})
+secInput.addEventListener('click', function(){
+  secInput.value = "";
+})
 firstInput.addEventListener('input', captureStartDate);
 secInput.addEventListener('input', caputureEndDate);
 const ht = document.querySelector('html');

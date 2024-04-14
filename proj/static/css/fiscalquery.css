@@ -6,7 +6,6 @@
     --aux1-start-pos-top: 750px;
   }
   
-
 html{
     background-color: rgb(32, 32, 32); 
     color: white;
@@ -227,6 +226,30 @@ input{
     margin-bottom: 15px;
 }
 
+.datasets-list{
+    position: relative;
+    font-weight: bold;
+    left: 25px;
+}
+
+.sidebar-lbl{
+    position: relative;
+    left: 25px;
+    background-color: rgb(36, 36, 82);
+    background-color: transparent;
+    font-weight: 100;
+    width: 175px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    padding-left: 5px;
+    border-radius: 5px;
+}
+
+.sidebar-lbl:hover{
+    background-color: rgb(32, 32, 32);
+    cursor: pointer;
+}
+
 #qryBtn{
     position: relative;
     top: 25px;
@@ -245,7 +268,6 @@ input{
 
 #qryBtn:hover, #qryBtn:focus{
     background: linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0));
-    margin-top: 3px;
 }
 
 .hidden{
@@ -253,39 +275,6 @@ input{
     top: 75px;
     box-sizing: border-box;
     height: 1px;
-}
-
-.datasets-list{
-    position: relative;
-    left: 25px;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 175px;
-    overflow-x: hidden;
-}
-
-.sidebar-lbl{
-    position: relative;
-    left: 25px;
-    background-color: rgb(36, 36, 82);
-    background-color: transparent;
-    font-weight: 100;
-    width: 175px;
-    margin-bottom: 8px;
-    margin-top: 8px;
-    padding-left: 5px;
-}
-
-
-.sidebar-lbl:nth-of-type(odd){ 
-    /*background-color: rgb(36, 36, 82);*/
-}
-
-.sidebar-lbl:hover{
-    background-color: rgb(32, 32, 32);
-    cursor: pointer;
 }
 
 .core-items{
@@ -325,7 +314,7 @@ input{
     display: block;
     top: 15px;
     margin-bottom: 5px;
-    width: 1000px;
+    width: 1035px;
     height: 3px;
     background-color: white;
 }
@@ -512,11 +501,14 @@ input{
     .sidebar{
         height: 100vh;
         overflow-y: scroll;
+        overflow-x: hidden;
+        scrollbar-color: white rgb(32, 32, 32);
+        scrollbar-width: thin;
     }
 
 }
 
-@media(max-width:1125px){
+@media(max-width:1200px){
     .chartcontainer{
         width: 475px;
     }
@@ -573,6 +565,7 @@ input{
     }
 
     .core-items{
+        display: block;
         max-width: 400px;
         margin: auto;
     }
@@ -632,9 +625,17 @@ input{
         margin-top: 0%;
         bottom: 500px;
     }
-
+    
     .modal{
+        width: 100vw;
+    }
+
+    .options-modal-content{
+        margin: auto;
+    }
+
+    .hidden{
 
     }
-    
+
 }
