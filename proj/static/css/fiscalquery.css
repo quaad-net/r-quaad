@@ -324,6 +324,12 @@ input{
     width: 950px;
 }
 
+#tb2{
+    position: relative;
+    left: 400px;
+    top: 35px;
+}
+
 .outlays-cht-container{
     height: 525px;
     width: 525px;
@@ -332,6 +338,12 @@ input{
 .outlays-yr{
     font-size: larger;
     font-weight: bold;
+}
+
+.flex3-icon{
+    position: relative;
+    left: 300px;
+    top: 65px;
 }
 
 .aux1-title-bar{ /*expenditures by class*/
@@ -374,12 +386,6 @@ input{
     border: 1px solid white;
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-#tb2{
-    position: relative;
-    bottom: 75px;
-    left: 275px;
 }
 
 .title-btn:hover, .title-btn:focus{
@@ -505,6 +511,10 @@ input{
         width: 475px;
     }
 
+    #tb2{
+        left: 375px;
+    }
+
     .outlays-cht-container{
         width: 475px;
         height: 475px;
@@ -578,6 +588,11 @@ input{
         width: 370px;
     }
 
+    #tb2{
+        left: 250px;
+        top: 30px;
+    }
+
     .aux1-title-bar{ /*expenditures by class*/
         width: 350px;
         height: 100px;
@@ -592,10 +607,6 @@ input{
         margin-bottom: 25px;
         top: 0%;
         bottom: 100px;
-    }
-
-    #tb2{
-        left: 225px;
     }
 
     .aux1-table{
