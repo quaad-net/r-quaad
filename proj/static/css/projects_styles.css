@@ -64,12 +64,9 @@ article{
   font-size: medium;
 }
 
-aside:hover, article:hover{
-  padding: 2em;
-  transition: padding 0.5s;
-}
 
-/*---------------------------------------------------FOR MOBILE SCREENS---------------------------------------------------*/
+/*------------FOR MOBILE SCREENS------------*/
+
 @media (max-width:780px){
   
   aside {
@@ -101,6 +98,15 @@ aside:hover, article:hover{
   article:hover{
     padding-left: 0;
     left: 0%;
+  }
+
+}
+
+@media(max-width:400px){
+
+  aside:hover, article:hover{
+    padding: 2em;
+    transition: padding 0.5s;
   }
 
 }
