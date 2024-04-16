@@ -10,7 +10,6 @@ html{
     background-color: rgb(32, 32, 32); 
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    position: relative;
 }
 
 @keyframes slide-left {
@@ -113,10 +112,10 @@ html{
     z-index: 1;
     position: fixed;
     box-sizing: border-box;
-    top: 0px;
+    top: -1px;
     left: 0px;
-    width: 250px; 
-    height: 100%;
+    width: 250px;
+    height: 100rem;
     background-color: rgb(23, 23, 54);
     animation-name: slide-down;
     animation-duration: 0.5s;
@@ -126,7 +125,6 @@ html{
 .sidebar-close{
     display: inline;
     color: white;
-    position: sticky;
     float: right;
     margin-right: 10px;
     top: 5px;
@@ -286,11 +284,9 @@ input{
     height: 1px;
 }
 
-.core-items{
-    display: flex;
-    flex-direction: column;
+.core-items{ /*horizantal centering*/
     max-width: 1200px;
-    margin: auto; 
+    margin: auto;
 }
 
 .main-title{
@@ -504,7 +500,7 @@ input{
     border: 0;
 }
 
-@media (max-height:800px){
+@media (max-height:777px){
     .sidebar{
         height: 100vh;
         overflow-y: scroll;
@@ -564,10 +560,6 @@ input{
         width: 100vw;
     }
 
-    .sidebar{
-        height: 100%;
-    }
-
     .main-title-icon{
         width: 40px;
         right: 850px;
@@ -589,7 +581,6 @@ input{
     }
 
     .core-items{
-        display: block;
         max-width: 400px;
         margin: auto;
     }
@@ -653,6 +644,7 @@ input{
     
     .modal{
         width: 100vw;
+        height: 100rem;
     }
 
     .options-modal-content{

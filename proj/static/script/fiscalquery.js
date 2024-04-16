@@ -42,7 +42,7 @@ const sidebarLbl = document.querySelectorAll(".sidebar-lbl");
 const sidebarDataHd = document.querySelector(".datasets-list");
 const sidebarClose = document.querySelector(".sidebar-close");
 
-mobileMenu.addEventListener("click", function(){
+mobileMenu.addEventListener("click", function(){ 
   mobileHeader.style.display = "none";
   sideBar.style.display = "block";
 })
@@ -449,11 +449,11 @@ function outlayYearModal(){
   var modal = document.getElementById("options-modal");
   var btn = document.getElementById("tb2"); //year button @ outlays by class chart
   var span = document.getElementsByClassName("close")[0];
-  btn.onclick = function() {
+  var modalOptions = document.querySelector(".options-modal-content");
+
+  btn.onclick = function() { 
     if(window.screen.width<=600){
-      window.scrollTo(0, 0);
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+      modalOptions.style.top = '"' + window.scrollY + 'px' + '"';
     }
     modal.style.display = "block";
   }
