@@ -234,7 +234,6 @@ input{
 .dataset-lbl-wrapper{
     border-radius: 5px;
     border: 1px solid rgb(36, 36, 82);
-    border-top: 0;
     width: 225px;
     margin:auto;
 }
@@ -423,7 +422,7 @@ input{
     animation-name: animatetop;
     animation-duration: 0.4s;
     border: 2px solid white;
-    top: 25px;
+    top: 10px;
 }
 
 .modal-icon{
@@ -658,6 +657,5 @@ input{
     .options-modal-content{
         margin: auto;
     }
-
 
 }
