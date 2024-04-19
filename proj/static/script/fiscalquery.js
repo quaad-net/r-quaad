@@ -121,6 +121,7 @@ qryBtn.addEventListener("click", async function(){
         }
         getGovExpendPlus(myCat, getStartYr, getEndYr);
         sidebarClose.click();
+        window.scrollTo(0, 0);
       }
   }
   
@@ -452,9 +453,6 @@ function outlayYearModal(){
   var modalOptions = document.querySelector(".options-modal-content");
 
   btn.onclick = function() { 
-    if(window.screen.width<=600){
-      modalOptions.style.top = '"' + window.scrollY + 'px' + '"';
-    }
     modal.style.display = "block";
   }
 
