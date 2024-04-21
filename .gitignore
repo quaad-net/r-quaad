@@ -6,7 +6,7 @@ qdev.py
 uqntdb.py
 xviews.py
 xsettings.py
-run_qry.py
+wip.py
 
 # Django files
 staticfiles/

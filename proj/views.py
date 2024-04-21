@@ -28,7 +28,7 @@ async def fiscalquery(request, startDate, endDate):
     
     cnxn = engine.connect()
 
-    mainEcon = f'select round(ttl_gov_expend, 1) as ttl_gov_expend, yr from main_econ_measures where yr between {startDate} and {endDate} order by yr;'
+    mainEcon = f'select round(ttl_gov_expend, 1) as ttl_gov_expend, date as yr from cbo_annual_cy_plus where date between {startDate} and {endDate} order by yr;'
     mainEcon_df = pd.read_sql(mainEcon, cnxn)
     mainEcon_jsn = mainEcon_df.to_json(orient='records')
 
@@ -51,7 +51,7 @@ async def update_outlays(request, year):
 
 async def gov_expend_plus(request, startDate, endDate):
     cnxn = engine.connect()
-    gov_expend = f'select * from gov_expend_plus where year between {startDate} and {endDate};'
+    gov_expend = f'select * from gov_expend_set where date between {startDate} and {endDate};' 
     gov_expend_df = pd.read_sql(gov_expend, cnxn)
     gov_expend_jsn = gov_expend_df.to_json(orient='records')
     allObjs = [gov_expend_jsn]
