@@ -19,7 +19,7 @@
     </aside>
     <article>
       <span class="proj-snip">Solution</span>
-      <h1>Plan-O-Gram</h1>
+      <h1>Plan-o-gram</h1>
       <p>
         I was tasked with creating an application that would produce a simple plan-o-gram (a visual layout) of items 
         optimally positioned on shelves given various product and shelf dimensions. The product dimensions were stored in a data
@@ -28,7 +28,7 @@
       </p>
   
       <p>
-        The PowerShell application asks the user to point to a file containing a clients desired products (which typically ranges from hundreds to thousands),
+        The application asks users to point to a file containing a clients desired products (which typically ranges from hundreds to thousands),
         then also takes the client's shelf dimensions. Given those sets of data, it outputs the plan-o-gram.
       </p>
     </article>
@@ -49,7 +49,7 @@
           <li>Outputs data for plan-o-gram.</li>
           <li>Places and styles finished plan-o-gram in an Excel workbook.</li>
           <li> 
-            <a href="https://1drv.ms/x/s!Ar6VAGa9JiSkiagWpt1jMquVOWwUqQ?e=2xuFCu" target="_blank" rel="noopener noreferrer">Sample plan-o-gram</a> |
+            <a href="https://1drv.ms/x/s!Ar6VAGa9JiSki-sY9DRqy9vxK_IOww?e=ZJjFPR" target="_blank" rel="noopener noreferrer">Sample plan-o-gram</a> |
             <a href="https://github.com/tukoh/Plan-o-gram.git" target="_blank" rel="noopener noreferrer">Module snippet</a>
           </li>
         </Ul>
@@ -98,10 +98,10 @@
       <h1 class="script-header">Outline</h1>
       <p>
         <Ul>
-          <li>Data is programmatically fetched from sources and stored in database.</li>
-          <li>Database views are utilized to format data and to make it easier to work with.</li>
-          <li>Python view functions fetch data on demand and send an http response.</li>
-          <li>JavaScript parses and formats data to be charted with HTML and CSS</li>
+          <li>Data is programmatically fetched from sources and stored in SQL database.</li>
+          <li>Database views are utilized to make data easier to work with.</li>
+          <li>Python view functions fetch data in response to requests.</li>
+          <li>JavaScript parses and formats data to be charted.</li>
           <li>
             <a href="{% url 'fiscal' %}" target="_blank" rel="noopener noreferrer">Dashboard</a> | 
             <a href="https://github.com/tukoh/fiscal.git" target="_blank" rel="noopener noreferrer">Source snippets</a> |
@@ -128,14 +128,14 @@
       <span class="proj-snip">Solution</span>
       <h1>Data Pre-Processing</h1>
       <p>
-        Sometimes data is received in a format that isn’t very useful for your needs. 
-        This was the case when a third-party vendor would send updated price lists on a weekly basis. 
-        Its format was unsuitable for loading into a data table to compare prices with other vendors.       
+        Sometimes data is received in a format that isn’t very useful for a particular task. 
+        This was the case when a third-party vendor would send updated price lists on a weekly basis.
+        The list contained incontiguous data, images, etc.       
       </p>
   
       <p>
-        In this project, the price list is formatted using algorithms that identify patterns within the original file 
-        then modify data as needed.  
+        In this project, the price list is formatted using algorithms that identify patterns within the 
+        original file then modify the file as needed, preparing the data to be utilized for price comparisons.
       </p>
     </article>
   </div>
@@ -185,7 +185,7 @@
       </p>
   
       <p>
-        The original product usage data loaded by the module comes from an XML file that is the result of an SQL query.
+        The original usage data loaded by the module comes from an XML file that is the result of an SQL query.
       </p>
     </article>
   </div>

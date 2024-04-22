@@ -64,6 +64,9 @@ article{
   font-size: medium;
 }
 
+#footer-illus-container-1{
+  display: none;
+}
 
 /*------------FOR MOBILE SCREENS------------*/
 

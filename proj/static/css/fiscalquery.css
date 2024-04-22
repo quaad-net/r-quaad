@@ -120,6 +120,7 @@ html{
     animation-name: slide-down;
     animation-duration: 0.5s;
     border-bottom-right-radius: 5px;
+    overflow: hidden;
 }
 
 .sidebar-close{
@@ -532,6 +533,19 @@ input{
     }
 }
 
+@media(max-height:600px){
+
+    .sidebar{
+        height: 100%;
+    }
+
+    .dataset-lbl-wrapper{
+        height: 100px;
+        overflow-y: scroll;
+    }
+
+}
+
 @media(max-width:1200px){
     .chartcontainer{
         width: 475px;
@@ -580,10 +594,6 @@ input{
 
     .mobile-header{
         width: 100vw;
-    }
-    
-    .sidebar{
-        height: 100rem;
     }
 
     .main-title-icon{

@@ -99,12 +99,12 @@ section.large div:nth-child(2){
   margin-top: 5px;
 }
 
-.projects h2 span{
-  font-weight: normal;
+#pre-headline{
+  color:gray;
 }
 
-.red-detail{
-  color: gray;
+.projects h2 span{
+  font-weight: normal;
 }
 
 .project div{
