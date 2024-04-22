@@ -41,6 +41,7 @@ const mobileHeader = document.querySelector(".mobile-header");
 const sidebarLbl = document.querySelectorAll(".sidebar-lbl"); 
 const sidebarDataHd = document.querySelector(".datasets-list");
 const sidebarClose = document.querySelector(".sidebar-close");
+const mbTabs = document.querySelectorAll(".mb-tab-btn");
 
 mobileMenu.addEventListener("click", function(){ 
   mobileHeader.style.display = "none";
@@ -51,6 +52,27 @@ sidebarClose.addEventListener("click", function(){
   sideBar.style.display = "none";
   mobileHeader.style.display = "block";
 })
+
+for(const b of mbTabs){
+  b.addEventListener('click', function(){
+
+    //sets color of tabs in header
+    //returns Overview or Posts template
+
+    const t1 = document.querySelector("#mb-tab-1");
+    const t2 = document.querySelector("#mb-tab-2");
+    if(b.id == 'mb-tab-1'){
+      b.style.backgroundColor="rgb(102, 1, 1)";
+      b.style.background="linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0))";
+      t2.style.background="none";
+    }
+    if(b.id == 'mb-tab-2'){
+      b.style.backgroundColor="rgb(102, 1, 1)"
+      b.style.background="linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0))";
+      t1.style.background="none";
+    }
+  })
+}
 
 qryBtn.addEventListener("click", async function(){
   let userinp1 = Number(firstInput.value) ;
