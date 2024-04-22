@@ -112,7 +112,7 @@ html{
     z-index: 1;
     position: fixed;
     box-sizing: border-box;
-    top: -1px;
+    top: 0px;
     left: 0px;
     width: 250px;
     height: 100rem;
@@ -226,10 +226,15 @@ input{
     margin-bottom: 15px;
 }
 
-.datasets-list{
+.datasets-list-hdr{
     position: relative;
     font-weight: bold;
-    left: 40px;
+    border: 1px solid rgb(36, 36, 82);
+    border-bottom: 0;
+    border-radius: 5px;
+    width: 225px;
+    text-align: center;
+    margin: auto;
 }
 
 .dataset-lbl-wrapper{
@@ -242,7 +247,7 @@ input{
 .sidebar-lbl{
     position: relative;
     left: 25px;
-    background-color: rgb(36, 36, 82);
+    background-color: rgb(23, 23, 54);
     background-color: transparent;
     font-weight: 100;
     width: 175px;

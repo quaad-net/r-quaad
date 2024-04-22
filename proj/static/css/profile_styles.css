@@ -148,8 +148,6 @@ section.medium div{
   top: 25px;
 }
 
-
-/*-------------------------------------------------- MOBILE SCREENS---------------------------------------------------*/
 @media (max-width:780px){
   section.large {
     display: flex;

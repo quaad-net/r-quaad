@@ -50,7 +50,6 @@ article{
   padding-left: 5px;
 }
 
-/*misaligned divider effect + yellow background for program outline*/
 .asd-script{
   flex: 1.5;
   background-color: rgb(240, 224, 136);
@@ -67,8 +66,6 @@ article{
 #footer-illus-container-1{
   display: none;
 }
-
-/*------------FOR MOBILE SCREENS------------*/
 
 @media (max-width:780px){
   
@@ -93,14 +90,14 @@ article{
     background-color: rgb(240, 224, 136);
   }
 
-  aside:hover, article:hover{
+  aside:hover{
     padding-right: 5em;
-
+    transition: padding-right 0.5s;
   }
 
   article:hover{
-    padding-left: 0;
-    left: 0%;
+    padding-right: 5em;
+    transition: padding-right 0.5s;
   }
 
 }
