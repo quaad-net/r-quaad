@@ -21,6 +21,8 @@ qdev.bat
 
 # JavaScript
 xfiscalquery.js
+123.js
+assocCharts.js
 
 #debugging
 .hintrc
