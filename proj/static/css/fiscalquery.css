@@ -48,7 +48,6 @@ html{
     box-sizing: border-box;
     width: 75px;
     text-align: center;
-    /*padding-left: 4px;*/
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: small;
     background: transparent;
@@ -316,7 +315,7 @@ input{
     height: 1px;
 }
 
-.core-items{ /*horizantal centering*/
+.core-items{
     display: flex;
     flex-direction: column;
     max-width: 1200px;
@@ -389,7 +388,7 @@ input{
     top: 65px;
 }
 
-.aux1-title-bar{ /*expenditures by class*/
+.aux1-title-bar{
     box-sizing: border-box;
     width: 400px;
     height: 100px;
@@ -543,10 +542,14 @@ input{
     overflow-y: auto;   
 }
 
-@media (max-height:777px){
+@media (max-height:800px){
+
+    .sidebar{
+        height: 100rem; /
+    }
 
     .dataset-lbl-wrapper{
-        height: 500px;
+        height: 100px;
         overflow-y: scroll;
         overflow-x: hidden;
         scrollbar-color: white rgb(32, 32, 32);
@@ -555,29 +558,8 @@ input{
     
 }
 
-@media(max-height:727px){
-
-    .sidebar{
-        height: 100%;
-        overflow-y: auto;
-        scrollbar-color: white rgb(32, 32, 32);
-        scrollbar-width: thin;
-    }
-
-}
-
 @media(max-height:600px){
 
-    .sidebar{
-        height: 100%;
-    }
-
-    .dataset-lbl-wrapper{
-        height: 100px;
-        overflow-y: scroll;
-    }
-
-    /*codemark*/
     @media(max-width:950px){
         
         html{
@@ -587,13 +569,6 @@ input{
     
         .mobile-header{
             width: 100vw;
-        }
-    
-        .sidebar{
-            height: 100%;
-            overflow-y: auto;
-            scrollbar-color: white rgb(32, 32, 32);
-            scrollbar-width: thin;
         }
     
         .main-title-icon{
@@ -639,7 +614,7 @@ input{
             top: 30px;
         }
     
-        .aux1-title-bar{ /*expenditures by class*/
+        .aux1-title-bar{
             width: 350px;
             height: 100px;
             background-color: transparent;
@@ -786,7 +761,7 @@ input{
         top: 30px;
     }
 
-    .aux1-title-bar{ /*expenditures by class*/
+    .aux1-title-bar{
         width: 350px;
         height: 100px;
         background-color: transparent;
@@ -840,20 +815,3 @@ input{
     }
 
 }
-
-/*
-@media(max-height:650px) and (max-width:600px){
- 
-    .aux1-title-bar{
-        position: relative;
-        right: 25px;
-        top: 5px;
-    }
-
-    .aux1-table{
-        position: relative;
-        left: 25px;
-    }
-
-}
-*/

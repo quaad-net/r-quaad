@@ -70,7 +70,6 @@ for(const b of mbTabs){
     const t2 = document.querySelector("#mb-tab-2");
     const coreElem = document.querySelector('.core');
 
-    //codemark
     if(b.id == 'mb-tab-1'){ //Overview - main
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
         const response = await fetch(getBaseURL);
@@ -709,7 +708,7 @@ window.addEventListener("load", (event) => {
   update_outlayModal(myYears); //updates modal with new years
 });
 
-function initialDataSets(noclick){ //codemark
+function initialDataSets(noclick){
 
   //adds additional initial datasets to gov expenditures series
 
