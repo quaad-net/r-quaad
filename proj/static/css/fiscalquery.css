@@ -267,6 +267,7 @@ input{
     border: 1px solid rgb(36, 36, 82);
     width: 225px;
     margin:auto;
+    background-color: rgb(32, 32, 32);
 }
 
 .sidebar-lbl{
