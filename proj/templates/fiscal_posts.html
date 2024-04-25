@@ -1,79 +1,22 @@
-{% extends "fiscal_genericl.html" %}
+{% extends "fiscal_generic.html" %}
 {% load static %}
-<HTML lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1"/>
-        <title>FiscalQuery</title>
-        <link rel="icon" href= "{% static '/img/icons8-us-dollar-32.png' %}" />
-        {% block script_n_style %}
-        <link rel= "stylesheet" href= "{% static '/css/fiscalquery.css' %}"/>
-        <!--<link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-2.0.2/datatables.min.css">-->
-        <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" ></script>
-        <!--<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/datatables.min.js"></script>-->
-        <script type="module" src="{% static '/script/fiscalquery.js' %}"></script>
-        {% endblock %}
-    </head>
-    <div class="mobile-header">
-        <img class="mb-icon-logo" src= "{% static '/img/icons8-us-dollar.svg' %}" width= 30px></img>
-        <img class="mb-icon-menu" src= "{% static '/img/icons8-whitemenu.svg' %}" width= 30px></img>
-        <span class="header-tabs">
-            <button type="button" class="mb-tab-btn" id="mb-tab-1">Overview</button>
-            <button type="button" class="mb-tab-btn" id="mb-tab-2">Posts</button>
-        </span>
-    </div>
-    <div class="sidebar">
-        <img class= "icon-logo" src= "{% static '/img/icons8-us-dollar.svg' %}" width= 30px></img>
-        <div class="logo">FiscalQuery</div>
-        <span class="sidebar-close">&times;</span>
-        <div class="divider"></div>
-        {% block sidebar_items %}
-        <div class="field">
-            <span id= "field-items">
-                <div class="textInputWrapper">
-                    <input id="input-1" placeholder="yyyy" type="text" class="textInput"maxlength="4"/>
-                </div>
-                <div class="textInputWrapper">
-                    <input id="input-2" placeholder="yyyy" type="text" class="textInput" maxlength="4"/>
-                </div>
-            </span>
-        </div>
-        <div class="datasets-list-hdr">Additional Datasets</div>
-        <div class="dataset-lbl-wrapper">
-            <div class="sidebar-lbl">corp profits</div>
-            <div class="sidebar-lbl">exports</div>
-            <div class="sidebar-lbl">federal debt</div>
-            <div class="sidebar-lbl">gdp</div>
-            <div class="sidebar-lbl">gov consumption and investments</div>
-            <div class="sidebar-lbl">gross domestic income</div>
-            <div class="sidebar-lbl">imports</div>
-            <div class="sidebar-lbl">money supply m1</div>
-            <div class="sidebar-lbl">net exports</div>
-            <div class="sidebar-lbl">personal consumption</div>
-            <div class="sidebar-lbl">personal income</div>
-            <div class="sidebar-lbl">personal savings</div>
-            <div class="sidebar-lbl">real exports</div>
-            <div class="sidebar-lbl">real gdp</div>
-            <div class="sidebar-lbl">real gov consumption and investments</div>
-            <div class="sidebar-lbl">real imports</div>
-            <div class="sidebar-lbl">real net exports</div>
-            <div class="sidebar-lbl">real personal consumption</div>
-        </div>
-        <div>
-            <button type ="button" id= "qryBtn">Search</button>
-        </div>
-        <div class='hidden'></div >
-        {% endblock %}
-    </div>
-    <div class="core-items">
-        {% block main_title %}
-        <div class= "main-title"></br>U.S. GOV'T EXPENDITURES</br>
-            <span class= "subtitle">in billions | nominal</span>
-            <img class= "main-title-icon" src= "{% static '/img/icons8-government.svg' %}" width=60px />
+{% block script_n_style %}
+    <link rel= "stylesheet" href= "{% static '/css/fiscal_posts.css' %}" id="posts-styles"/>
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-2.0.2/datatables.min.css">-->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" ></script>
+    <!--<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/datatables.min.js"></script>-->
+    <script type="module" src="{% static '/script/fiscalPosts.js' %}" id="posts-script"></script>
+{% endblock %}
+    {% block sidebar_items %}
+    {% endblock %}
+    {% block main_title %}
+        <div class= "main-title"></br>FISCAL</br>
+            <span class= "subtitle">Posts</span>
+            <!--<img class= "main-title-icon" src= "{% static '/img/icons8-government.svg' %}" width=60px />-->
             <span class="mb-main-title-line"></span>
         </div>
-        {% endblock %}
-        {% block flex_sections %}
+    {% endblock %}
+    {% block flex_sections %}
         <div class="flex-sections">
             <div class="flex-box" id="flex1">
                 <div class= "chartcontainer">
@@ -84,11 +27,11 @@
         </div>
         <div class="flex-sections" id="flex-section-2">
             <div class="flex-box" id="flex2">
-                <button type="button" class="title-btn" id= "tb2">Year</button>
-                <div class="pre-title">Expenditures By Class</div>
+                <button type="button" class="title-btn" id= "tb2"></button>
+                <div class="pre-title">chart</div>
                 <div class= "outlays-container"> 
-                    <span class="outlays-yr">Year</br>
-                        <span class="subtitle">percentages</span>
+                    <span class="outlays-yr">Title</br>
+                        <span class="subtitle">subtitle</span>
                     </span>
                     <div class="outlays-cht-container">
                         <canvas id="outlays-cht"></canvas>
@@ -97,22 +40,21 @@
                 <div class="box-dividers" id="bx-div-2"></div>
             </div>
             <div class="flex-box" id="flex3">
-                <img class= "flex3-icon" src="{% static '/img/icons8-organization-chart-people.svg' %}" width=30px />
-                <div class= "aux1-title-bar"><br/>&#160&#160EXPENDITURES<br/>
-                    <span class= "subtitle">&#160&#160by class</span>
+                <!--<img class= "flex3-icon" src="{% static '/img/icons8-organization-chart-people.svg' %}" width=30px />-->
+                <div class= "aux1-title-bar"><br/>&#160&#160TableTitle<br/>
+                    <span class= "subtitle">&#160&#160subtitle</span>
                 </div>
                 <div class= "aux1-table">
                 </div>
             </div>
         </div>
-        {% endblock %}
-    </div>
-    {% block modal %}
+    {% endblock %}
+{% block modal %}
     <div id="options-modal" class="modal">
         <div class="options-modal-content">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <img src= "{% static '/img/icons8-list.svg' %}" width=30px  class= "modal-icon"/> 
+                <img src= "{% static '/img/icons8-list.svg' %}" width=30px  class= "modal-icon"/>
                 <h2 class ="modal-header-text"></h2>
             </div>
             <div class="modal-body">
@@ -122,6 +64,4 @@
             </div>
         </div>
     </div>
-    {% endblock %}
-    <div class= "right-sidebar"></div>
-</HTML>
+{% endblock %}

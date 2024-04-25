@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from pathlib import Path
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 import pandas as pd
 import os
+
 devEnv = False
 if(os.getenv('QUAAD_DEV')):
         devEnv = True
@@ -23,6 +24,9 @@ def projects(request):
 
 def fiscal(request):
     return render(request, 'fiscal_generic.html')
+
+def fiscal_posts(request):
+    return render(request, 'fiscal_posts.html')
 
 async def fiscalquery(request, startDate, endDate):
     
@@ -66,3 +70,21 @@ async def price_index(request, startDate, endDate):
     allObjs = [price_index_jsn]
     cnxn.close()
     return JsonResponse(allObjs, safe=False)
+
+async def get_posts(request):
+    cnxn = engine.connect()
+    my_posts_qry = """
+    select format(post_date, 'MM/dd/yyyy') as post_date, 
+    post_time, auth_firstname, auth_lastname, 
+    title, post_description, post, id from posts
+    order by post_date desc, post_time desc
+    """
+    get_posts_df = pd.read_sql(my_posts_qry, cnxn)
+    get_posts_jsn = get_posts_df.to_json(orient='records')
+    allObjs = [get_posts_jsn]
+    cnxn.close()
+    return JsonResponse(allObjs, safe=False)
+
+def test(request):
+    return render(request, 'test.html')
+

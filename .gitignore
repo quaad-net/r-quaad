@@ -1,16 +1,17 @@
 #python files
 __pycache__
-venv
 .env
+fiscal_post.py
 qdev.py
 uqntdb.py
-xviews.py
+venv
 xsettings.py
+xviews.py
 wip.py
 
 # Django files
-staticfiles/
 db.sqlite3
+staticfiles/
 
 # macOS files
 .DS_Store
@@ -22,5 +23,8 @@ qdev.bat
 xfiscalquery.js
 
 #debugging
-.vscode
 .hintrc
+test.css
+test.html
+test.js
+.vscode

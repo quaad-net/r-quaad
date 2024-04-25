@@ -5,7 +5,7 @@
     --aux1-start-pos-left: 850px;
     --aux1-start-pos-top: 750px;
   }
-  
+
 html{
     background-color: rgb(32, 32, 32);
     color: white;
@@ -61,6 +61,7 @@ html{
 
 .mb-tab-btn:hover, .mb-tab-btn:focus{
     background-color: rgb(102, 1, 1);
+    background: linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0));
 }
 
 .flex-sections{
@@ -840,20 +841,3 @@ input{
     }
 
 }
-
-/*
-@media(max-height:650px) and (max-width:600px){
- 
-    .aux1-title-bar{
-        position: relative;
-        right: 25px;
-        top: 5px;
-    }
-
-    .aux1-table{
-        position: relative;
-        left: 25px;
-    }
-
-}
-*/

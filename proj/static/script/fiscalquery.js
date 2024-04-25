@@ -1,5 +1,16 @@
-const firstInput = document.querySelector('#input-1');
-const secInput = document.querySelector('#input-2');
+//DOM global vars - must reassign upon innerHTML updates with js
+var firstInput = document.querySelector('#input-1');
+var secInput = document.querySelector('#input-2');
+var qryBtn = document.querySelector("#qryBtn");
+var mobileMenu = document.querySelector(".mb-icon-menu");
+var sideBar = document.querySelector(".sidebar");
+var mobileHeader = document.querySelector(".mobile-header");
+var sidebarLbl = document.querySelectorAll(".sidebar-lbl"); 
+var sidebarDataHd = document.querySelector(".datasets-list");
+var sidebarClose = document.querySelector(".sidebar-close");
+var mbTabs = document.querySelectorAll(".mb-tab-btn");
+var ht = document.querySelector('html');
+var getBaseURL = ht.baseURI;
 firstInput.addEventListener('click', function(){
   firstInput.value = "";
 })
@@ -8,40 +19,6 @@ secInput.addEventListener('click', function(){
 })
 firstInput.addEventListener('input', captureStartDate);
 secInput.addEventListener('input', caputureEndDate);
-const ht = document.querySelector('html');
-const getBaseURL = ht.baseURI;
-let startDate;
-let endDate;
-let setFiscalquery;
-let MSeries;
-let MSeriesExists = false;
-let outlaysCht;
-const myBkGrd = [
-  'rgb(138, 43, 226)', 'rgb(165, 42, 42)', 'rgb(220, 20, 60)', 'rgb(210, 105, 30)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)', 'rgb(85, 107, 47)',
-  'rgb(72, 61, 139)', 'rgb(255, 20, 147)', 'rgb(255, 0, 255)'
-]
-let OutlaysExist = false;
-const dt = new Date();
-const curYr =  dt.getFullYear();
-const myStartYr = curYr - 6;
-const myEndYr = curYr - 1; 
-const myUrlStr = getBaseURL + 'q-' + myStartYr + '/' + myEndYr;
-function captureStartDate(e) {
-  startDate = e.target.value;
-}
-function caputureEndDate(e){
-    endDate = e.target.value;
-}
-let fetchobj = [];
-let dataForChts;
-const qryBtn = document.querySelector("#qryBtn");
-const mobileMenu = document.querySelector(".mb-icon-menu");
-const sideBar = document.querySelector(".sidebar");
-const mobileHeader = document.querySelector(".mobile-header");
-const sidebarLbl = document.querySelectorAll(".sidebar-lbl"); 
-const sidebarDataHd = document.querySelector(".datasets-list");
-const sidebarClose = document.querySelector(".sidebar-close");
-const mbTabs = document.querySelectorAll(".mb-tab-btn");
 
 mobileMenu.addEventListener("click", function(){ 
   mobileHeader.style.display = "none";
@@ -53,30 +30,171 @@ sidebarClose.addEventListener("click", function(){
   mobileHeader.style.display = "block";
 })
 
+
+//non-DOM global vars
+var startDate;
+var endDate;
+var setFiscalquery;
+var MSeries;
+var MSeriesExists = false;
+var outlaysCht;
+const myBkGrd = [
+  'rgb(138, 43, 226)', 'rgb(165, 42, 42)', 'rgb(220, 20, 60)', 'rgb(210, 105, 30)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)', 'rgb(85, 107, 47)',
+  'rgb(72, 61, 139)', 'rgb(255, 20, 147)', 'rgb(255, 0, 255)'
+]
+var OutlaysExist = false;
+const dt = new Date();
+const curYr =  dt.getFullYear();
+const myStartYr = curYr - 6;
+const myEndYr = curYr - 1; 
+const myUrlStr = getBaseURL + 'q-' + myStartYr + '/' + myEndYr;
+function captureStartDate(e) {
+  startDate = e.target.value;
+}
+function caputureEndDate(e){
+    endDate = e.target.value;
+}
+var fetchobj = [];
+var dataForChts;
+
+//header tab click events
+
 for(const b of mbTabs){
-  b.addEventListener('click', function(){
+
+  b.addEventListener('click', async function(){
 
     //sets color of tabs in header
     //returns Overview or Posts template
 
     const t1 = document.querySelector("#mb-tab-1");
     const t2 = document.querySelector("#mb-tab-2");
-    if(b.id == 'mb-tab-1'){
-      b.style.backgroundColor="rgb(102, 1, 1)";
-      b.style.background="linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0))";
-      t2.style.background="none";
+    const coreElem = document.querySelector('.core');
+
+    //codemark
+    if(b.id == 'mb-tab-1'){ //Overview - main
+      if(b.style.backgroundColor!="rgb(102, 1, 1)"){
+        const response = await fetch(getBaseURL);
+        const responseTxt = await response.text();
+        var parser = new DOMParser();
+        var newDoc = parser.parseFromString(responseTxt, 'text/html');
+        var coreDiv = newDoc.querySelector('.core');
+        coreElem.innerHTML = coreDiv.innerHTML;
+
+        b.style.backgroundColor = "rgb(102, 1, 1)";
+        t2.style.background = 'none';
+
+        //const headElem = document.querySelector('head');
+        //const postStyles = document.querySelector('#posts-styles');
+
+        // //add style
+        // var myStyle = document.createElement("link");
+        // myStyle.rel = "stylesheet";
+        // myStyle.type = "text/css";
+        // myStyle.setAttribute('id', 'fiscal-styles');
+        // myStyle.href =  newDoc.querySelector('#fiscal-styles').href; //gets stylesheet from fetched document "/fiscalquery.css"
+        // headElem.appendChild(myStyle);
+
+        // //add script
+        // var myScript = document.createElement("script");
+        // //myScript.type = "module";
+        // myScript.setAttribute('id', 'fiscal-script');
+        // myScript.src =  newDoc.querySelector('#fiscal-script').src; //gets stylesheet from fetched document "/fiscalquery.css"
+        // console.log(newDoc.querySelector('#fiscal-script').src);
+        // headElem.appendChild(myScript);
+
+
+        //reassign elements
+        firstInput = document.querySelector('#input-1');
+        secInput = document.querySelector('#input-2');
+        qryBtn = document.querySelector("#qryBtn");
+        mobileMenu = document.querySelector(".mb-icon-menu");
+        sideBar = document.querySelector(".sidebar");
+        mobileHeader = document.querySelector(".mobile-header");
+        sidebarLbl = document.querySelectorAll(".sidebar-lbl"); 
+        sidebarDataHd = document.querySelector(".datasets-list");
+        sidebarClose = document.querySelector(".sidebar-close");
+        mbTabs = document.querySelectorAll(".mb-tab-btn");
+        firstInput.addEventListener('click', function(){
+          firstInput.value = "";
+        })
+        secInput.addEventListener('click', function(){
+          secInput.value = "";
+        })
+        firstInput.addEventListener('input', captureStartDate);
+        secInput.addEventListener('input', caputureEndDate);
+
+        mobileMenu.addEventListener("click", function(){ 
+          mobileHeader.style.display = "none";
+          sideBar.style.display = "block";
+        })
+        sidebarClose.addEventListener("click", function(){
+          sideBar.style.display = "none";
+          mobileHeader.style.display = "block";
+        })
+        MSeriesExists = false;
+        var noclick = true; //updates qryBtn click event due to changes in DOM
+        initialDataSets(noclick);
+        //initializeOverview();
+
+      }
     }
-    if(b.id == 'mb-tab-2'){
-      b.style.backgroundColor="rgb(102, 1, 1)"
-      b.style.background="linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0))";
-      t1.style.background="none";
+    if(b.id == 'mb-tab-2'){ //Posts
+      if(b.style.backgroundColor!="rgb(102, 1, 1)"){
+        const response = await fetch(getBaseURL + 'posts');
+        const responseTxt = await response.text();
+
+        var parser = new DOMParser();
+        var newDoc = parser.parseFromString(responseTxt, 'text/html');
+        var coreDiv = newDoc.querySelector('.core');
+        coreElem.innerHTML = coreDiv.innerHTML;
+
+        b.style.backgroundColor = "rgb(102, 1, 1)";
+        t1.style.background = 'none';
+
+        //// get header tag elements
+        
+        //const headElem = document.querySelector('head');
+        //const fiscalStyles = document.querySelector('#fiscal-styles');
+
+        // //add style
+        // var myStyle = document.createElement("link");
+        // myStyle.rel = "stylesheet";
+        // myStyle.type = "text/css";
+        // myStyle.setAttribute('id', 'posts-styles');
+        // myStyle.href =  newDoc.querySelector('#posts-styles').href; //gets stylesheet from fetched document "/fiscal_posts.css"
+        // headElem.appendChild(myStyle);
+
+        // //add script
+        // var myScript = document.createElement("script");
+        // //myScript.type = "module";
+        // myScript.setAttribute('id', 'posts-script');
+        // myScript.src =  newDoc.querySelector('#posts-script').src; //gets stylesheet from fetched document "/fiscalquery.css"
+        // console.log(newDoc.querySelector('#posts-script').src)
+        // headElem.appendChild(myScript);
+
+        //reassign elements
+        mobileMenu = document.querySelector(".mb-icon-menu");
+        sideBar = document.querySelector(".sidebar");
+        mobileHeader = document.querySelector(".mobile-header");
+        sidebarClose = document.querySelector(".sidebar-close");
+        mbTabs = document.querySelectorAll(".mb-tab-btn");
+        mobileMenu.addEventListener("click", function(){ 
+          mobileHeader.style.display = "none";
+          sideBar.style.display = "block";
+        })
+        sidebarClose.addEventListener("click", function(){
+          sideBar.style.display = "none";
+          mobileHeader.style.display = "block";
+        })
+      }
     }
+
   })
 }
 
 qryBtn.addEventListener("click", async function(){
-  let userinp1 = Number(firstInput.value) ;
-  let userinp2 = Number(secInput.value);
+  var userinp1 = Number(firstInput.value) ;
+  var userinp2 = Number(secInput.value);
   if(userinp1 + 0 == 0){
     window.alert('Please enter a start year.');
   }
@@ -97,8 +215,8 @@ qryBtn.addEventListener("click", async function(){
         window.alert('Data available 1960-2023.');
       }
       else{
-        let getStartYr = 0;
-        let getEndYr = 0;
+        var getStartYr = 0;
+        var getEndYr = 0;
         getStartYr += Number(firstInput.value);
         getEndYr += Number(secInput.value);
 
@@ -116,14 +234,14 @@ qryBtn.addEventListener("click", async function(){
           getStartYr -=5;
         }
       
-        let my_qry_btn_url = getBaseURL + 'q-' + getStartYr + '/' + getEndYr;
+        var my_qry_btn_url = getBaseURL + 'q-' + getStartYr + '/' + getEndYr;
         const response = await fetch(my_qry_btn_url);
         dataForChts = await response.text();
         formatJSN(dataForChts, getStartYr);
       
         //adds years of available data to modal (years available determined by initial query search)
-        let myYears = [];
-        let i = 0; 
+        var myYears = [];
+        var i = 0; 
         if(getEndYr > getStartYr){
           while ((getStartYr + i) < getEndYr) {
             myYears.push(getStartYr + i);
@@ -135,7 +253,7 @@ qryBtn.addEventListener("click", async function(){
         update_outlayModal(myYears);
       
         //add selected datasets in sidebar to array for query
-        let myCat = [] //array of category names
+        var myCat = [] //array of category names
         for (const lbl of sidebarLbl){
             if (lbl.style.backgroundColor == 'rgb(13, 13, 230)'){
               myCat.push(extractContent(lbl.textContent));
@@ -150,30 +268,30 @@ qryBtn.addEventListener("click", async function(){
 });
 
 function extractContent(textcontent) {
-  let span = document.createElement('span');
+  var span = document.createElement('span');
   span.innerHTML = textcontent;
   return span.textContent
 };
 
 function formatJSN(myJSNStr, start){
 
-    let cls_desc = [], outly_amt = [];
-    let main_econ, gov_outlays;
+    var cls_desc = [], outly_amt = [];
+    var main_econ, gov_outlays;
     const myData = JSON.parse(myJSNStr);
     main_econ = JSON.parse(myData[0]);
     gov_outlays = JSON.parse(myData[1]);
 
-    let gov_expd = [], yr = [];
+    var gov_expd = [], yr = [];
     for (const idx in main_econ){
       gov_expd.push(main_econ[idx]['ttl_gov_expend']);
       yr.push(main_econ[idx]['yr']);
     };
 
     //select top 10 into array (qry returns result desc by 'amt')
-    let topTen = 0; 
-    let otherOtlyTtls = 0;
-    let idxCount = 0;
-    let OutlayTtls = 0;
+    var topTen = 0; 
+    var otherOtlyTtls = 0;
+    var idxCount = 0;
+    var OutlayTtls = 0;
     for(const idx in gov_outlays){
       OutlayTtls += gov_outlays[idx]['amt'];
     }
@@ -459,9 +577,9 @@ function updateOutlaysLegend(year, classes, amounts){
 
     const outlay_yr = document.querySelector('.outlays-yr');
     outlay_yr.textContent = year;
-    let subtitle = document.createElement("span");
+    var subtitle = document.createElement("span");
     subtitle.setAttribute("class", "subtitle");
-    let brk = document.createElement("br");
+    var brk = document.createElement("br");
     subtitle.textContent = 'percentages';
     outlay_yr.appendChild(brk);
     outlay_yr.appendChild(subtitle);
@@ -479,11 +597,11 @@ function outlayYearModal(){
   }
 
   //updates header text
-  let hd = document.querySelector(".modal-header-text");
-  let hd2 = document.querySelector(".modal-header");
-  let sp = document.createElement('span');
+  var hd = document.querySelector(".modal-header-text");
+  var hd2 = document.querySelector(".modal-header");
+  var sp = document.createElement('span');
   sp.textContent = 'Year';
-  let dv = document.createElement('div');
+  var dv = document.createElement('div');
   dv.setAttribute("class", "modal-subtitle");
   dv.textContent = "expenditures by class"
   hd.appendChild(sp);
@@ -512,7 +630,7 @@ function update_outlayModal(years){
     modalContent.removeChild(modalContent.firstChild);
   }
   years.forEach((y)=>{
-    let bElem = document.createElement("button");
+    var bElem = document.createElement("button");
     bElem.setAttribute("type", "button");
     bElem.setAttribute("class", "outlay-yrs-btn-modal");
     bElem.setAttribute("id", `yr${y}`);
@@ -533,13 +651,13 @@ async function update_Outlays(date){
 
 function format_outlaysJSN(myJSNStr, start){
 
-  let cls_desc = [], outly_amt = [], gov_outlays, myData;
+  var cls_desc = [], outly_amt = [], gov_outlays, myData;
   myData = JSON.parse(myJSNStr);
   gov_outlays = JSON.parse(myData[0]);
 
-  let topTen = 0; 
-  let otherOtlyTtls = 0;
-  let OutlayTtls = 0
+  var topTen = 0; 
+  var otherOtlyTtls = 0;
+  var OutlayTtls = 0
 
   for(const idx in gov_outlays){
     OutlayTtls += gov_outlays[idx]['amt'];
@@ -565,15 +683,21 @@ function format_outlaysJSN(myJSNStr, start){
   }
 };
 
-// //to load intial datasets and charts 
 window.addEventListener("load", (event) => {
+
+  //load intial datasets and charts 
+
+  const overview = document.querySelector('#mb-tab-1');
+  const Posts = document.querySelector('#mb-tab-2');
+  overview.style.backgroundColor = 'rgb(102, 1, 1)';
+  Posts.style.background = 'none';
 
   initialDataSets();
   outlayYearModal(); //generates modal
 
   //adds years of available data to modal (years available a determined by intial query search)
-  let myYears = [];
-  let i = 0; 
+  var myYears = [];
+  var i = 0; 
   if(myEndYr > myStartYr){
     while ((myStartYr + i) < myEndYr) {
       myYears.push(myStartYr + i);
@@ -585,7 +709,8 @@ window.addEventListener("load", (event) => {
   update_outlayModal(myYears); //updates modal with new years
 });
 
-function initialDataSets(){
+function initialDataSets(noclick){ //codemark
+
   //adds additional initial datasets to gov expenditures series
 
   SideLblListn();
@@ -601,13 +726,18 @@ function initialDataSets(){
         break;
     }
   })
-  qryBtn.click(); 
+  if(noclick == true){//updates qryBtn event
+    updateQryClick();
+  }
+  else{
+    qryBtn.click()
+  }; 
 }
 
 function add_listn_to_years(years){
     //adds event listeners to all years in modal
 
-    let xx = document.getElementsByClassName("close")[0];
+    var xx = document.getElementsByClassName("close")[0];
     years.forEach((y)=>{
       document.querySelector(`#yr${y}`).addEventListener("click", function(){
         update_Outlays(`${y}`);
@@ -618,7 +748,7 @@ function add_listn_to_years(years){
 
 async function getGovExpendPlus(categories, startyear, endyear){
 
-  let my_qry_btn_url = getBaseURL + 'q-expd-' + startyear + '/' + endyear;
+  var my_qry_btn_url = getBaseURL + 'q-expd-' + startyear + '/' + endyear;
   const response = await fetch(my_qry_btn_url);
   dataForChts = await response.text();
   formatGovExpendPlus(dataForChts, categories);
@@ -626,11 +756,11 @@ async function getGovExpendPlus(categories, startyear, endyear){
 }
 
 function formatGovExpendPlus(data, categories){
-  let myData = JSON.parse(data);
-  let govExpdPlus = JSON.parse(myData[0]);
-  let gdp = [], real_gdp = [], gross_domestic_income = [], personal_income = [], corp_profits = [], personal_consumption = [];
-  let real_personal_consumption = [], gov_consumption_and_investments = [], real_gov_consumption_and_investments = [], net_exports = [];
-  let exports = [], imports = [], real_net_exports = [], real_exports = [], real_imports = [], federal_debt = [], money_supply_m1 = [], personal_savings = [];
+  var myData = JSON.parse(data);
+  var govExpdPlus = JSON.parse(myData[0]);
+  var gdp = [], real_gdp = [], gross_domestic_income = [], personal_income = [], corp_profits = [], personal_consumption = [];
+  var real_personal_consumption = [], gov_consumption_and_investments = [], real_gov_consumption_and_investments = [], net_exports = [];
+  var exports = [], imports = [], real_net_exports = [], real_exports = [], real_imports = [], federal_debt = [], money_supply_m1 = [], personal_savings = [];
   
   for (const idx in govExpdPlus){
     //year.push(govExpdPlus[idx]['year']);
@@ -680,9 +810,9 @@ function formatGovExpendPlus(data, categories){
 
   //replace spaces with underscores (for sql query)
   categories.forEach((c)=>{
-    let myTxt = c;
-    let qryCol = ''
-    let undrSr = "_"
+    var myTxt = c;
+    var qryCol = ''
+    var undrSr = "_"
     for(const idx in myTxt){
       if(myTxt[idx]== ' '){
         qryCol += undrSr;
@@ -733,13 +863,117 @@ function SideLblListn(){
   }
 }
 
+// function initializeOverview() {
+
+//   //load intial datasets and charts 
+//   initialDataSets();
+//   outlayYearModal(); //generates modal
+
+//   //adds years of available data to modal (years available a determined by intial query search)
+//   var myYears = [];
+//   var i = 0; 
+//   if(myEndYr > myStartYr){
+//     while ((myStartYr + i) < myEndYr) {
+//       myYears.push(myStartYr + i);
+//       i++;
+//     };
+//     myYears.push(myEndYr);
+//   }
+//   else{myYears.push(myStartYr)};
+//   update_outlayModal(myYears); //updates modal with new years
+
+//   // mobileHeader.style.display = "none";
+//   // sideBar.style.display = "block";
+
+// };
+
+function updateQryClick(){
+
+  outlayYearModal();
+  qryBtn.addEventListener("click", async function(){
+    var userinp1 = Number(firstInput.value) ;
+    var userinp2 = Number(secInput.value);
+    if(userinp1 + 0 == 0){
+      window.alert('Please enter a start year.');
+    }
+    else if(userinp2 ==0){
+      window.alert('Please enter an end year.')
+    }
+    else if(userinp1 > userinp2){ 
+      window.alert('Invalid year range.');
+    }
+    else{
+        if(userinp1 > userinp2){
+          window.alert('Invalid year range.');
+        }
+        else if(userinp1 < 1960){
+          window.alert('Data available 1960-2023.');
+        }
+        else if(userinp2 > 2023){
+          window.alert('Data available 1960-2023.');
+        }
+        else{
+          var getStartYr = 0;
+          var getEndYr = 0;
+          getStartYr += Number(firstInput.value);
+          getEndYr += Number(secInput.value);
+
+          //adjust year range for certain user inputs
+          if(getEndYr == 0){
+            if(getStartYr == Number(curYr)){
+              getStartYr -= 3;
+              getEndYr = Number(curYr);
+            }
+            else{
+              getEndYr = Number(curYr);
+            }
+          }
+          if(getStartYr == getEndYr){
+            getStartYr -=5;
+          }
+        
+          var my_qry_btn_url = getBaseURL + 'q-' + getStartYr + '/' + getEndYr;
+          const response = await fetch(my_qry_btn_url);
+          dataForChts = await response.text();
+          formatJSN(dataForChts, getStartYr);
+        
+          //adds years of available data to modal (years available determined by initial query search)
+          var myYears = [];
+          var i = 0; 
+          if(getEndYr > getStartYr){
+            while ((getStartYr + i) < getEndYr) {
+              myYears.push(getStartYr + i);
+              i++;
+            };
+            myYears.push(getEndYr);
+          }
+          else{myYears.push(getStartYr)};
+          update_outlayModal(myYears);
+        
+          //add selected datasets in sidebar to array for query
+          var myCat = [] //array of category names
+          for (const lbl of sidebarLbl){
+              if (lbl.style.backgroundColor == 'rgb(13, 13, 230)'){
+                myCat.push(extractContent(lbl.textContent));
+              }
+          }
+          getGovExpendPlus(myCat, getStartYr, getEndYr);
+          sidebarClose.click();
+          window.scrollTo(0, 0);
+        }
+    }
+    
+  });
+  qryBtn.click();
+};
+
 // async function getPriceIdx(){ 
 
-//   let getStartYr = 0;
-//   let getEndYr = 0;
+//   var getStartYr = 0;
+//   var getEndYr = 0;
 //   getStartYr += Number(firstInput.value);
 //   getEndYr += Number(secInput.value);
-//   let myIdxUrl = getBaseURL + 'q-idx-' + getStartYr + '/' + getEndYr;
+//   var myIdxUrl = getBaseURL + 'q-idx-' + getStartYr + '/' + getEndYr;
 //   const response = await fetch(myIdxUrl);
 //   const jsnStr = await response.text();
 //   const myData = JSON.parse(jsnStr);
@@ -748,7 +982,7 @@ function SideLblListn(){
 
 
 //   for(const idx in p_idx){
-//     let rw = [];
+//     var rw = [];
 //     rw.push(p_idx[idx]['yr']);
 //     rw.push(p_idx[idx]['cpiaucsl']);
 //     rw.push(p_idx[idx]['CSUSHPINSA']);
@@ -776,8 +1010,8 @@ function SideLblListn(){
 //   });
 
 //   //removes text showing number of entries
-//   let entr = document.querySelector(".dt-info");
-//   let entr2 = document.querySelector(".dt-end");
+//   var entr = document.querySelector(".dt-info");
+//   var entr2 = document.querySelector(".dt-end");
 //   entr.textContent = '';
 //   entr2.textContent = '';
 // };
