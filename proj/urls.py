@@ -26,7 +26,5 @@ urlpatterns = [
     re_path(r'^fiscal/q-outlays-(?P<year>\d+)', views.update_outlays, name= 'outlays'),
     path('projects/', views.projects, name= 'projects'),
     path('test/', views.test, name= 'test'),
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     re_path(r'^.*/$', views.handler500),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
