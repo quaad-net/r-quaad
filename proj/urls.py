@@ -7,11 +7,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
+from .views import handler500
 
-handler404 = 'proj.views.handler404'
 handler500 = 'proj.views.handler500'
-handler403 = 'proj.views.handler404'
-handler400 = 'proj.views.handler404'
+# handler404 = 'proj.views.handler404'
+# handler403 = 'proj.views.handler404'
+# handler400 = 'proj.views.handler404'
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('test/', views.test, name= 'test'),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+    re_path(r'^.*/$', views.handler500),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
