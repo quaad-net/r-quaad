@@ -85,6 +85,16 @@ async def get_posts(request):
     cnxn.close()
     return JsonResponse(allObjs, safe=False)
 
+def handler404(request, exception):
+    response = render(request, 'handler404.html')
+    response.status_code = 404
+    return response
+
+def handler500(request):
+    response = render(request, 'handler500.html')
+    response.status_code = 500
+    return response
+
 def test(request):
     return render(request, 'test.html')
 
