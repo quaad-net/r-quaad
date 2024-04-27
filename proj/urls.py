@@ -3,11 +3,8 @@ from django.urls import path, include, re_path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
-from .views import handler500
 
 handler500 = 'proj.views.handler500'
 # handler404 = 'proj.views.handler404'
