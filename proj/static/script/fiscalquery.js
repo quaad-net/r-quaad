@@ -1,5 +1,5 @@
-import { mySeriesColor} from '/static/script/seriesBackgrounds.js'
-import { getPosts} from '/static/script/fiscalPosts.js'
+//import { mySeriesColor} from '/static/script/seriesBackgrounds.js'
+//import { getPosts} from '/static/script/fiscalPosts.js'
 
 var firstInput = document.querySelector('#input-1');
 var secInput = document.querySelector('#input-2');
@@ -894,3 +894,298 @@ function updateQryClick(){
   });
   qryBtn.click();
 };
+
+function mySeriesColor(category){
+  const mySeriesBackGrounds = new Map();
+  mySeriesBackGrounds.set('year', 'rgb(255, 157, 255)')
+  mySeriesBackGrounds.set('gov_expend', 'rgb(7, 179, 247)')
+  mySeriesBackGrounds.set('gdp', 'rgb(242, 138, 58)')
+  mySeriesBackGrounds.set('real_gdp', 'rgb(91, 79, 91)')
+  mySeriesBackGrounds.set('gross_domestic_income', 'rgb(52, 146, 146)')
+  mySeriesBackGrounds.set('personal_income', 'rgb(218, 172, 112)')
+  mySeriesBackGrounds.set('corp_profits', 'rgb(0, 80, 146)')
+  mySeriesBackGrounds.set('personal_consumption', 'rgb(79, 234, 156)')
+  mySeriesBackGrounds.set('real_personal_consumption', 'rgb(20, 2, 141)')
+  mySeriesBackGrounds.set('gov_consumption_and_investments', 'rgb(135, 169, 183)')
+  mySeriesBackGrounds.set('real_gov_consumption_and_investments', 'rgb(160, 51, 0)')
+  mySeriesBackGrounds.set('net_exports', 'rgb(138, 43, 226)')
+  mySeriesBackGrounds.set('exports', 'rgb(165, 42, 42)')
+  mySeriesBackGrounds.set('imports', 'rgb(220, 20, 60)')
+  mySeriesBackGrounds.set('real_net_exports', 'rgb(210, 105, 30)')
+  mySeriesBackGrounds.set('real_exports', 'rgb(0, 0, 139)')
+  mySeriesBackGrounds.set('real_imports', 'rgb(0, 100, 0)')
+  mySeriesBackGrounds.set('federal_debt', 'rgb(85, 107, 47)')
+  mySeriesBackGrounds.set('money_supply_m1', 'rgb(72, 61, 139)')
+  mySeriesBackGrounds.set('personal_savings', 'rgb(255, 20, 147)')
+  mySeriesBackGrounds.set('CPI', 'black')
+  return mySeriesBackGrounds.get(category);
+}
+
+function addDataSetsX(chart, label, newData) {
+  chart.data.datasets.push( 
+    {
+      label: label,
+      data: newData,
+      borderColor: mySeriesColor(label),
+    }
+  );
+  chart.update();
+}
+
+function createStackedBar(categories, yrs, vals, canvas, title) {
+
+  //two story stack bar
+
+  Chart.defaults.font.family = "poppins, sans-serif";
+  Chart.defaults.font.size = 13;
+  Chart.defaults.color = 'white';
+
+  const data = {
+    labels: yrs,
+    datasets: [ //smallest dataset to largest
+      {
+        label: categories[1], 
+        data:  vals[1],
+        backgroundColor: mySeriesColor(categories[1]),
+        borderWidth: 1
+      },
+      {
+        label: categories[0],
+        data: vals[0],
+        backgroundColor: mySeriesColor(categories[0]),
+        borderWidth: 1,
+      },
+    ]
+  };
+
+  const newChart = new Chart(
+
+      canvas,
+    {
+      type: 'bar',
+      data: data,
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: title
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+          }
+        }
+      }
+    }
+  )
+}
+
+function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels, title) {
+  
+    Chart.defaults.font.family = "poppins, sans-serif"; //"Times, 'Times New Roman', serif, Georgia";
+    Chart.defaults.font.size = 13;
+    Chart.defaults.elements.line.tension = 0.4;
+    Chart.defaults.color = 'white';
+    Chart.defaults.elements.point.radius = 2; //point radius on line
+
+    const newChart = new Chart(
+        canvas,
+      {
+        type: 'line',
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          animation: {
+            duration: 2000,
+          },
+          interaction: { 
+            mode: 'x', //used for interactions based on x coord
+          },
+          plugins: {
+            customCanvasBackgroundColor: {
+              color: 'rgb(32, 32, 32)',
+            },
+            legend: {
+              display: true,
+              labels:{
+                usePointStyle: true,
+              },
+              title: {
+                display: true,
+                text: title,
+                font: {
+                  weight: 'bold',
+                },
+                padding: 10,
+              }
+            },
+            tooltip: {
+              enabled: true,
+              usePointStyle: true, 
+              callbacks: {
+                // labelColor: function(context) {
+                //     return {
+                //         //borderColor: 'rgb(0, 0, 255)',
+                //         //backgroundColor: 'transparent',
+                //         borderWidth: 5,
+                //         //borderDash: [2, 2],
+                //         //borderRadius: 2,
+                //     };
+                // },
+                labelPointStyle: function(context) {
+                  return {
+                      pointStyle: 'line',
+                  };
+                }
+              }
+            },
+            // colors: { 
+            //     forceOverride: true // uses default colors for each dataset
+            // }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: true,
+                color: 'lightcoral',
+                drawTicks: false,
+              }
+            },
+            y: {
+              grid: {
+                display: false,
+                color: 'lightgray',
+                drawTicks: false,
+              }
+            },
+          }
+        },
+        plugins: [ plugin ],
+        data: {
+          labels: yrs,  
+          datasets: [ 
+            {
+              label: category, //name of dataset 
+              data: vals,
+              backgroundColor: 'transparent',
+              borderColor: mySeriesColor(category),
+            }
+          ],
+        }
+      }
+    );
+
+    //addSets --nested list, addLabels--list, should be of same length (one label for each nested list)
+    for (const idx in addSets){
+        addDataSetsX(newChart, addLabels[idx], addSets[idx])
+    }
+
+};
+
+async function getPosts(){
+
+  //const getBaseURL = (document.baseURI).replace('test', '')
+  //const allPostsReq = await fetch(getBaseURL + 'fiscal/posts/getposts')
+  const allPostsReq = await fetch('posts/getposts')
+  const allPostsTxt = await allPostsReq.text()
+  const postsData = JSON.parse(allPostsTxt)
+  const allPosts = JSON.parse(postsData[0])
+  let scriptID
+  const ht = document.querySelector('html')
+  //const myURL = (ht.baseURI).replace('/test/', '')
+  let appdPost = document.querySelector('.append-post')
+
+  // Loops through posts data and updates HTML
+  for (const idx in allPosts){
+      const postDiv = document.createElement('div')
+      const appendPostDiv = document.createElement('div')
+      appendPostDiv.setAttribute('class', 'append-post')
+      let myCharts
+      postDiv.innerHTML =`
+      <div class="post-details-container">
+          <div class="post-details">
+              <div class="post-date">Date:</br>${allPosts[idx]['post_date']}</div></br>
+          </div>
+          <div class="post-title-container">
+              <div class="post-title">${allPosts[idx]['title']}</div>
+              <div class="post-description">${allPosts[idx]['post_description']}</div>
+          </div>
+      </div>
+      <div class="content-container">
+          <div class="post-post">${allPosts[idx]['post']}</div>
+      </div>
+      <div class="chart-n-details">
+          <div class="post-chart-container">
+              <canvas class="post-chart"></canvas>
+          </div>
+          <div class="post-chart-details-container">
+              <canvas class="post-chart-details"></canvas>
+          </div>   
+      </div>
+      `
+      // Adds element to append additional posts to 
+      postDiv.append(appendPostDiv);
+
+      scriptID = `${allPosts[idx]['script_id']}`
+      let myScriptNum = parseInt(scriptID)
+      let canvasElem = postDiv.querySelector('.post-chart')
+      let canvasElem2 = postDiv.querySelector('.post-chart-details')
+
+      async function getChartScripts(scriptID, canvas, canvas2){
+      const chartData = await fetch(`posts/charts-${scriptID}`)
+          const chartDataTxt = await chartData.text()
+          const chartDataJsn = JSON.parse(chartDataTxt)
+          myCharts = assocCharts(scriptID, chartDataJsn, canvas, canvas2)
+      }
+      getChartScripts(myScriptNum, canvasElem, canvasElem2)
+
+      // Appends postDiv to last appdPost. Reassigns appdPost.
+      appdPost.append(postDiv)
+      appdPost = postDiv.querySelector('.append-post')
+  }
+  window.scrollTo(0, 0)
+}
+
+function assocCharts(scriptID, JSONdata, canvas, canvas2){
+
+  //scriptID = scriptID from SQL table. 
+  //Functions written under each switch case below should be relevant to the record fetched from SQL table
+
+  switch(scriptID){
+      case 1:
+         const normsJSN = JSON.parse(JSONdata[0])
+         const datasetJSN = JSON.parse(JSONdata[2])
+         const normsYr = [], normsSav = [], normsConsump = [], normsMI = [], normsCPI = []
+         for(const idx in normsJSN){
+          normsYr.push(normsJSN[idx]['Year'])
+          normsSav.push(normsJSN[idx]['Savings'])
+          normsConsump.push(normsJSN[idx]['Consumption'])
+          normsMI.push(normsJSN[idx]['M1'])
+          normsCPI.push(normsJSN[idx]['CPI'])
+         }
+         
+         const myAdditionalSets = [normsConsump, normsMI, normsCPI]
+         const myAdditionalLabels = ['personal_consumption', 'money_supply_m1', 'CPI']
+         createTimeSeries('personal_savings', normsYr, normsSav, canvas, myAdditionalSets, myAdditionalLabels, 'NORMALIZED DATASETS')
+
+         const actualPersonalConsump = [], actualPersonalSav = [], actualPersonalInc = []
+         for(const idx in datasetJSN){
+          actualPersonalConsump.push(datasetJSN[idx]['pce'])
+          actualPersonalSav.push(datasetJSN[idx]['personal_saving'])
+          actualPersonalInc.push(datasetJSN[idx]['personal_income'])
+         }
+
+         //order items for stacked bar chart from largest to smallest
+         const myStackedLabels = ['personal_consumption', 'personal_savings']
+         const myStackedvals = [actualPersonalConsump, actualPersonalSav]
+         createStackedBar(myStackedLabels, normsYr, myStackedvals, canvas2, 'CONSUMPTION VS SAVING | in billions | USD')
+  }
+}
+
+
