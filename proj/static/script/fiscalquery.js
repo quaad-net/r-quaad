@@ -1,7 +1,6 @@
-import { getPosts } from "./fiscalPosts.js"
-import { mySeriesColor } from "./seriesBackgrounds.js"
+import { mySeriesColor} from '/static/script/seriesBackgrounds.js'
+import { getPosts} from '/static/script/fiscalPosts.js'
 
-//DOM global vars - must reassign upon innerHTML updates with js
 var firstInput = document.querySelector('#input-1');
 var secInput = document.querySelector('#input-2');
 var qryBtn = document.querySelector("#qryBtn");
@@ -128,8 +127,7 @@ for(const b of mbTabs){
     }
     if(b.id == 'mb-tab-2'){ //Posts
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
-        const fiscalPosts = getBaseURL + 'posts'
-        const response = await fetch(fiscalPosts);
+        const response = await fetch('posts');
         const responseTxt = await response.text();
 
         var parser = new DOMParser();
@@ -212,7 +210,7 @@ qryBtn.addEventListener("click", async function(){
           getStartYr -=5;
         }
       
-        const my_qry_btn_url = getBaseURL + 'q-' + getStartYr + '/' + getEndYr;
+        const my_qry_btn_url = 'q-' + getStartYr + '/' + getEndYr;
         const response = await fetch(my_qry_btn_url);
         dataForChts = await response.text();
         formatJSN(dataForChts, getStartYr);
@@ -621,7 +619,7 @@ function update_outlayModal(years){
 
 async function update_Outlays(date){
 
-  const setUrl = getBaseURL + 'q-outlays-' + date;
+  const setUrl = 'q-outlays-' + date;
   const response = await fetch(setUrl); 
   const outlaysJsn = await response.text();
   format_outlaysJSN(outlaysJsn, date);
@@ -727,7 +725,7 @@ function add_listn_to_years(years){
 
 async function getGovExpendPlus(categories, startyear, endyear){
 
-  const my_qry_btn_url = getBaseURL + 'q-expd-' + startyear + '/' + endyear;
+  const my_qry_btn_url = 'q-expd-' + startyear + '/' + endyear;
   const response = await fetch(my_qry_btn_url);
   dataForChts = await response.text();
   formatGovExpendPlus(dataForChts, categories);
@@ -862,7 +860,7 @@ function updateQryClick(){
             getStartYr -=5;
           }
         
-          const my_qry_btn_url = getBaseURL + 'q-' + getStartYr + '/' + getEndYr;
+          const my_qry_btn_url = 'q-' + getStartYr + '/' + getEndYr;
           const response = await fetch(my_qry_btn_url);
           dataForChts = await response.text();
           formatJSN(dataForChts, getStartYr);

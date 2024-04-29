@@ -23,3 +23,5 @@ export function mySeriesColor(category){
     mySeriesBackGrounds.set('CPI', 'black')
     return mySeriesBackGrounds.get(category);
 }
+
+

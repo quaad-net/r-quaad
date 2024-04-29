@@ -1,4 +1,4 @@
-import { assocCharts } from './assocCharts.js'
+import { assocCharts } from '/static/script/assocCharts.js'
 
 export async function getPosts(){
 
@@ -63,3 +63,4 @@ export async function getPosts(){
     }
     window.scrollTo(0, 0)
 }
+

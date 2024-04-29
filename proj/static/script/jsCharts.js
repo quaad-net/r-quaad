@@ -1,5 +1,4 @@
-
-import { mySeriesColor } from './seriesBackgrounds.js'
+import { mySeriesColor } from '/static/script/seriesBackgrounds.js'
 
 function addDataSets(chart, label, newData) {
   chart.data.datasets.push( 
