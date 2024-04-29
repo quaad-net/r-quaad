@@ -1,4 +1,4 @@
-import { mySeriesColor} from '/static/script/seriesBackgrounds.js'
+import { mySeriesColor} from './seriesBackgrounds.js'
 //import { assocCharts } from '/static/script/assocCharts.js'
 //import { getPosts} from '/static/script/fiscalPosts.js'
 
