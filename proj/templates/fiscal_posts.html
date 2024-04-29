@@ -1,67 +1,16 @@
 {% extends "fiscal_generic.html" %}
 {% load static %}
-{% block script_n_style %}
+{% block add_style %}
     <link rel= "stylesheet" href= "{% static '/css/fiscal_posts.css' %}" id="posts-styles"/>
-    <!--<link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-2.0.2/datatables.min.css">-->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" ></script>
-    <!--<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/datatables.min.js"></script>-->
-    <script type="module" src="{% static '/script/fiscalPosts.js' %}" id="posts-script"></script>
 {% endblock %}
     {% block sidebar_items %}
     {% endblock %}
-    {% block main_title %}
-        <div class= "main-title"></br>FISCAL</br>
-            <span class= "subtitle">Posts</span>
-            <!--<img class= "main-title-icon" src= "{% static '/img/icons8-government.svg' %}" width=60px />-->
-            <span class="mb-main-title-line"></span>
+    {% block core_items %}
+        <div class="posts-core-items">
+            <div class= "posts-main-title"></br>FISCAL</br>
+                <span class= "subtitle">Posts</span>
+                <span class="mb-main-title-line"></span>
+            </div>
+            <div class="append-post"></div>
         </div>
     {% endblock %}
-    {% block flex_sections %}
-        <div class="flex-sections">
-            <div class="flex-box" id="flex1">
-                <div class= "chartcontainer">
-                    <canvas id="MainSeriesCht"></canvas>
-                </div>
-                <div class="box-dividers"></div>
-            </div>
-        </div>
-        <div class="flex-sections" id="flex-section-2">
-            <div class="flex-box" id="flex2">
-                <button type="button" class="title-btn" id= "tb2"></button>
-                <div class="pre-title">chart</div>
-                <div class= "outlays-container"> 
-                    <span class="outlays-yr">Title</br>
-                        <span class="subtitle">subtitle</span>
-                    </span>
-                    <div class="outlays-cht-container">
-                        <canvas id="outlays-cht"></canvas>
-                    </div>
-                </div>
-                <div class="box-dividers" id="bx-div-2"></div>
-            </div>
-            <div class="flex-box" id="flex3">
-                <!--<img class= "flex3-icon" src="{% static '/img/icons8-organization-chart-people.svg' %}" width=30px />-->
-                <div class= "aux1-title-bar"><br/>&#160&#160TableTitle<br/>
-                    <span class= "subtitle">&#160&#160subtitle</span>
-                </div>
-                <div class= "aux1-table">
-                </div>
-            </div>
-        </div>
-    {% endblock %}
-{% block modal %}
-    <div id="options-modal" class="modal">
-        <div class="options-modal-content">
-            <div class="modal-header">
-                <span class="close">&times;</span>
-                <img src= "{% static '/img/icons8-list.svg' %}" width=30px  class= "modal-icon"/>
-                <h2 class ="modal-header-text"></h2>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <p></p>
-            </div>
-        </div>
-    </div>
-{% endblock %}

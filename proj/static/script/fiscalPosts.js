@@ -1,36 +1,65 @@
-function outlayYearModal(){
+import { assocCharts } from './assocCharts.js'
 
-  var modal = document.getElementById("options-modal");
-  var btn = document.getElementById("tb2"); //year button @ outlays by class chart
-  var span = document.getElementsByClassName("close")[0];
-  var modalOptions = document.querySelector(".options-modal-content");
+export async function getPosts(){
 
-  btn.onclick = function() { 
-    modal.style.display = "block";
-  }
+    //const getBaseURL = (document.baseURI).replace('test', '')
+    //const allPostsReq = await fetch(getBaseURL + 'fiscal/posts/getposts')
+    const allPostsReq = await fetch('posts/getposts')
+    const allPostsTxt = await allPostsReq.text()
+    const postsData = JSON.parse(allPostsTxt)
+    const allPosts = JSON.parse(postsData[0])
+    let scriptID
+    const ht = document.querySelector('html')
+    //const myURL = (ht.baseURI).replace('/test/', '')
+    let appdPost = document.querySelector('.append-post')
 
-  //updates header text
-  var hd = document.querySelector(".modal-header-text");
-  var hd2 = document.querySelector(".modal-header");
-  var sp = document.createElement('span');
-  sp.textContent = 'Year';
-  var dv = document.createElement('div');
-  dv.setAttribute("class", "modal-subtitle");
-  dv.textContent = "expenditures by class"
-  hd.appendChild(sp);
-  hd2.append(dv);
+    // Loops through posts data and updates HTML
+    for (const idx in allPosts){
+        const postDiv = document.createElement('div')
+        const appendPostDiv = document.createElement('div')
+        appendPostDiv.setAttribute('class', 'append-post')
+        let myCharts
+        postDiv.innerHTML =`
+        <div class="post-details-container">
+            <div class="post-details">
+                <div class="post-date">Date:</br>${allPosts[idx]['post_date']}</div></br>
+            </div>
+            <div class="post-title-container">
+                <div class="post-title">${allPosts[idx]['title']}</div>
+                <div class="post-description">${allPosts[idx]['post_description']}</div>
+            </div>
+        </div>
+        <div class="content-container">
+            <div class="post-post">${allPosts[idx]['post']}</div>
+        </div>
+        <div class="chart-n-details">
+            <div class="post-chart-container">
+                <canvas class="post-chart"></canvas>
+            </div>
+            <div class="post-chart-details-container">
+                <canvas class="post-chart-details"></canvas>
+            </div>   
+        </div>
+        `
+        // Adds element to append additional posts to 
+        postDiv.append(appendPostDiv);
 
+        scriptID = `${allPosts[idx]['script_id']}`
+        let myScriptNum = parseInt(scriptID)
+        let canvasElem = postDiv.querySelector('.post-chart')
+        let canvasElem2 = postDiv.querySelector('.post-chart-details')
 
-  //<span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
+        async function getChartScripts(scriptID, canvas, canvas2){
+        const chartData = await fetch(`posts/charts-${scriptID}`)
+            const chartDataTxt = await chartData.text()
+            const chartDataJsn = JSON.parse(chartDataTxt)
+            myCharts = assocCharts(scriptID, chartDataJsn, canvas, canvas2)
+        }
+        getChartScripts(myScriptNum, canvasElem, canvasElem2)
 
-  //close modal
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
+        // Appends postDiv to last appdPost. Reassigns appdPost.
+        appdPost.append(postDiv)
+        appdPost = postDiv.querySelector('.append-post')
     }
-  }
-
-};
+    window.scrollTo(0, 0)
+}

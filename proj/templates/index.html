@@ -18,13 +18,13 @@
     </ul>
 {% endblock %}
 {% block networking_links %}
-    <a href="https://www.linkedin.com/in/etoro-ukoh-674096300" class="networking-icons">
+    <a href="https://www.linkedin.com/in/etoro-ukoh-674096300" class="networking-icons" target="_blank" rel="noopener noreferrer">
         <img alt="LinkedIn" src= "{% static '/img/icons8-linkedin-50.png' %}" width="25px"/>
     </a>
-    <a href="https://www.upwork.com/freelancers/~01e07fba22bc30193f?mp_source=share" class="networking-icons">
+    <a href="https://www.upwork.com/freelancers/~01e07fba22bc30193f?mp_source=share" class="networking-icons" target="_blank" rel="noopener noreferrer">
         <img alt="upwork" src= "{% static '/img/icons8-upwork-50.png' %}" width="25px"/>
     </a>
-    <a href="https://www.fiverr.com/e_ukoh?public_mode=true" class="networking-icons">
+    <a href="https://www.fiverr.com/e_ukoh?public_mode=true" class="networking-icons" target="_blank" rel="noopener noreferrer">
         <img alt="fiver" src= "{% static '/img/icons8-fiverr-50.png' %}" width="25px"/>
     </a>
 {% endblock %}
@@ -86,7 +86,8 @@
             Creating and automating HTML emails |
             Custom data dashboards |
             Web scraping |
-            Database development
+            Database development |
+            <a href=" {% url 'projects' %} ">Sample projects</a>
         </span>
     </span><br/>
 {% endblock %}

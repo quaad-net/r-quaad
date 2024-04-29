@@ -13,6 +13,9 @@ wip.py
 db.sqlite3
 staticfiles/
 
+#HTML
+xprojects_generic.html
+
 # macOS files
 .DS_Store
 

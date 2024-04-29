@@ -1,3 +1,6 @@
+import { getPosts } from "./fiscalPosts.js"
+import { mySeriesColor } from "./seriesBackgrounds.js"
+
 //DOM global vars - must reassign upon innerHTML updates with js
 var firstInput = document.querySelector('#input-1');
 var secInput = document.querySelector('#input-2');
@@ -54,7 +57,6 @@ function captureStartDate(e) {
 function caputureEndDate(e){
     endDate = e.target.value;
 }
-var fetchobj = [];
 var dataForChts;
 
 //header tab click events
@@ -82,25 +84,13 @@ for(const b of mbTabs){
         b.style.backgroundColor = "rgb(102, 1, 1)";
         t2.style.background = 'none';
 
-        //const headElem = document.querySelector('head');
-        //const postStyles = document.querySelector('#posts-styles');
-
-        // //add style
+        // // add style
+        // const headElem = document.querySelector('head');
         // var myStyle = document.createElement("link");
         // myStyle.rel = "stylesheet";
-        // myStyle.type = "text/css";
         // myStyle.setAttribute('id', 'fiscal-styles');
         // myStyle.href =  newDoc.querySelector('#fiscal-styles').href; //gets stylesheet from fetched document "/fiscalquery.css"
         // headElem.appendChild(myStyle);
-
-        // //add script
-        // var myScript = document.createElement("script");
-        // //myScript.type = "module";
-        // myScript.setAttribute('id', 'fiscal-script');
-        // myScript.src =  newDoc.querySelector('#fiscal-script').src; //gets stylesheet from fetched document "/fiscalquery.css"
-        // console.log(newDoc.querySelector('#fiscal-script').src);
-        // headElem.appendChild(myScript);
-
 
         //reassign elements
         firstInput = document.querySelector('#input-1');
@@ -133,13 +123,12 @@ for(const b of mbTabs){
         MSeriesExists = false;
         var noclick = true; //updates qryBtn click event due to changes in DOM
         initialDataSets(noclick);
-        //initializeOverview();
 
       }
     }
     if(b.id == 'mb-tab-2'){ //Posts
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
-        const response = await fetch(getBaseURL + 'posts');
+        const response = await fetch('posts');
         const responseTxt = await response.text();
 
         var parser = new DOMParser();
@@ -150,26 +139,14 @@ for(const b of mbTabs){
         b.style.backgroundColor = "rgb(102, 1, 1)";
         t1.style.background = 'none';
 
-        //// get header tag elements
-        
-        //const headElem = document.querySelector('head');
-        //const fiscalStyles = document.querySelector('#fiscal-styles');
-
-        // //add style
+        // // add style
+        // const headElem = document.querySelector('head');
         // var myStyle = document.createElement("link");
         // myStyle.rel = "stylesheet";
-        // myStyle.type = "text/css";
+        // //myStyle.type = "text/css";
         // myStyle.setAttribute('id', 'posts-styles');
         // myStyle.href =  newDoc.querySelector('#posts-styles').href; //gets stylesheet from fetched document "/fiscal_posts.css"
         // headElem.appendChild(myStyle);
-
-        // //add script
-        // var myScript = document.createElement("script");
-        // //myScript.type = "module";
-        // myScript.setAttribute('id', 'posts-script');
-        // myScript.src =  newDoc.querySelector('#posts-script').src; //gets stylesheet from fetched document "/fiscalquery.css"
-        // console.log(newDoc.querySelector('#posts-script').src)
-        // headElem.appendChild(myScript);
 
         //reassign elements
         mobileMenu = document.querySelector(".mb-icon-menu");
@@ -186,6 +163,7 @@ for(const b of mbTabs){
           mobileHeader.style.display = "block";
         })
       }
+      getPosts()
     }
 
   })
@@ -233,7 +211,7 @@ qryBtn.addEventListener("click", async function(){
           getStartYr -=5;
         }
       
-        var my_qry_btn_url = getBaseURL + 'q-' + getStartYr + '/' + getEndYr;
+        var my_qry_btn_url = 'q-' + getStartYr + '/' + getEndYr;
         const response = await fetch(my_qry_btn_url);
         dataForChts = await response.text();
         formatJSN(dataForChts, getStartYr);
@@ -622,6 +600,7 @@ function outlayYearModal(){
 };
 
 function update_outlayModal(years){
+
   //Updates modal with available years of data
 
   const modalContent = document.querySelector(".modal-body");
@@ -641,7 +620,7 @@ function update_outlayModal(years){
 
 async function update_Outlays(date){
 
-  const setUrl = getBaseURL + 'q-outlays-' + date;
+  const setUrl = 'q-outlays-' + date;
   const response = await fetch(setUrl); 
   const outlaysJsn = await response.text();
   format_outlaysJSN(outlaysJsn, date);
@@ -747,7 +726,7 @@ function add_listn_to_years(years){
 
 async function getGovExpendPlus(categories, startyear, endyear){
 
-  var my_qry_btn_url = getBaseURL + 'q-expd-' + startyear + '/' + endyear;
+  var my_qry_btn_url = 'q-expd-' + startyear + '/' + endyear;
   const response = await fetch(my_qry_btn_url);
   dataForChts = await response.text();
   formatGovExpendPlus(dataForChts, categories);
@@ -824,31 +803,6 @@ function formatGovExpendPlus(data, categories){
   });
 }
 
-function mySeriesColor(category){
-  const mySeriesBackGrounds = new Map();
-  mySeriesBackGrounds.set('year', 'rgb(255, 157, 255)')
-  mySeriesBackGrounds.set('gov_expend', 'rgb(7, 179, 247)')
-  mySeriesBackGrounds.set('gdp', 'rgb(242, 138, 58)')
-  mySeriesBackGrounds.set('real_gdp', 'rgb(91, 79, 91)')
-  mySeriesBackGrounds.set('gross_domestic_income', 'rgb(52, 146, 146)')
-  mySeriesBackGrounds.set('personal_income', 'rgb(218, 172, 112)')
-  mySeriesBackGrounds.set('corp_profits', 'rgb(0, 80, 146)')
-  mySeriesBackGrounds.set('personal_consumption', 'rgb(79, 234, 156)')
-  mySeriesBackGrounds.set('real_personal_consumption', 'rgb(20, 2, 141)')
-  mySeriesBackGrounds.set('gov_consumption_and_investments', 'rgb(135, 169, 183)')
-  mySeriesBackGrounds.set('real_gov_consumption_and_investments', 'rgb(160, 51, 0)')
-  mySeriesBackGrounds.set('net_exports', 'rgb(138, 43, 226)')
-  mySeriesBackGrounds.set('exports', 'rgb(165, 42, 42)')
-  mySeriesBackGrounds.set('imports', 'rgb(220, 20, 60)')
-  mySeriesBackGrounds.set('real_net_exports', 'rgb(210, 105, 30)')
-  mySeriesBackGrounds.set('real_exports', 'rgb(0, 0, 139)')
-  mySeriesBackGrounds.set('real_imports', 'rgb(0, 100, 0)')
-  mySeriesBackGrounds.set('federal_debt', 'rgb(85, 107, 47)')
-  mySeriesBackGrounds.set('money_supply_m1', 'rgb(72, 61, 139)')
-  mySeriesBackGrounds.set('personal_savings', 'rgb(255, 20, 147)')
-  return mySeriesBackGrounds.get(category);
-}
-
 function SideLblListn(){
   for (const lbl of sidebarLbl){
     lbl.addEventListener('click', function(){
@@ -861,30 +815,6 @@ function SideLblListn(){
     });
   }
 }
-
-// function initializeOverview() {
-
-//   //load intial datasets and charts 
-//   initialDataSets();
-//   outlayYearModal(); //generates modal
-
-//   //adds years of available data to modal (years available a determined by intial query search)
-//   var myYears = [];
-//   var i = 0; 
-//   if(myEndYr > myStartYr){
-//     while ((myStartYr + i) < myEndYr) {
-//       myYears.push(myStartYr + i);
-//       i++;
-//     };
-//     myYears.push(myEndYr);
-//   }
-//   else{myYears.push(myStartYr)};
-//   update_outlayModal(myYears); //updates modal with new years
-
-//   // mobileHeader.style.display = "none";
-//   // sideBar.style.display = "block";
-
-// };
 
 function updateQryClick(){
 
@@ -931,7 +861,7 @@ function updateQryClick(){
             getStartYr -=5;
           }
         
-          var my_qry_btn_url = getBaseURL + 'q-' + getStartYr + '/' + getEndYr;
+          var my_qry_btn_url = 'q-' + getStartYr + '/' + getEndYr;
           const response = await fetch(my_qry_btn_url);
           dataForChts = await response.text();
           formatJSN(dataForChts, getStartYr);
@@ -965,52 +895,3 @@ function updateQryClick(){
   });
   qryBtn.click();
 };
-
-// async function getPriceIdx(){ 
-
-//   var getStartYr = 0;
-//   var getEndYr = 0;
-//   getStartYr += Number(firstInput.value);
-//   getEndYr += Number(secInput.value);
-//   var myIdxUrl = getBaseURL + 'q-idx-' + getStartYr + '/' + getEndYr;
-//   const response = await fetch(myIdxUrl);
-//   const jsnStr = await response.text();
-//   const myData = JSON.parse(jsnStr);
-//   const p_idx = JSON.parse(myData[0]);
-//   const idxdataSet = []
-
-
-//   for(const idx in p_idx){
-//     var rw = [];
-//     rw.push(p_idx[idx]['yr']);
-//     rw.push(p_idx[idx]['cpiaucsl']);
-//     rw.push(p_idx[idx]['CSUSHPINSA']);
-//     rw.push(p_idx[idx]['HLTHSCPIMEPS']);
-//     rw.push(p_idx[idx]['IPMAN']);
-//     rw.push(p_idx[idx]['PPIACO']);
-//     idxdataSet.push(rw);
-//   }
-
-//   new DataTable('#price-idx', {
-//     columns: [
-//         { title: 'Year' },
-//         { title: 'CPI' },
-//         { title: 'Home' },
-//         { title: 'Health Expd' },
-//         { title: 'Industr Manufact' },
-//         { title: 'Producer' }
-//     ],
-//     data: idxdataSet,
-//     paging: false,
-//     searching: false,
-//     searchPanes: false,
-//     responsive: true,
-//     //scrollY: 
-//   });
-
-//   //removes text showing number of entries
-//   var entr = document.querySelector(".dt-info");
-//   var entr2 = document.querySelector(".dt-end");
-//   entr.textContent = '';
-//   entr2.textContent = '';
-// };

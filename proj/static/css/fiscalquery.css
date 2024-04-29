@@ -60,6 +60,7 @@ html{
 
 .mb-tab-btn:hover, .mb-tab-btn:focus{
     background-color: rgb(102, 1, 1);
+    cursor: pointer;
 }
 
 .flex-sections{
@@ -342,8 +343,8 @@ input{
 .main-title-icon{
     float: right;
     position: relative;
-    right: 825px;
-    bottom: 25px;
+    right: 925px;
+    bottom: 15px;
     border-top: 1px solid white;
     border-radius: 25px;
 }
@@ -572,12 +573,6 @@ input{
             width: 100vw;
         }
     
-        .main-title-icon{
-            width: 40px;
-            right: 850px;
-            bottom: 15px;
-        }
-    
         .mb-main-title-line{
             width: 380px;
         }
@@ -722,12 +717,6 @@ input{
 
     .mobile-header{
         width: 100vw;
-    }
-
-    .main-title-icon{
-        width: 40px;
-        right: 850px;
-        bottom: 15px;
     }
 
     .mb-main-title-line{

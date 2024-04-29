@@ -3,68 +3,13 @@
 {% block addstyles %}
   <link rel="stylesheet" href= "{% static '/css/projects_styles.css' %}" />
 {% endblock%}
-
 {% block mycontent %}
-  <div class="container">{% comment%} proj1  {% endcomment %}
+  <div class="container">{% comment%} proj  {% endcomment %}
     <aside>
       <br/><img src= "{% static 'img/icons8-stack-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
       <h2 class="overview-header"><br/></h2>
       <p class="ov-items">
-        <span>Lang:<br/></span>
-          PowerShell<br/>
-          .Net<br/>
-          Visual Basic<br/>
-        <span>Solution Type:<br/></span>Project Mgmt</br>
-      </p>
-    </aside>
-    <article>
-      <span class="proj-snip">Solution</span>
-      <h1>Plan-o-gram</h1>
-      <p>
-        I was tasked with creating an application that would produce a simple plan-o-gram (a visual layout) of items 
-        optimally positioned on shelves given various product and shelf dimensions. The product dimensions were stored in a data
-        table while shelf levels and dimensions where taken in the form of user input(this would vary as desired by clients). 
-        The plan-o-gram could then be used as a guide for the initial setup of products at the client's location. 
-      </p>
-  
-      <p>
-        The application asks users to point to a file containing a clients desired products (which typically ranges from hundreds to thousands),
-        then also takes the client's shelf dimensions. Given those sets of data, it outputs the plan-o-gram.
-      </p>
-    </article>
-  </div>
-  <div class="container">
-    <aside class="asd-script">
-      <br/><img src= "{% static 'img/icons8-code-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
-      <h2><br/></h2>
-      <p>
-      </p>
-    </aside>
-    <article class="art-script">
-      <h1 class="script-header">Outline</h1>
-      <p>
-        <Ul>
-          <li>Application takes user input for dimensions and products file.</li>
-          <li>Sets products on shelves optimally given product and shelf dimensions.</li>
-          <li>Outputs data for plan-o-gram.</li>
-          <li>Places and styles finished plan-o-gram in an Excel workbook.</li>
-          <li> 
-            <a href="https://1drv.ms/x/s!Ar6VAGa9JiSki-sY9DRqy9vxK_IOww?e=ZJjFPR" target="_blank" rel="noopener noreferrer">Sample plan-o-gram</a> |
-            <a href="https://github.com/tukoh/Plan-o-gram.git" target="_blank" rel="noopener noreferrer">Module snippet</a>
-          </li>
-        </Ul>
-      </p>
-  
-      <p>
-      </p>
-    </article>
-  </div>
-  <div class="container">{% comment%} proj2  {% endcomment %}
-    <aside>
-      <br/><img src= "{% static 'img/icons8-stack-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
-      <h2 class="overview-header"><br/></h2>
-      <p class="ov-items">
-        <span>Lang:<br/></span>
+        <span>Components:<br/></span>
           HTML</br>
           CSS</br>
           JavaScript<br/>
@@ -75,94 +20,14 @@
     </aside>
     <article>
       <span class="proj-snip">Solution</span>
-      <h1>Data Dashboard</h1>
+      <h1>Dashboard...</h1>
       <p>
-        A work in progress of a web dashboard utilizing some data published by various departments of the U.S. Government.
-        The front-end is written in pure JavaScript, HTML, and CSS, and the back-end in Python. Data is stored in an Azure SQL database and
-        fetched through SQL and Python view functions.
+        Utilizes data published by various departments of the U.S. Government. Built on Django backend framework
+        with Azure SQL data storage.
       </p>
-  
-      <p>
-        Additional components to come.
-      </p>
-    </article>
-  </div>
-  <div class="container">
-    <aside class="asd-script">
-      <br/><img src= "{% static 'img/icons8-code-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
-      <h2><br/></h2>
-      <p>
-      </p>
-    </aside>
-    <article class="art-script">
-      <h1 class="script-header">Outline</h1>
-      <p>
-        <Ul>
-          <li>Data is programmatically fetched from sources and stored in SQL database.</li>
-          <li>Database views are utilized to make data easier to work with.</li>
-          <li>Python view functions fetch data in response to requests.</li>
-          <li>JavaScript parses and formats data to be charted.</li>
-          <li>
-            <a href="{% url 'fiscal' %}" target="_blank" rel="noopener noreferrer">Dashboard</a> | 
-            <a href="https://github.com/tukoh/fiscal.git" target="_blank" rel="noopener noreferrer">Source snippets</a> |
-            <a href="https://github.com/tukoh/fiscal_db.git" target="_blank" rel="noopener noreferrer">SQL</a>
-          </li>
-        </Ul>
-      </p>
-  
-      <p>
-      </p>
-    </article>
-  </div>
-  <div class="container">{% comment%} proj3  {% endcomment %}
-    <aside>
-      <br/><img src= "{% static 'img/icons8-stack-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
-      <h2 class="overview-header"><br/></h2>
-      <p class="ov-items">
-        <span>Lang:<br/></span>
-          VBA<br/>
-        <span>Solution Type:<br/></span>Pre-processing</br>
-      </p>
-    </aside>
-    <article>
-      <span class="proj-snip">Solution</span>
-      <h1>Data Pre-processing</h1>
-      <p>
-        Sometimes data is received in a format that isn’t very useful for a particular task. 
-        This was the case when a third-party vendor would send updated price lists on a weekly basis.
-        The list contained incontiguous data, images, etc.       
-      </p>
-  
-      <p>
-        In this project, the price list is formatted using algorithms that identify patterns within the 
-        original file then modify the file as needed, preparing the data to be utilized for price comparisons.
-      </p>
-    </article>
-  </div>
-  <div class="container">
-    <aside class="asd-script">
-      <br/><img src= "{% static 'img/icons8-code-48.png' %}" alt="overview" width="35px" height="35px" class="icon"/>
-      <h2><br/></h2>
-      <p>
-      </p>
-    </aside>
-    <article class="art-script">
-      <h1 class="script-header">Outline</h1>
-      <p>
-        <Ul>
-          <li>File is fetched and transformed using Power Query.</li>
-          <li>VBA is used to format and clean data.</li>
-          <li>Formatted file is stored and saved for further use.</li>
-          <li>
-            <a href="https://1drv.ms/x/s!Ar6VAGa9JiSki-EnX7D5wKXFHm3CdA?e=OVjUSV" target="_blank" rel="noopener noreferrer">Original price list</a> | 
-            <a href= "https://1drv.ms/u/s!Ar6VAGa9JiSki-Ep_NeVnm_qTQ6rdA?e=BrkDZt" target="_blank" rel="noopener noreferrer"> Modified price list</a> |
-            <a href="https://github.com/tukoh/format-price-list.git" target="_blank" rel="noopener noreferrer">Source code</a>
-          </li>
-        </Ul>
-      </p>
-  
-      <p>
-      </p>
+        <a href="{% url 'fiscal' %}" target="_blank" rel="noopener noreferrer">Dashboard</a> | 
+        <a href="https://github.com/tukoh/fiscal.git" target="_blank" rel="noopener noreferrer">Source snippets</a> |
+        <a href="https://github.com/tukoh/fiscal_db.git" target="_blank" rel="noopener noreferrer">SQL</a>
     </article>
   </div>
 {% endblock %}

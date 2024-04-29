@@ -20,6 +20,6 @@ export function mySeriesColor(category){
     mySeriesBackGrounds.set('federal_debt', 'rgb(85, 107, 47)')
     mySeriesBackGrounds.set('money_supply_m1', 'rgb(72, 61, 139)')
     mySeriesBackGrounds.set('personal_savings', 'rgb(255, 20, 147)')
+    mySeriesBackGrounds.set('CPI', 'black')
     return mySeriesBackGrounds.get(category);
 }
-//mySeriesBackGrounds.get('key')
