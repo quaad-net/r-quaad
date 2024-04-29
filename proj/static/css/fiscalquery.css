@@ -310,6 +310,10 @@ input{
     background: linear-gradient(180deg, rgb(102, 1, 1), rgb(54, 0, 0));
 }
 
+#qryBtn:hover{
+    cursor: pointer;
+}
+
 .hidden{
     position: relative;
     top: 75px;
