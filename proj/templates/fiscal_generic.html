@@ -4,14 +4,14 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1"/>
-        <title>Test</title>
+        <title>Fiscal</title>
         <link rel="stylesheet" href= "{% static '/css/fiscalquery.css' %}"/>
         <link rel="stylesheet" href= "{% static '/css/fiscal_posts.css' %}"/>
         <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" ></script>
-        <script src= "{% static '/script/seriesColors.js' %}"></script>
+        {% comment %} <script src= "{% static '/script/seriesColors.js' %}"></script>
         <script src= "{% static '/script/jsCharts.js' %}"></script>
         <script src= "{% static '/script/assocCharts.js' %}"></script>
-        <script src= "{% static '/script/fiscalPosts.js' %}"></script>
+        <script src= "{% static '/script/fiscalPosts.js' %}"></script> {% endcomment %}
         <script type="module" src= "{% static '/script/fiscalquery.js' %}"></script>
         {% block script_n_style %}
         {% endblock %}

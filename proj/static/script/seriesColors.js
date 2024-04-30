@@ -20,4 +20,5 @@ mySeriesColor.set('federal_debt', 'rgb(85, 107, 47)')
 mySeriesColor.set('money_supply_m1', 'rgb(72, 61, 139)')
 mySeriesColor.set('personal_savings', 'rgb(255, 20, 147)')
 mySeriesColor.set('CPI', 'black')
+export { mySeriesColor }
 //mySeriesColor.get(category);

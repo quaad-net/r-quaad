@@ -1,6 +1,6 @@
-//import { assocCharts } from '/static/script/assocCharts.js'
+import { assocCharts } from './assocCharts.js'
 
-async function getPosts(){
+export async function getPosts(){
 
     //const getBaseURL = (document.baseURI).replace('test', '')
     //const allPostsReq = await fetch(getBaseURL + 'fiscal/posts/getposts')

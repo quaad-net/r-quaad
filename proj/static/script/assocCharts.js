@@ -1,6 +1,6 @@
-//import { createStackedBar, createTimeSeries} from '/static/script/jsCharts.js'
+import { createStackedBar, createTimeSeries} from './jsCharts.js'
 
-function assocCharts(scriptID, JSONdata, canvas, canvas2){
+export function assocCharts(scriptID, JSONdata, canvas, canvas2){
 
     //scriptID = scriptID from SQL table. 
     //Functions written under each switch case below should be relevant to the record fetched from SQL table

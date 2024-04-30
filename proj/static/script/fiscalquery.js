@@ -1,3 +1,6 @@
+import { mySeriesColor } from './seriesColors.js'
+import { getPosts } from './fiscalPosts.js';
+
 var firstInput = document.querySelector('#input-1');
 var secInput = document.querySelector('#input-2');
 var qryBtn = document.querySelector("#qryBtn");

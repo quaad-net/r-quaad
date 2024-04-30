@@ -1,6 +1,6 @@
-//import { mySeriesColor } from '/static/script/seriesBackgrounds.js'
+import { mySeriesColor } from './seriesColors.js'
 
-function addDataSetsX(chart, label, newData) {
+export function addDataSetsX(chart, label, newData) {
   chart.data.datasets.push( 
     {
       label: label,
@@ -11,7 +11,7 @@ function addDataSetsX(chart, label, newData) {
   chart.update();
 }
 
-function createStackedBar(categories, yrs, vals, canvas, title) {
+export function createStackedBar(categories, yrs, vals, canvas, title) {
 
   //two story stack bar
 
@@ -65,7 +65,7 @@ function createStackedBar(categories, yrs, vals, canvas, title) {
   )
 }
 
-function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels, title) {
+export function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels, title) {
   
     Chart.defaults.font.family = "poppins, sans-serif"; //"Times, 'Times New Roman', serif, Georgia";
     Chart.defaults.font.size = 13;
