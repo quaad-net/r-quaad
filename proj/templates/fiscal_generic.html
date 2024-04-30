@@ -1,16 +1,19 @@
-<!DOCTYPE HTML>
+<!doctype html>
 {% load static %}
-<HTML lang="en">
+<html lang="en">
     <head>
-        <meta charset="utf-8"/>
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1"/>
-        <title>FiscalQuery</title>
-        <link rel="icon" href= "{% static '/img/icons8-us-dollar-32.png' %}" />
-            <link rel= "stylesheet" href= "{% static '/css/fiscalquery.css' %}" id="fiscal-styles"/>
-            <link rel= "stylesheet" href= "{% static '/css/fiscal_posts.css' %}" id="posts-styles"/>
-            <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" ></script>
-            <script type="module" src="{% static '/script/fiscalquery.js' %}" id="fiscal-script"></script>
-        {% block add_style %}
+        <title>Test</title>
+        <link rel="stylesheet" href= "{% static '/css/fiscalquery.css' %}"/>
+        <link rel="stylesheet" href= "{% static '/css/fiscal_posts.css' %}"/>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" ></script>
+        <script src= "{% static '/script/seriesBackgrounds.js' %}"></script>
+        <script src= "{% static '/script/jsCharts.js' %}"></script>
+        <script src= "{% static '/script/assocCharts.js' %}"></script>
+        <script src= "{% static '/script/fiscalPosts.js' %}"></script>
+        <script type="module" src= "{% static '/script/fiscalquery.js' %}"></script>
+        {% block script_n_style %}
         {% endblock %}
     </head>
     <div class="mobile-header">
@@ -69,41 +72,37 @@
         </div>
         {% block core_items %}
             <div class="core-items">
-                <div class= "main-title"></br>U.S. Gov't Expenditures</br>
-                    <span class= "subtitle">in billions | nominal</span>
-                    <img class= "main-title-icon" src= "{% static '/img/icons8-government.svg' %}" width=30px />
-                    <span class="mb-main-title-line"></span>
+                <div class="main-title"></br>U.S. GOV'T EXPENDITURES</br>
+                    <div class="subtitle">in billions | nominal</div>
+                    <!--<img class="main-title-icon" src= "{% static '/img/icons8-government.svg' %}" width=30px />-->
+                    <div class="main-title-line"></di>
                 </div>
-                <div class="flex-sections">
-                    <div class="flex-box" id="flex1">
-                        <div class= "chartcontainer">
-                            <canvas id="MainSeriesCht"></canvas>
-                        </div>
-                        <div class="box-dividers"></div>
+                <div class="main-series">
+                    <div class= "chartcontainer">
+                        <canvas id="MainSeriesCht"></canvas>
                     </div>
                 </div>
-                <div class="flex-sections" id="flex-section-2">
-                    <div class="flex-box" id="flex2">
-                        <button type="button" class="title-btn" id= "tb2">Year</button>
-                        <div class="pre-title">Expenditures By Class</div>
-                        <div class= "outlays-container"> 
-                            <span class="outlays-yr">Year</br>
-                                <span class="subtitle">percentages</span>
-                            </span>
-                            <div class="outlays-cht-container">
-                                <canvas id="outlays-cht"></canvas>
-                            </div>
-                        </div>
-                        <div class="box-dividers" id="bx-div-2"></div>
-                    </div>
-                    <div class="flex-box" id="flex3">
-                        <img class= "flex3-icon" src="{% static '/img/icons8-organization-chart-people.svg' %}" width=25px />
-                        <div class= "aux1-title-bar"><br/>&#160&#160Expenditures<br/>
-                            <span class= "subtitle">&#160&#160by class</span>
-                        </div>
-                        <div class= "aux1-table">
+                <div class="outlays-n-aux">
+                    <div class="outlays-header">
+                        <div class="outlays-header-items">
+                            <div class="pre-title" id="expd-by-class">Expenditures By Class</div>
+                            <div class="outlays-yr">Year</div>
+                            <div class="subtitle" id="outlay-subtitle"></div>
+                            <button type="button" class="title-btn" id= "tb2">Year</button>
                         </div>
                     </div>
+                    <div class= "outlays-container"> 
+                        <div class="outlays-cht-container">
+                            <canvas id="outlays-cht"></canvas>
+                        </div>
+                    </div>
+                    <div class="aux1-header">
+                        <div class="aux1-header-items">
+                            <div id="aux1-title">Expenditure<br/></div>
+                            <div class="subtitle" id="aux1-subtitle">Class Details</div>
+                        </div>
+                    </div>
+                    <div class="aux1-table"></div>
                 </div>
             </div>
         {% endblock %}
@@ -123,4 +122,4 @@
         </div>
         <div class= "right-sidebar"></div>
     </div>
-</HTML>
+</html>

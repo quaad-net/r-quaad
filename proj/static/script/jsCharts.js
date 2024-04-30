@@ -1,17 +1,17 @@
 //import { mySeriesColor } from '/static/script/seriesBackgrounds.js'
 
-function addDataSets(chart, label, newData) {
+function addDataSetsX(chart, label, newData) {
   chart.data.datasets.push( 
     {
       label: label,
       data: newData,
-      borderColor: mySeriesColor(label),
+      borderColor: mySeriesColor.get(label),
     }
   );
   chart.update();
 }
 
-export function createStackedBar(categories, yrs, vals, canvas, title) {
+function createStackedBar(categories, yrs, vals, canvas, title) {
 
   //two story stack bar
 
@@ -25,13 +25,13 @@ export function createStackedBar(categories, yrs, vals, canvas, title) {
       {
         label: categories[1], 
         data:  vals[1],
-        backgroundColor: mySeriesColor(categories[1]),
+        backgroundColor: mySeriesColor.get(categories[1]),
         borderWidth: 1
       },
       {
         label: categories[0],
         data: vals[0],
-        backgroundColor: mySeriesColor(categories[0]),
+        backgroundColor: mySeriesColor.get(categories[0]),
         borderWidth: 1,
       },
     ]
@@ -65,7 +65,7 @@ export function createStackedBar(categories, yrs, vals, canvas, title) {
   )
 }
 
-export function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels, title) {
+function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels, title) {
   
     Chart.defaults.font.family = "poppins, sans-serif"; //"Times, 'Times New Roman', serif, Georgia";
     Chart.defaults.font.size = 13;
@@ -153,7 +153,7 @@ export function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels
               label: category, //name of dataset 
               data: vals,
               backgroundColor: 'transparent',
-              borderColor: mySeriesColor(category),
+              borderColor: mySeriesColor.get(category),
             }
           ],
         }
@@ -162,7 +162,7 @@ export function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels
 
     //addSets --nested list, addLabels--list, should be of same length (one label for each nested list)
     for (const idx in addSets){
-        addDataSets(newChart, addLabels[idx], addSets[idx])
+      addDataSetsX(newChart, addLabels[idx], addSets[idx])
     }
 
 };
