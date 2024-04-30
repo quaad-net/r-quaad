@@ -28,11 +28,12 @@ def index(request):
             return response
 
 # remove first if-statement in each function def when ready for production
+
 def projects(request):
 
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         return render(request, 'projects_generic.html')
     except:
         if IS_HEROKU_APP:
@@ -43,8 +44,8 @@ def projects(request):
 def fiscal(request):
 
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         return render(request, 'fiscal_generic.html')
     except:
         if IS_HEROKU_APP:
@@ -55,8 +56,8 @@ def fiscal(request):
 def fiscal_posts(request):
 
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         return render(request, 'fiscal_posts.html')
     except:
         if IS_HEROKU_APP:
@@ -67,8 +68,8 @@ def fiscal_posts(request):
 async def fiscalquery(request, startDate, endDate):
 
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         cnxn = engine.connect()
 
         mainEcon = f'select round(ttl_gov_expend, 1) as ttl_gov_expend, date as yr from cbo_annual_cy_plus where date between {startDate} and {endDate} order by yr;'
@@ -91,8 +92,8 @@ async def fiscalquery(request, startDate, endDate):
 async def update_outlays(request, year):
 
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         cnxn = engine.connect()
         outlays = f'select fiscal_year, classification_description as clsdesc, current_fiscal_year_to_date_gross_outlays_amount as amt from gov_outlays_by_class where fiscal_year = {year} and current_fiscal_year_to_date_gross_outlays_amount > 0 order by current_fiscal_year_to_date_gross_outlays_amount desc;'
         outlays_df  = pd.read_sql(outlays, cnxn)
@@ -109,8 +110,8 @@ async def update_outlays(request, year):
 async def gov_expend_plus(request, startDate, endDate):
     
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         cnxn = engine.connect()
         gov_expend = f'select * from gov_expend_set where date between {startDate} and {endDate};' 
         gov_expend_df = pd.read_sql(gov_expend, cnxn)
@@ -125,11 +126,10 @@ async def gov_expend_plus(request, startDate, endDate):
             return response
 
 async def price_index(request, startDate, endDate):
-    
-    # remove first if statement when ready to publish
+
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         cnxn = engine.connect()
         price_index = f'select year(date) as yr, round(cpiaucsl, 2) as cpiaucsl, round(CSUSHPINSA, 2) as CSUSHPINSA, round(HLTHSCPIMEPS, 2) as HLTHSCPIMEPS, round(IPMAN, 2) as IPMAN, round(PPIACO , 2) as PPIACO from price_idx where year(date) between {startDate} and {endDate};'
         price_index_df = pd.read_sql(price_index, cnxn)
@@ -146,8 +146,8 @@ async def price_index(request, startDate, endDate):
 async def get_posts(request):
 
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         cnxn = engine.connect()
         my_posts_qry = """
         select format(post_date, 'MM/dd/yyyy') as post_date, 
@@ -186,8 +186,8 @@ def test(request):
 def get_assoc_chts(request, scriptID):
 
     try:
-        # if IS_HEROKU_APP:
-        #     raise('err')
+        if IS_HEROKU_APP:
+            raise('err')
         match int(scriptID):
             case 1:
             
