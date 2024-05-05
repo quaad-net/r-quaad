@@ -1,0 +1,61 @@
+#aux-modal{
+    background-color: rgba(0, 0, 0, 0.777);
+}
+
+.aux-table-modal{
+    display: flex;
+}
+
+.aux-table-modal-data{
+    color: white;
+    max-width: 30%;
+    min-height: 350px;
+    margin: auto;
+    margin-top: 50px;
+    overflow-y: auto;
+    background-color: rgba(78, 78, 78, 0.164); 
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.aux-table-modal-data:hover{
+    border: 1px solid white;
+}
+
+.aux-table-modal-close{
+    position: relative;
+    float: right;
+    left: 15px; 
+    bottom: 25px;
+    color: white;
+    font-size: 28px;
+    font-weight:bolder;
+}
+
+.aux-table-modal-close:hover,
+.aux-table-modal-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.aux-table-modal-header{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.aux-table-modal-header, .aux-table-modal-row{
+    border-radius: 2px;
+    border-bottom: 1px solid rgb(78, 78, 78);  
+}
+
+.aux-table-modal-row:nth-of-type(even){
+    background-color: #232323;
+}
+
+.aux-table-modal-header, .aux-table-modal-row{
+    background-color: rgb(20, 20, 20);
+}
+
+.aux-table-modal-row:hover{
+    border: 1px solid white
+}

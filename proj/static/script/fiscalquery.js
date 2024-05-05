@@ -1,18 +1,39 @@
-import { mySeriesColor } from './seriesColors.js'
-import { getPosts } from './fiscalPosts.js';
+import { mySeriesColor, myBkGrd } from './seriesColors.js'
+import { getPosts } from './fiscalPosts.js'
+import { origins as or } from './dataHelpers.js'
 
-var firstInput = document.querySelector('#input-1');
-var secInput = document.querySelector('#input-2');
-var qryBtn = document.querySelector("#qryBtn");
-var mobileMenu = document.querySelector(".mb-icon-menu");
-var sideBar = document.querySelector(".sidebar");
-var mobileHeader = document.querySelector(".mobile-header");
-var sidebarLbl = document.querySelectorAll(".sidebar-lbl"); 
-var sidebarDataHd = document.querySelector(".datasets-list");
-var sidebarClose = document.querySelector(".sidebar-close");
-var mbTabs = document.querySelectorAll(".mb-tab-btn");
-var ht = document.querySelector('html');
-var getBaseURL = ht.baseURI;
+//DOM vars
+var firstInput = document.querySelector('#input-1')
+var secInput = document.querySelector('#input-2')
+var qryBtn = document.querySelector("#qryBtn")
+var mobileMenu = document.querySelector(".mb-icon-menu")
+var sideBar = document.querySelector(".sidebar")
+var mobileHeader = document.querySelector(".mobile-header")
+var sidebarClose = document.querySelector(".sidebar-close")
+var mbTabs = document.querySelectorAll(".mb-tab-btn")
+var ht = document.querySelector('html')
+var getBaseURL = ht.baseURI
+var auxModal = document.querySelector('#aux-modal')
+var hlprIcon =  document.querySelectorAll('.helper-icon')
+
+//non-DOM vars
+var startDate
+var endDate
+var MSeries
+var MSeriesExists = false
+var fedDebtChart
+var outlaysCht;
+var dataForChts
+const dt = new Date()
+const curYr =  dt.getFullYear()
+const myStartYr = curYr - 6
+const myEndYr = curYr - 1
+let myTopOutlaysClassID
+let myOtherOutlaysVals
+let myOtherOutlaysList
+
+// Event Listeners
+
 firstInput.addEventListener('click', function(){
   firstInput.value = "";
 })
@@ -32,34 +53,29 @@ sidebarClose.addEventListener("click", function(){
   mobileHeader.style.display = "block";
 })
 
+function hlprIconListn(){
 
-//non-DOM global vars
-var startDate;
-var endDate;
-var setFiscalquery;
-var MSeries;
-var MSeriesExists = false;
-var outlaysCht;
-const myBkGrd = [
-  'rgb(138, 43, 226)', 'rgb(165, 42, 42)', 'rgb(220, 20, 60)', 'rgb(210, 105, 30)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)', 'rgb(85, 107, 47)',
-  'rgb(72, 61, 139)', 'rgb(255, 20, 147)', 'rgb(255, 0, 255)'
-]
-var OutlaysExist = false;
-const dt = new Date();
-const curYr =  dt.getFullYear();
-const myStartYr = curYr - 6;
-const myEndYr = curYr - 1; 
-const myUrlStr = getBaseURL + 'q-' + myStartYr + '/' + myEndYr;
-function captureStartDate(e) {
-  startDate = e.target.value;
+  // Adds source information to modal
+
+  for (const c of hlprIcon){
+    c.addEventListener('click', function(){
+
+      const rowSect = document.querySelector('.aux-table-modal-rows')
+      while(rowSect.firstChild){
+        rowSect.removeChild(rowSect.firstChild)
+      }
+      const dv = document.createElement('div')
+      const tableHeader = document.querySelector('.aux-table-modal-header')
+      dv.textContent = or.getOrigin(c.id).source
+      dv.setAttribute('class', 'aux-table-modal-row')
+      rowSect.appendChild(dv)
+      tableHeader.textContent = 'Source'
+      auxModal.style.display = 'block'
+    })
+  }
 }
-function caputureEndDate(e){
-    endDate = e.target.value;
-}
-var dataForChts;
 
 //header tab click events
-
 for(const b of mbTabs){
 
   b.addEventListener('click', async function(){
@@ -98,8 +114,6 @@ for(const b of mbTabs){
         mobileMenu = document.querySelector(".mb-icon-menu");
         sideBar = document.querySelector(".sidebar");
         mobileHeader = document.querySelector(".mobile-header");
-        sidebarLbl = document.querySelectorAll(".sidebar-lbl"); 
-        sidebarDataHd = document.querySelector(".datasets-list");
         sidebarClose = document.querySelector(".sidebar-close");
         mbTabs = document.querySelectorAll(".mb-tab-btn");
         firstInput.addEventListener('click', function(){
@@ -120,9 +134,15 @@ for(const b of mbTabs){
           mobileHeader.style.display = "block";
         })
         MSeriesExists = false;
-        var noclick = true; //updates qryBtn click event due to changes in DOM
-        initialDataSets(noclick);
-
+        outlayYearModal();
+        qryBtn.addEventListener("click", function(){
+          runQry()
+        })
+        runQry(myStartYr, myEndYr)
+        auxModal = document.querySelector('#aux-modal')
+        hlprIcon =  document.querySelectorAll('.helper-icon')
+        auxTableModal()
+        hlprIconListn() //codemark
       }
     }
     if(b.id == 'mb-tab-2'){ //Posts
@@ -168,13 +188,44 @@ for(const b of mbTabs){
   })
 }
 
-qryBtn.addEventListener("click", async function(){
-  var userinp1 = Number(firstInput.value) ;
-  var userinp2 = Number(secInput.value);
-  if(userinp1 + 0 == 0){
+
+// Startup
+runQry(myStartYr, myEndYr)
+outlayYearModal()
+document.querySelector("#mb-tab-1").style.backgroundColor = 'rgb(102, 1, 1)'
+auxTableModal()
+hlprIconListn()
+
+// Functions
+
+function captureStartDate(e) {
+  startDate = e.target.value;
+}
+function caputureEndDate(e){
+    endDate = e.target.value;
+}
+
+async function runQry(startyear, endyear){
+
+  // For "search" button and intial page load
+  // No parameters included when called on button click
+
+  var userinp1
+  var userinp2
+
+  if(startyear){
+    userinp1 = Number(startyear)
+    userinp2 = Number(endyear)
+  }
+  else{
+    userinp1 = Number(firstInput.value)
+    userinp2 = Number(secInput.value)
+  }
+
+  if(userinp1 == 0){
     window.alert('Please enter a start year.');
   }
-  else if(userinp2 ==0){
+  else if(userinp2 == 0){
     window.alert('Please enter an end year.')
   }
   else if(userinp1 > userinp2){ 
@@ -193,26 +244,17 @@ qryBtn.addEventListener("click", async function(){
       else{
         var getStartYr = 0;
         var getEndYr = 0;
-        getStartYr += Number(firstInput.value);
-        getEndYr += Number(secInput.value);
+        getStartYr += userinp1;
+        getEndYr += userinp2;
 
-        //adjust year range for certain user inputs
-        if(getEndYr == 0){
-          if(getStartYr == Number(curYr)){
-            getStartYr -= 3;
-            getEndYr = Number(curYr);
-          }
-          else{
-            getEndYr = Number(curYr);
-          }
-        }
+        //adjustment to produce range
         if(getStartYr == getEndYr){
           getStartYr -=5;
         }
       
         const my_qry_btn_url = 'q-' + getStartYr + '/' + getEndYr;
         const response = await fetch(my_qry_btn_url);
-        dataForChts = await response.text();
+        dataForChts = await response.text();  
         formatJSN(dataForChts, getStartYr);
       
         //adds years of available data to modal (years available determined by initial query search)
@@ -228,19 +270,22 @@ qryBtn.addEventListener("click", async function(){
         else{myYears.push(getStartYr)};
         update_outlayModal(myYears);
       
-        //add selected datasets in sidebar to array for query
-        var myCat = [] //array of category names
-        for (const lbl of sidebarLbl){
-            if (lbl.style.backgroundColor == 'rgb(13, 13, 230)'){
-              myCat.push(extractContent(lbl.textContent));
-            }
+        // Show intial years of query
+        if(startyear){
+          firstInput.value = startyear
+          secInput.value = endyear
         }
-        getGovExpendPlus(myCat, getStartYr, getEndYr);
-        sidebarClose.click();
-        window.scrollTo(0, 0);
+
+        if(sideBar.style.display!='none'){
+          sidebarClose.click()
+          window.scrollTo(0, 0)
+        }
       }
   }
-  
+}
+
+qryBtn.addEventListener("click", function(){
+  runQry()
 });
 
 function extractContent(textcontent) {
@@ -251,67 +296,32 @@ function extractContent(textcontent) {
 
 function formatJSN(myJSNStr, start){
 
-    var cls_desc = [], outly_amt = [];
-    var main_econ, gov_outlays;
-    const myData = JSON.parse(myJSNStr);
-    main_econ = JSON.parse(myData[0]);
-    gov_outlays = JSON.parse(myData[1]);
+    var cls_desc = [], outly_amt = [], gov_expd = [], fedDebt =[], yr = []
+    var myData = JSON.parse(myJSNStr);
+    var fiscalData = JSON.parse(myData[0])
+    var gov_outlays = JSON.parse(myData[1])
+    var year_ttl_all_cls = JSON.parse(myData[2])
 
-    var gov_expd = [], yr = [];
-    for (const idx in main_econ){
-      gov_expd.push(main_econ[idx]['ttl_gov_expend']);
-      yr.push(main_econ[idx]['yr']);
+    for (var idx in fiscalData){
+      gov_expd.push(fiscalData[idx]['ttl_gov_expend']);
+      fedDebt.push(fiscalData[idx]['federal_debt'])
+      yr.push(fiscalData[idx]['yr']);
     };
-
-    //select top 10 into array (qry returns result desc by 'amt')
-    var topTen = 0; 
-    var otherOtlyTtls = 0;
-    var idxCount = 0;
-    var OutlayTtls = 0;
-    for(const idx in gov_outlays){
-      OutlayTtls += gov_outlays[idx]['amt'];
-    }
-    for (const idx in gov_outlays){
-      idxCount += 1;
-      if(topTen < 9){ 
-        cls_desc.push((gov_outlays[idx]['clsdesc']).replace('Total--', '')); //class description
-        outly_amt.push(Math.round((gov_outlays[idx]['amt'] / OutlayTtls) * 100));
-        topTen += 1;
-      }
-      else{
-        otherOtlyTtls += gov_outlays[idx]['amt']; //adds non top 10 amounts into 'Other' category
-       
-      }
-    };
-    cls_desc.push('Other');
-    outly_amt.push(Math.round((otherOtlyTtls / OutlayTtls) * 100)); 
 
     if(MSeriesExists){
-      MSeries.destroy();
-      createMainSeries('gov expend', yr, gov_expd);
-      if(cls_desc.length = 10){
-        outlaysCht.destroy();
-        createOutlays(cls_desc, outly_amt);
-        updateOutlaysLegend(start, cls_desc, outly_amt);
-      }
+      MSeries.destroy()
+      fedDebtChart.destroy()
+      createMainSeries('gov_expend', yr, gov_expd) 
+      createFedDebtSeries('federal_debt', yr, fedDebt)
+      var destroy = true
+      format_outlays(gov_outlays, year_ttl_all_cls, start, destroy)
     }
     else{
-      createMainSeries('gov expend', yr, gov_expd);
-      if(cls_desc.length = 10){
-        createOutlays(cls_desc, outly_amt);
-        updateOutlaysLegend(start, cls_desc, outly_amt);
-      };
+      createMainSeries('gov_expend', yr, gov_expd)
+      createFedDebtSeries('federal_debt', yr, fedDebt)
+      format_outlays(gov_outlays, year_ttl_all_cls, start)
     }
 
-};
-
-function addData(chart, label, newData) {
-  chart.data.labels = label;
-  chart.data.datasets.forEach((dataset) => {
-      //dataset.data.push(newData);
-      dataset.data = newData;
-  });
-  chart.update();
 }
 
 function addDataSets(chart, label, newData, color) {
@@ -322,23 +332,6 @@ function addDataSets(chart, label, newData, color) {
       borderColor: color,
     }
   );
-  chart.update();
-}
-
-function removeData(chart) {
-  chart.data.labels.pop();
-  chart.data.datasets.forEach((dataset) => {
-      //dataset.data.pop();
-      dataset.data = null;
-  });
-  chart.update();
-}
-
-function removeDataDoughnut(chart) {
-  chart.data.labels.pop();
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data = null;
-  });
   chart.update();
 }
 
@@ -356,11 +349,11 @@ const plugin = {
 
 function createMainSeries(category, yrs, vals) {
   
-    Chart.defaults.font.family = "poppins, sans-serif"; //"Times, 'Times New Roman', serif, Georgia";
-    Chart.defaults.font.size = 13;
+    Chart.defaults.font.family = "poppins, sans-serif";
+    Chart.defaults.font.size = 11;
     Chart.defaults.elements.line.tension = 0.4;
     Chart.defaults.color = 'white';
-    Chart.defaults.elements.point.radius = 5;
+    Chart.defaults.elements.point.radius = 3;
 
     MSeries = new Chart(
       document.getElementById("MainSeriesCht"),
@@ -376,19 +369,28 @@ function createMainSeries(category, yrs, vals) {
             mode: 'x', //used for interactions based on x coord
           },
           plugins: {
+            title: {
+              display: true,
+              text: "[Expenditures]",
+              font: {
+                weight: 'bold',
+                family: 'georgia sans-serif',
+                size: 17
+              }
+            },
             customCanvasBackgroundColor: {
-              color: 'rgb(32, 32, 32)',
+              color: 'transparent',
             },
             legend: {
-              display: true,
+              display: false,
               labels:{
                 usePointStyle: true,
               },
               title: {
-                display: false,
+                display: true,
                 text: "",
                 font: {
-                  size: 20,
+                  //size: 10,
                   weight: 'bold',
                 }
               }
@@ -439,7 +441,7 @@ function createMainSeries(category, yrs, vals) {
               label: category, //name of dataset 
               data: vals,
               backgroundColor: 'transparent',
-              borderColor: 'blue',
+              borderColor: mySeriesColor.get(category),
               //tension: 0.4
             }
           ],
@@ -447,6 +449,110 @@ function createMainSeries(category, yrs, vals) {
       }
     );
     MSeriesExists = true;
+};
+
+function createFedDebtSeries(category, yrs, vals){
+  
+  Chart.defaults.font.family = "poppins, sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.elements.line.tension = 0.4;
+  Chart.defaults.color = 'white';
+  Chart.defaults.elements.point.radius = 3;
+
+  fedDebtChart = new Chart(
+    document.getElementById("debt-series-cht"),
+    {
+      type: 'line',
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        animation: {
+          duration: 2000,
+        },
+        interaction: { 
+          mode: 'x', //used for interactions based on x coord
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: "[Debt]",
+            font: {
+              weight: 'bold',
+              family: 'georgia sans-serif',
+              size: 17
+            }
+          },
+          customCanvasBackgroundColor: {
+            color: 'transparent',
+          },
+          legend: {
+            display: false,
+            labels:{
+              display: false,
+              usePointStyle: true,
+            },
+            title: {// legend title
+              display: false,
+              text: "",
+              font: {
+                size: 10,
+                weight: 'bold',
+              }
+            }
+          },
+          tooltip: {
+            enabled: true,
+            usePointStyle: true,
+            callbacks: {
+              // labelColor: function(context) {
+              //     return {
+              //         //borderColor: 'rgb(0, 0, 255)',
+              //         //backgroundColor: 'transparent',
+              //         borderWidth: 5,
+              //         //borderDash: [2, 2],
+              //         //borderRadius: 2,
+              //     };
+              // },
+              labelPointStyle: function(context) {
+                return {
+                    pointStyle: 'line',
+                };
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: true,
+              color: 'rgb(160, 51, 0)',
+              drawTicks: false,
+            }
+          },
+          y: {
+            grid: {
+              display: false,
+              color: 'rgb(160, 51, 0)',
+              drawTicks: false,
+            }
+          },
+        }
+      },
+      plugins: [ plugin ],
+      data: {
+        labels: yrs,  // x vals
+        datasets: [ 
+          {
+            label: category, //name of dataset 
+            data: vals, // y vals
+            backgroundColor: 'transparent',
+            borderColor: mySeriesColor.get(category),
+            //tension: 0.4
+          }
+        ],
+      }
+    }
+  );
 };
 
 function createOutlays(mylabels, mydata) {
@@ -459,14 +565,15 @@ function createOutlays(mylabels, mydata) {
         type: 'doughnut',
         //plugins: [ plugin ],
         data: {
-          labels: ['not avail'], //x-axis 
-          datasets: [ //y-axis 
+          labels: ['not avail'], 
+          datasets: [ 
             {
               data: [100],
               hoverOffset: 2,
               backgroundColor: myBkGrd,
               borderColor: 'white', 
-              borderRadius: 5
+              borderRadius: 2,
+              borderWidth: 1
             }
           ]
         },
@@ -497,14 +604,16 @@ function createOutlays(mylabels, mydata) {
         type: 'doughnut',
         //plugins: [ plugin ],
         data: {
-          labels: mylabels, //x-axis 
-          datasets: [ //y-axis 
+          labels: mylabels,
+          datasets: [ 
             {
               data: mydata,
               hoverOffset: 2,
               backgroundColor: myBkGrd,
               borderColor: 'white', 
-              borderRadius: 5
+              borderRadius: 2,
+              borderWidth: 1
+
             }
           ]
         },
@@ -542,23 +651,27 @@ function updateOutlaysLegend(year, classes, amounts){
       }
       else{
         dv.textContent = classes[i]
+        dv.setAttribute('class', 'parent-outlay')
       };
       
       const dv2 = document.createElement("div")
       dv2.textContent = amounts[i] + '%'; 
+      dv2.setAttribute('class', 'outlay-perct')
       //dv2.style.color = myBkGrd[i]; //note: background color array is constant
       ax.appendChild(dv);
       ax.appendChild(dv2);
     }
 
-    const outlay_yr = document.querySelector('.outlays-yr');
-    outlay_yr.textContent = year;
-    var subtitle = document.createElement("span");
-    subtitle.setAttribute("class", "subtitle");
-    var brk = document.createElement("br");
-    subtitle.textContent = 'percentages';
-    outlay_yr.appendChild(brk);
-    outlay_yr.appendChild(subtitle);
+    const outlay_yr = document.querySelector('.outlays-yr')
+    outlay_yr.textContent = year
+    const subtitle = document.createElement("span")
+    subtitle.setAttribute("class", "subtitle")
+    const brk = document.createElement("br")
+    subtitle.textContent = 'percentages'
+    outlay_yr.appendChild(brk)
+    outlay_yr.appendChild(subtitle)
+    add_listn_to_outlays_table()
+    auxTableModal()
 }
 
 function outlayYearModal(){
@@ -566,7 +679,6 @@ function outlayYearModal(){
   var modal = document.getElementById("options-modal");
   var btn = document.getElementById("tb2"); //year button @ outlays by class chart
   var span = document.getElementsByClassName("close")[0];
-  var modalOptions = document.querySelector(".options-modal-content");
 
   btn.onclick = function() { 
     modal.style.display = "block";
@@ -583,13 +695,10 @@ function outlayYearModal(){
   hd.appendChild(sp);
   hd2.append(dv);
 
-
-  //<span> (x), close the modal
   span.onclick = function() {
     modal.style.display = "none";
   }
 
-  //close modal
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
@@ -600,7 +709,7 @@ function outlayYearModal(){
 
 function update_outlayModal(years){
 
-  //Updates modal with available years of data
+  //Updates modal with "years" based on query
 
   const modalContent = document.querySelector(".modal-body");
   while (modalContent.firstChild){
@@ -619,100 +728,63 @@ function update_outlayModal(years){
 
 async function update_Outlays(date){
 
-  const setUrl = 'q-outlays-' + date;
-  const response = await fetch(setUrl); 
+  const myUrl = 'q-outlays-' + date;
+  const response = await fetch(myUrl); 
   const outlaysJsn = await response.text();
-  format_outlaysJSN(outlaysJsn, date);
+  const myOutlaysData = JSON.parse(outlaysJsn)
+  const myOutlays = JSON.parse(myOutlaysData[0])
+  const myOutlayYrTtl = JSON.parse(myOutlaysData[1])
+  const destroy = true
+  format_outlays(myOutlays, myOutlayYrTtl, date, destroy);
    
 }
 
-function format_outlaysJSN(myJSNStr, start){
+function format_outlays(outlays, yeartotal, start, destroy){
 
-  var cls_desc = [], outly_amt = [], gov_outlays, myData;
-  myData = JSON.parse(myJSNStr);
-  gov_outlays = JSON.parse(myData[0]);
-
-  var topTen = 0; 
-  var otherOtlyTtls = 0;
+  var cls_desc = [], outly_amt = []
+  var gov_outlays = outlays
+  
+  var topTen = 0
+  var otherOtlyTtls = 0
+  var idxCount = 0
   var OutlayTtls = 0
+  var classDescr
+  myTopOutlaysClassID = new Map()
+  myOtherOutlaysVals = []
+  myOtherOutlaysList = []
 
-  for(const idx in gov_outlays){
-    OutlayTtls += gov_outlays[idx]['amt'];
+  // Get year total
+  for(var idx in yeartotal){
+    OutlayTtls += yeartotal[idx]['year_ttl_all_cls'];
   }
 
-  for (const idx in gov_outlays){
-    if(topTen < 9){ //selects into array top 10 desc
-      cls_desc.push((gov_outlays[idx]['clsdesc']).replace('Total--', '')); //class description
-      outly_amt.push(Math.round((gov_outlays[idx]['amt'] / OutlayTtls) * 100)); 
+  // Get top 9 records
+  for (var idx in gov_outlays){
+    classDescr = (gov_outlays[idx]['clsdesc']).replace('Total--', '')
+    idxCount += 1;
+    if(topTen < 9){ 
+      cls_desc.push(classDescr) 
+      outly_amt.push(Number((gov_outlays[idx]['amt'] / OutlayTtls) * 100).toFixed(2)) // percentage
+      myTopOutlaysClassID.set(classDescr, gov_outlays[idx]['subclass_helper'] ) // Used to fetch drill down data
       topTen += 1;
     }
     else{
-      otherOtlyTtls += gov_outlays[idx]['amt']; //adds non top 10 to 'other'
+      otherOtlyTtls += gov_outlays[idx]['amt']; //adds non top 10 amounts into 'Other' category
+      myOtherOutlaysVals.push(gov_outlays[idx]['amt']) //used for otherOutlays drilldown
+      myOtherOutlaysList.push(gov_outlays[idx]['clsdesc']) // ...
     }
-  };
-  cls_desc.push('Other');
-  outly_amt.push(Math.round((otherOtlyTtls / OutlayTtls) * 100)); 
-
-  if(cls_desc.length = 10){
-    outlaysCht.destroy();
-    createOutlays(cls_desc, outly_amt);
-    updateOutlaysLegend(start, cls_desc, outly_amt);
   }
+
+  cls_desc.push('Other')
+  outly_amt.push(Number((otherOtlyTtls / OutlayTtls) * 100).toFixed(2)) // percentage
+
+  if(destroy){outlaysCht.destroy()} 
+  createOutlays(cls_desc, outly_amt)
+  updateOutlaysLegend(start, cls_desc, outly_amt)
+
 };
 
-window.addEventListener("load", (event) => {
-
-  //load intial datasets and charts 
-
-  const overview = document.querySelector('#mb-tab-1');
-  const Posts = document.querySelector('#mb-tab-2');
-  overview.style.backgroundColor = 'rgb(102, 1, 1)';
-  Posts.style.background = 'none';
-
-  initialDataSets();
-  outlayYearModal(); //generates modal
-
-  //adds years of available data to modal (years available a determined by intial query search)
-  var myYears = [];
-  var i = 0; 
-  if(myEndYr > myStartYr){
-    while ((myStartYr + i) < myEndYr) {
-      myYears.push(myStartYr + i);
-      i++;
-    };
-    myYears.push(myEndYr);
-  }
-  else{myYears.push(myStartYr)};
-  update_outlayModal(myYears); //updates modal with new years
-});
-
-function initialDataSets(noclick){
-
-  //adds additional initial datasets to gov expenditures series
-
-  SideLblListn();
-  firstInput.value = myStartYr;
-  secInput.value = myEndYr;
-  sidebarLbl.forEach((s)=>{
-    switch (s.textContent){
-      case 'personal savings':
-        s.style.backgroundColor = 'rgb(13, 13, 230)';
-        break;
-      case 'personal consumption':
-        s.style.backgroundColor = 'rgb(13, 13, 230)';
-        break;
-    }
-  })
-  if(noclick == true){//updates qryBtn event
-    updateQryClick();
-  }
-  else{
-    qryBtn.click()
-  }; 
-}
-
 function add_listn_to_years(years){
-    //adds event listeners to all years in modal
 
     var xx = document.getElementsByClassName("close")[0];
     years.forEach((y)=>{
@@ -723,472 +795,118 @@ function add_listn_to_years(years){
     });
 }
 
-async function getGovExpendPlus(categories, startyear, endyear){
+function add_listn_to_outlays_table(){
 
-  const my_qry_btn_url = 'q-expd-' + startyear + '/' + endyear;
-  const response = await fetch(my_qry_btn_url);
-  dataForChts = await response.text();
-  formatGovExpendPlus(dataForChts, categories);
-  
-}
+  const parentOutlay = document.querySelectorAll('.parent-outlay')
+  parentOutlay.forEach((p)=>{
+    p.addEventListener('click', ()=>{
 
-function formatGovExpendPlus(data, categories){
-  var myData = JSON.parse(data);
-  var govExpdPlus = JSON.parse(myData[0]);
-  var gdp = [], real_gdp = [], gross_domestic_income = [], personal_income = [], corp_profits = [], personal_consumption = [];
-  var real_personal_consumption = [], gov_consumption_and_investments = [], real_gov_consumption_and_investments = [], net_exports = [];
-  var exports = [], imports = [], real_net_exports = [], real_exports = [], real_imports = [], federal_debt = [], money_supply_m1 = [], personal_savings = [];
-  
-  for (const idx in govExpdPlus){
-    //year.push(govExpdPlus[idx]['year']);
-    //gov_expend.push(govExpdPlus[idx]['gov_expend']);
-    gdp.push(govExpdPlus[idx]['gdp']);
-    real_gdp.push(govExpdPlus[idx]['real_gdp']);
-    gross_domestic_income.push(govExpdPlus[idx]['gross_domestic_income']);
-    personal_income.push(govExpdPlus[idx]['personal_income']);
-    corp_profits.push(govExpdPlus[idx]['corp_profits']);
-    personal_consumption.push(govExpdPlus[idx]['personal_consumption']);
-    real_personal_consumption.push(govExpdPlus[idx]['real_personal_consumption']);
-    gov_consumption_and_investments.push(govExpdPlus[idx]['gov_consumption_and_investments']);
-    real_gov_consumption_and_investments.push(govExpdPlus[idx]['real_gov_consumption_and_investments']);
-    net_exports.push(govExpdPlus[idx]['net_exports']);
-    exports.push(govExpdPlus[idx]['exports']);
-    imports.push(govExpdPlus[idx]['imports']);
-    real_net_exports.push(govExpdPlus[idx]['real_net_exports']);
-    real_exports.push(govExpdPlus[idx]['real_exports']);
-    real_imports.push(govExpdPlus[idx]['real_imports']);
-    federal_debt.push(govExpdPlus[idx]['federal_debt']);
-    money_supply_m1.push(govExpdPlus[idx]['money_supply_m1']);
-    personal_savings.push(govExpdPlus[idx]['personal_savings']);
-  }
-
-  function getMyData(category){
-    const myDataArr = new Map();
-    myDataArr.set('gdp', gdp);
-    myDataArr.set('real_gdp', real_gdp);
-    myDataArr.set('gross_domestic_income', gross_domestic_income);
-    myDataArr.set('personal_income', personal_income);
-    myDataArr.set('corp_profits', corp_profits);
-    myDataArr.set('personal_consumption', personal_consumption);
-    myDataArr.set('real_personal_consumption', real_personal_consumption);
-    myDataArr.set('gov_consumption_and_investments', gov_consumption_and_investments);
-    myDataArr.set('real_gov_consumption_and_investments', real_gov_consumption_and_investments);
-    myDataArr.set('net_exports', net_exports);
-    myDataArr.set('exports', exports);
-    myDataArr.set('imports', imports);
-    myDataArr.set('real_net_exports', real_net_exports);
-    myDataArr.set('real_exports', real_exports);
-    myDataArr.set('real_imports', real_imports);
-    myDataArr.set('federal_debt', federal_debt);
-    myDataArr.set('money_supply_m1', money_supply_m1);
-    myDataArr.set('personal_savings', personal_savings);
-    return myDataArr.get(category);
-  }
-
-  //replace spaces with underscores (for sql query)
-  categories.forEach((c)=>{
-    var myTxt = c;
-    var qryCol = ''
-    var undrSr = "_"
-    for(const idx in myTxt){
-      if(myTxt[idx]== ' '){
-        qryCol += undrSr;
+      // Gets composition of outlay class (subclasses) and their values
+      if(p.textContent == 'Other'){
+        const otherOutlays = true
+        outlaysTblDrilldown(null, otherOutlays)
       }
       else{
-        qryCol += myTxt[idx];
+        outlaysTblDrilldown(myTopOutlaysClassID.get(p.textContent))
       }
-    };
-    addDataSets(MSeries, c, getMyData(qryCol), mySeriesColor.get(qryCol)); //qryCol replaces spaces(' ') in c.value with '_'
-  });
+    })
+  })
 }
 
-function SideLblListn(){
-  for (const lbl of sidebarLbl){
-    lbl.addEventListener('click', function(){
-      if (lbl.style.backgroundColor != 'rgb(13, 13, 230)'){
-        lbl.style.backgroundColor = 'rgb(13, 13, 230)';
+async function outlaysTblDrilldown(classID, otherOutlays){
+
+  const tableHeader = document.querySelector('.aux-table-modal-header')
+  const rowSect = document.querySelector('.aux-table-modal-rows')
+  let drilldown
+
+  while(rowSect.firstChild){
+    rowSect.removeChild(rowSect.firstChild)
+  }
+
+  if(otherOutlays){}
+  else{
+    const drilldownReq = await fetch(`q-outlays-drilldown-${classID}`)
+    const drilldownTxt = await drilldownReq.text()
+    const drilldownData = JSON.parse(drilldownTxt)
+    drilldown = JSON.parse(drilldownData[0])
+  }
+
+  if(otherOutlays){
+    tableHeader.textContent = 'Other Expenditures'
+    for(const idx in myOtherOutlaysList){
+      const dv = document.createElement("div")
+      dv.setAttribute('class', 'aux-table-modal-row')
+      dv.textContent = myOtherOutlaysList[idx]
+      const dv2 = document.createElement("div")
+      dv2.setAttribute('class', 'aux-table-modal-row')
+      dv2.textContent = new Intl.NumberFormat().format(myOtherOutlaysVals[idx])
+      rowSect.appendChild(dv)
+      rowSect.appendChild(dv2)
+    }
+  }
+  else{
+    tableHeader.textContent = (drilldown[0]['parent_cls_desc']).replace(':', '')
+    for(const idx in drilldown){
+      const dv = document.createElement("div")
+      dv.setAttribute('class', 'aux-table-modal-row')
+      const dv2 = document.createElement("div")
+      dv2.setAttribute('class', 'aux-table-modal-row')
+
+      const ttl = /Total/
+      const colon = /:/
+      if(ttl.test(drilldown[idx]['classification_description'])){
+        dv.style.color = 'lightcoral'
+        dv2.style.color = 'lightcoral'
+        dv.textContent = drilldown[idx]['classification_description']
       }
-      else{
-        lbl.style.backgroundColor = "";
+      else {
+        if(!colon.test(drilldown[idx]['classification_description'])){ // To avoid subclass headers
+          if(Number(drilldown[idx]['amt']) != 0){
+            dv.textContent = drilldown[idx]['classification_description']
+          }
+        }
+        else{ 
+          dv.textContent = drilldown[idx]['classification_description']
+          if(colon.test(drilldown[idx]['classification_description'])){ // subclass headers
+              dv.style.color = 'rgb(188, 188, 0)'
+          }
+        }
       }
-    });
+      if(Number(drilldown[idx]['amt']) != 0){ // To exclude nulls
+          dv2.textContent = new Intl.NumberFormat().format(drilldown[idx]['amt'])  
+      }
+      rowSect.appendChild(dv)
+      rowSect.appendChild(dv2)
+    }
   }
 }
 
-function updateQryClick(){
+function auxTableModal(){ 
 
-  outlayYearModal();
-  qryBtn.addEventListener("click", async function(){
-    var userinp1 = Number(firstInput.value) ;
-    var userinp2 = Number(secInput.value);
-    if(userinp1 + 0 == 0){
-      window.alert('Please enter a start year.');
-    }
-    else if(userinp2 ==0){
-      window.alert('Please enter an end year.')
-    }
-    else if(userinp1 > userinp2){ 
-      window.alert('Invalid year range.');
-    }
-    else{
-        if(userinp1 > userinp2){
-          window.alert('Invalid year range.');
-        }
-        else if(userinp1 < 1960){
-          window.alert('Data available 1960-2023.');
-        }
-        else if(userinp2 > 2023){
-          window.alert('Data available 1960-2023.');
-        }
-        else{
-          var getStartYr = 0;
-          var getEndYr = 0;
-          getStartYr += Number(firstInput.value);
-          getEndYr += Number(secInput.value);
+  const modal = document.querySelector('#aux-modal')
+  const parentOutlay = document.querySelectorAll('.parent-outlay')
+  const auxModalClose = document.querySelector('.aux-table-modal-close')
+  
+  parentOutlay.forEach((p)=>{
+    p.addEventListener('click', ()=>{
+      modal.style.display = "block"
+    })
+  })
 
-          //adjust year range for certain user inputs
-          if(getEndYr == 0){
-            if(getStartYr == Number(curYr)){
-              getStartYr -= 3;
-              getEndYr = Number(curYr);
-            }
-            else{
-              getEndYr = Number(curYr);
-            }
-          }
-          if(getStartYr == getEndYr){
-            getStartYr -=5;
-          }
-        
-          const my_qry_btn_url = 'q-' + getStartYr + '/' + getEndYr;
-          const response = await fetch(my_qry_btn_url);
-          dataForChts = await response.text();
-          formatJSN(dataForChts, getStartYr);
-        
-          //adds years of available data to modal (years available determined by initial query search)
-          var myYears = [];
-          var i = 0; 
-          if(getEndYr > getStartYr){
-            while ((getStartYr + i) < getEndYr) {
-              myYears.push(getStartYr + i);
-              i++;
-            };
-            myYears.push(getEndYr);
-          }
-          else{myYears.push(getStartYr)};
-          update_outlayModal(myYears);
-        
-          //add selected datasets in sidebar to array for query
-          var myCat = [] //array of category names
-          for (const lbl of sidebarLbl){
-              if (lbl.style.backgroundColor == 'rgb(13, 13, 230)'){
-                myCat.push(extractContent(lbl.textContent));
-              }
-          }
-          getGovExpendPlus(myCat, getStartYr, getEndYr);
-          sidebarClose.click();
-          window.scrollTo(0, 0);
-        }
+  auxModalClose.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
-    
-  });
-  qryBtn.click();
+  }
+
+  document.addEventListener('click', (event)=>{
+    if(event.target == modal){
+      modal.style.display = "none"
+    }
+  })
+
 };
-
-/////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////
-/////////////////////
-//////////
-
-// function mySeriesColor(category){
-//   const mySeriesBackGrounds = new Map();
-//   mySeriesBackGrounds.set('year', 'rgb(255, 157, 255)')
-//   mySeriesBackGrounds.set('gov_expend', 'rgb(7, 179, 247)')
-//   mySeriesBackGrounds.set('gdp', 'rgb(242, 138, 58)')
-//   mySeriesBackGrounds.set('real_gdp', 'rgb(91, 79, 91)')
-//   mySeriesBackGrounds.set('gross_domestic_income', 'rgb(52, 146, 146)')
-//   mySeriesBackGrounds.set('personal_income', 'rgb(218, 172, 112)')
-//   mySeriesBackGrounds.set('corp_profits', 'rgb(0, 80, 146)')
-//   mySeriesBackGrounds.set('personal_consumption', 'rgb(79, 234, 156)')
-//   mySeriesBackGrounds.set('real_personal_consumption', 'rgb(20, 2, 141)')
-//   mySeriesBackGrounds.set('gov_consumption_and_investments', 'rgb(135, 169, 183)')
-//   mySeriesBackGrounds.set('real_gov_consumption_and_investments', 'rgb(160, 51, 0)')
-//   mySeriesBackGrounds.set('net_exports', 'rgb(138, 43, 226)')
-//   mySeriesBackGrounds.set('exports', 'rgb(165, 42, 42)')
-//   mySeriesBackGrounds.set('imports', 'rgb(220, 20, 60)')
-//   mySeriesBackGrounds.set('real_net_exports', 'rgb(210, 105, 30)')
-//   mySeriesBackGrounds.set('real_exports', 'rgb(0, 0, 139)')
-//   mySeriesBackGrounds.set('real_imports', 'rgb(0, 100, 0)')
-//   mySeriesBackGrounds.set('federal_debt', 'rgb(85, 107, 47)')
-//   mySeriesBackGrounds.set('money_supply_m1', 'rgb(72, 61, 139)')
-//   mySeriesBackGrounds.set('personal_savings', 'rgb(255, 20, 147)')
-//   mySeriesBackGrounds.set('CPI', 'black')
-//   return mySeriesBackGrounds.get(category);
-// }
-
-// function addDataSetsX(chart, label, newData) {
-//   chart.data.datasets.push( 
-//     {
-//       label: label,
-//       data: newData,
-//       borderColor: mySeriesColor.get(label),
-//     }
-//   );
-//   chart.update();
-// }
-
-// function createStackedBar(categories, yrs, vals, canvas, title) {
-
-//   //two story stack bar
-
-//   Chart.defaults.font.family = "poppins, sans-serif";
-//   Chart.defaults.font.size = 13;
-//   Chart.defaults.color = 'white';
-
-//   const data = {
-//     labels: yrs,
-//     datasets: [ //smallest dataset to largest
-//       {
-//         label: categories[1], 
-//         data:  vals[1],
-//         backgroundColor: mySeriesColor.get(categories[1]),
-//         borderWidth: 1
-//       },
-//       {
-//         label: categories[0],
-//         data: vals[0],
-//         backgroundColor: mySeriesColor.get(categories[0]),
-//         borderWidth: 1,
-//       },
-//     ]
-//   };
-
-//   const newChart = new Chart(
-
-//       canvas,
-//     {
-//       type: 'bar',
-//       data: data,
-//       options: {
-//         plugins: {
-//           title: {
-//             display: true,
-//             text: title
-//           },
-//         },
-//         responsive: true,
-//         maintainAspectRatio: false,
-//         scales: {
-//           x: {
-//             stacked: true,
-//           },
-//           y: {
-//             stacked: true,
-//           }
-//         }
-//       }
-//     }
-//   )
-// }
-
-// function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels, title) {
-  
-//     Chart.defaults.font.family = "poppins, sans-serif"; //"Times, 'Times New Roman', serif, Georgia";
-//     Chart.defaults.font.size = 13;
-//     Chart.defaults.elements.line.tension = 0.4;
-//     Chart.defaults.color = 'white';
-//     Chart.defaults.elements.point.radius = 2; //point radius on line
-
-//     const newChart = new Chart(
-//         canvas,
-//       {
-//         type: 'line',
-//         options: {
-//           maintainAspectRatio: false,
-//           responsive: true,
-//           animation: {
-//             duration: 2000,
-//           },
-//           interaction: { 
-//             mode: 'x', //used for interactions based on x coord
-//           },
-//           plugins: {
-//             customCanvasBackgroundColor: {
-//               color: 'rgb(32, 32, 32)',
-//             },
-//             legend: {
-//               display: true,
-//               labels:{
-//                 usePointStyle: true,
-//               },
-//               title: {
-//                 display: true,
-//                 text: title,
-//                 font: {
-//                   weight: 'bold',
-//                 },
-//                 padding: 10,
-//               }
-//             },
-//             tooltip: {
-//               enabled: true,
-//               usePointStyle: true, 
-//               callbacks: {
-//                 // labelColor: function(context) {
-//                 //     return {
-//                 //         //borderColor: 'rgb(0, 0, 255)',
-//                 //         //backgroundColor: 'transparent',
-//                 //         borderWidth: 5,
-//                 //         //borderDash: [2, 2],
-//                 //         //borderRadius: 2,
-//                 //     };
-//                 // },
-//                 labelPointStyle: function(context) {
-//                   return {
-//                       pointStyle: 'line',
-//                   };
-//                 }
-//               }
-//             },
-//             // colors: { 
-//             //     forceOverride: true // uses default colors for each dataset
-//             // }
-//           },
-//           scales: {
-//             x: {
-//               grid: {
-//                 display: true,
-//                 color: 'lightcoral',
-//                 drawTicks: false,
-//               }
-//             },
-//             y: {
-//               grid: {
-//                 display: false,
-//                 color: 'lightgray',
-//                 drawTicks: false,
-//               }
-//             },
-//           }
-//         },
-//         plugins: [ plugin ],
-//         data: {
-//           labels: yrs,  
-//           datasets: [ 
-//             {
-//               label: category, //name of dataset 
-//               data: vals,
-//               backgroundColor: 'transparent',
-//               borderColor: mySeriesColor.get(category),
-//             }
-//           ],
-//         }
-//       }
-//     );
-
-//     //addSets --nested list, addLabels--list, should be of same length (one label for each nested list)
-//     for (const idx in addSets){
-//         addDataSetsX(newChart, addLabels[idx], addSets[idx])
-//     }
-
-// };
-
-// async function getPosts(){
-
-//   const allPostsReq = await fetch('posts/getposts')
-//   const allPostsTxt = await allPostsReq.text()
-//   const postsData = JSON.parse(allPostsTxt)
-//   const allPosts = JSON.parse(postsData[0])
-//   let scriptID
-//   const ht = document.querySelector('html')
-//   //const myURL = (ht.baseURI).replace('/test/', '')
-//   let appdPost = document.querySelector('.append-post')
-
-//   // Loops through posts data and updates HTML
-//   for (const idx in allPosts){
-//       const postDiv = document.createElement('div')
-//       const appendPostDiv = document.createElement('div')
-//       appendPostDiv.setAttribute('class', 'append-post')
-//       let myCharts
-//       postDiv.innerHTML =`
-//       <div class="post-details-container">
-//           <div class="post-details">
-//               <div class="post-date">Date:</br>${allPosts[idx]['post_date']}</div></br>
-//           </div>
-//           <div class="post-title-container">
-//               <div class="post-title">${allPosts[idx]['title']}</div>
-//               <div class="post-description">${allPosts[idx]['post_description']}</div>
-//           </div>
-//       </div>
-//       <div class="content-container">
-//           <div class="post-post">${allPosts[idx]['post']}</div>
-//       </div>
-//       <div class="chart-n-details">
-//           <div class="post-chart-container">
-//               <canvas class="post-chart"></canvas>
-//           </div>
-//           <div class="post-chart-details-container">
-//               <canvas class="post-chart-details"></canvas>
-//           </div>   
-//       </div>
-//       `
-//       // Adds element to append additional posts to 
-//       postDiv.append(appendPostDiv);
-
-//       scriptID = `${allPosts[idx]['script_id']}`
-//       let myScriptNum = parseInt(scriptID)
-//       let canvasElem = postDiv.querySelector('.post-chart')
-//       let canvasElem2 = postDiv.querySelector('.post-chart-details')
-
-//       async function getChartScripts(scriptID, canvas, canvas2){
-//       const chartData = await fetch(`posts/charts-${scriptID}`)
-//           const chartDataTxt = await chartData.text()
-//           const chartDataJsn = JSON.parse(chartDataTxt)
-//           myCharts = assocCharts(scriptID, chartDataJsn, canvas, canvas2)
-//       }
-//       getChartScripts(myScriptNum, canvasElem, canvasElem2)
-
-//       // Appends postDiv to last appdPost. Reassigns appdPost.
-//       appdPost.append(postDiv)
-//       appdPost = postDiv.querySelector('.append-post')
-//   }
-//   window.scrollTo(0, 0)
-// }
-
-// function assocCharts(scriptID, JSONdata, canvas, canvas2){
-
-//   //scriptID = scriptID from SQL table. 
-//   //Functions written under each switch case below should be relevant to the record fetched from SQL table
-
-//   switch(scriptID){
-//       case 1:
-//          const normsJSN = JSON.parse(JSONdata[0])
-//          const datasetJSN = JSON.parse(JSONdata[2])
-//          const normsYr = [], normsSav = [], normsConsump = [], normsMI = [], normsCPI = []
-//          for(const idx in normsJSN){
-//           normsYr.push(normsJSN[idx]['Year'])
-//           normsSav.push(normsJSN[idx]['Savings'])
-//           normsConsump.push(normsJSN[idx]['Consumption'])
-//           normsMI.push(normsJSN[idx]['M1'])
-//           normsCPI.push(normsJSN[idx]['CPI'])
-//          }
-         
-//          const myAdditionalSets = [normsConsump, normsMI, normsCPI]
-//          const myAdditionalLabels = ['personal_consumption', 'money_supply_m1', 'CPI']
-//          createTimeSeries('personal_savings', normsYr, normsSav, canvas, myAdditionalSets, myAdditionalLabels, 'NORMALIZED DATASETS')
-
-//          const actualPersonalConsump = [], actualPersonalSav = [], actualPersonalInc = []
-//          for(const idx in datasetJSN){
-//           actualPersonalConsump.push(datasetJSN[idx]['pce'])
-//           actualPersonalSav.push(datasetJSN[idx]['personal_saving'])
-//           actualPersonalInc.push(datasetJSN[idx]['personal_income'])
-//          }
-
-//          //order items for stacked bar chart from largest to smallest
-//          const myStackedLabels = ['personal_consumption', 'personal_savings']
-//          const myStackedvals = [actualPersonalConsump, actualPersonalSav]
-//          createStackedBar(myStackedLabels, normsYr, myStackedvals, canvas2, 'CONSUMPTION VS SAVING | in billions | USD')
-//   }
-// }
-
-

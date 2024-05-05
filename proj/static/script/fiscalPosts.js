@@ -2,15 +2,12 @@ import { assocCharts } from './assocCharts.js'
 
 export async function getPosts(){
 
-    //const getBaseURL = (document.baseURI).replace('test', '')
-    //const allPostsReq = await fetch(getBaseURL + 'fiscal/posts/getposts')
     const allPostsReq = await fetch('posts/getposts')
     const allPostsTxt = await allPostsReq.text()
     const postsData = JSON.parse(allPostsTxt)
     const allPosts = JSON.parse(postsData[0])
     let scriptID
     const ht = document.querySelector('html')
-    //const myURL = (ht.baseURI).replace('/test/', '')
     let appdPost = document.querySelector('.append-post')
 
     // Loops through posts data and updates HTML

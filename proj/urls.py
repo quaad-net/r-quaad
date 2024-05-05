@@ -21,6 +21,7 @@ urlpatterns = [
     re_path(r'^fiscal/q-(?P<startDate>\d+)/' + r'(?P<endDate>\d+)', views.fiscalquery, name='fiscalquery'),
     re_path(r'^fiscal/q-idx-(?P<startDate>\d+)/' + r'(?P<endDate>\d+)', views.price_index, name= 'price_index'),
     re_path(r'^fiscal/q-outlays-(?P<year>\d+)', views.update_outlays, name= 'outlays'),
+    re_path(r'^fiscal/q-outlays-drilldown-(?P<classID>\d+)', views.gov_outlays_tbl_drilldown),
     path('projects/', views.projects, name= 'projects'),
     path('test/', views.test, name= 'test'),
     re_path(r'^.*/$', views.handler500),

@@ -5,7 +5,7 @@
 }
 
 .posts-core-items{
-    width: 75vw;
+    max-width: 75%;
     margin: auto;
 }
 

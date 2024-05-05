@@ -1,12 +1,12 @@
 #python files
 __pycache__
 .env
-fiscal_post.py
 qdev.py
 uqntdb.py
 venv
 xsettings.py
 xviews.py
+xurls.py
 wip.py
 
 # Django files
@@ -14,6 +14,8 @@ db.sqlite3
 staticfiles/
 
 #HTML
+xindex.html
+xmain.html
 xprojects_generic.html
 
 # macOS files
@@ -32,3 +34,5 @@ test.css
 test.html
 test.js
 .vscode
+
+#db scripts

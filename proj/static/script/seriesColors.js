@@ -16,9 +16,14 @@ mySeriesColor.set('imports', 'rgb(220, 20, 60)')
 mySeriesColor.set('real_net_exports', 'rgb(210, 105, 30)')
 mySeriesColor.set('real_exports', 'rgb(0, 0, 139)')
 mySeriesColor.set('real_imports', 'rgb(0, 100, 0)')
-mySeriesColor.set('federal_debt', 'rgb(85, 107, 47)')
+mySeriesColor.set('federal_debt', 'rgb(149, 220, 25)')
 mySeriesColor.set('money_supply_m1', 'rgb(72, 61, 139)')
 mySeriesColor.set('personal_savings', 'rgb(255, 20, 147)')
 mySeriesColor.set('CPI', 'black')
 export { mySeriesColor }
 //mySeriesColor.get(category);
+
+export const myBkGrd = [
+    'rgb(138, 43, 226)', 'rgb(165, 42, 42)', 'rgb(220, 20, 60)', 'rgb(210, 105, 30)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)', 'rgb(85, 107, 47)',
+    'rgb(72, 61, 139)', 'rgb(255, 20, 147)', 'rgb(255, 0, 255)'
+]

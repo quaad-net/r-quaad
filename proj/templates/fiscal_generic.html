@@ -8,10 +8,6 @@
         <link rel="stylesheet" href= "{% static '/css/fiscalquery.css' %}"/>
         <link rel="stylesheet" href= "{% static '/css/fiscal_posts.css' %}"/>
         <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" ></script>
-        {% comment %} <script src= "{% static '/script/seriesColors.js' %}"></script>
-        <script src= "{% static '/script/jsCharts.js' %}"></script>
-        <script src= "{% static '/script/assocCharts.js' %}"></script>
-        <script src= "{% static '/script/fiscalPosts.js' %}"></script> {% endcomment %}
         <script type="module" src= "{% static '/script/fiscalquery.js' %}"></script>
         {% block script_n_style %}
         {% endblock %}
@@ -26,42 +22,23 @@
     </div>
     <div class="core">
         <div class="sidebar">
-            <img class= "icon-logo" src= "{% static '/img/icons8-us-dollar.svg' %}" width= 30px></img>
-            <div class="logo">FiscalQuery</div>
             <span class="sidebar-close">&times;</span>
+            <div class="logo-n-icon">
+                <img class= "icon-logo" src= "{% static '/img/icons8-us-dollar.svg' %}" width= 30px></img>
+                <div class="logo">FiscalQuery</div>
+            </div> 
             <div class="divider"></div>
             {% block sidebar_items %}
                 <div class="sidebar-items">
                     <div class="field">
                         <span id= "field-items">
                             <div class="textInputWrapper">
-                                <input id="input-1" placeholder="yyyy" type="text" class="textInput"maxlength="4"/>
+                                <input id="input-1" placeholder="YYYY" type="text" class="textInput"maxlength="4"/>
                             </div>
                             <div class="textInputWrapper">
-                                <input id="input-2" placeholder="yyyy" type="text" class="textInput" maxlength="4"/>
+                                <input id="input-2" placeholder="YYYY" type="text" class="textInput" maxlength="4"/>
                             </div>
                         </span>
-                    </div>
-                    <div class="datasets-list-hdr">Additional Datasets</div>
-                    <div class="dataset-lbl-wrapper">
-                        <div class="sidebar-lbl">corp profits</div>
-                        <div class="sidebar-lbl">exports</div>
-                        <div class="sidebar-lbl">federal debt</div>
-                        <div class="sidebar-lbl">gdp</div>
-                        <div class="sidebar-lbl">gov consumption and investments</div>
-                        <div class="sidebar-lbl">gross domestic income</div>
-                        <div class="sidebar-lbl">imports</div>
-                        <div class="sidebar-lbl">money supply m1</div>
-                        <div class="sidebar-lbl">net exports</div>
-                        <div class="sidebar-lbl">personal consumption</div>
-                        <div class="sidebar-lbl">personal income</div>
-                        <div class="sidebar-lbl">personal savings</div>
-                        <div class="sidebar-lbl">real exports</div>
-                        <div class="sidebar-lbl">real gdp</div>
-                        <div class="sidebar-lbl">real gov consumption and investments</div>
-                        <div class="sidebar-lbl">real imports</div>
-                        <div class="sidebar-lbl">real net exports</div>
-                        <div class="sidebar-lbl">real personal consumption</div>
                     </div>
                     <div>
                         <button type ="button" id= "qryBtn">Search</button>
@@ -72,14 +49,21 @@
         </div>
         {% block core_items %}
             <div class="core-items">
-                <div class="main-title"></br>U.S. GOV'T EXPENDITURES</br>
+                <div class="main-title"></br>U.S. Gov't Fiscal Data</br>
                     <div class="subtitle">in billions | nominal</div>
-                    <!--<img class="main-title-icon" src= "{% static '/img/icons8-government.svg' %}" width=30px />-->
-                    <div class="main-title-line"></di>
                 </div>
-                <div class="main-series">
-                    <div class= "chartcontainer">
-                        <canvas id="MainSeriesCht"></canvas>
+                <div class="expd-n-debt">
+                    <div class="main-series" id="main-series-1">
+                        <img class="helper-icon" id="hlpr-USGovExpenditures" src= "{% static '/img/icons8-help.svg' %}" width=25px/>
+                        <div class= "chartcontainer">
+                            <canvas id="MainSeriesCht"></canvas>
+                        </div>
+                    </div>
+                    <div class="main-series" id="main-series-2">
+                        <img class="helper-icon" id="hlpr-USGovDebt" src= "{% static '/img/icons8-help.svg' %}" width=25px/>
+                        <div class= "debt-chartcontainer">
+                            <canvas id="debt-series-cht"></canvas>
+                        </div>
                     </div>
                 </div>
                 <div class="outlays-n-aux">
@@ -98,7 +82,8 @@
                     </div>
                     <div class="aux1-header">
                         <div class="aux1-header-items">
-                            <div id="aux1-title">Expenditure<br/></div>
+                            <img class="helper-icon" id="hlpr-USGovOutlays" src= "{% static '/img/icons8-help.svg' %}" width=25px/>
+                            <div id="aux1-title"><br/></br></div>
                             <div class="subtitle" id="aux1-subtitle">Class Details</div>
                         </div>
                     </div>
@@ -117,6 +102,16 @@
                 </div>
                 <div class="modal-footer">
                     <p></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="aux-modal">
+            <div class="aux-table-modal">
+                <div class="aux-table-modal-data">
+                    <span class="aux-table-modal-close">&times;</span>
+                    <div class="aux-table-modal-header"></div>
+                    <div class="aux-table-modal-rows">
+                    </div>
                 </div>
             </div>
         </div>

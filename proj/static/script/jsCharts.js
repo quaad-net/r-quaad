@@ -88,7 +88,7 @@ export function createTimeSeries(category, yrs, vals, canvas, addSets, addLabels
           },
           plugins: {
             customCanvasBackgroundColor: {
-              color: 'rgb(32, 32, 32)',
+              color: 'transparent',
             },
             legend: {
               display: true,
