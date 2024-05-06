@@ -21,12 +21,10 @@ export function createModal(btnID, title){
   hd2.append(dv);
 
 
-  //<span> (x), close the modal
   span.onclick = function() {
     modal.style.display = "none";
   }
 
-  //close modal
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";

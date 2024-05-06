@@ -14,28 +14,7 @@ else:
     from . import uqntdb as udb
     engine = db.create_engine(f"mssql+pymssql://{udb.UQNT_USER}:{udb.UQNT_PASS}@{udb.UQNT_SERVER}:1433/{udb.UQNT_DB}")
 
-def index(request):
-
-    try:
-        return render(request, 'main.html')
-    except:
-        if IS_HEROKU_APP:
-            response = render(request, 'handler500.html')
-            response.status_code = 500
-            return response
-
-def projects(request):
-
-    try:
-        if IS_HEROKU_APP:
-            raise('err')
-        return render(request, 'projects_generic.html')
-    except:
-        if IS_HEROKU_APP:
-            response = render(request, 'handler500.html')
-            response.status_code = 500
-            return response
-        
+   
 def fiscal(request):
 
     try:
@@ -91,106 +70,6 @@ async def fiscalquery(request, startDate, endDate):
             response.status_code = 500
             return response
 
-async def update_outlays(request, year):
-
-    try:
-        cnxn = engine.connect()
-        
-        gov_outlays_1 = f'select fiscal_year, classification_description as clsdesc, parent_cls_desc, subclass_helper, current_fiscal_year_to_date_gross_outlays_amount '
-        gov_outlays_2 = f"as amt from gov_outlays_q4_w_helpers where fiscal_year = {year} and classification_description like 'Total--%' "
-        gov_outlays_3 = f'and Sequence_Level_Number = 2 and current_fiscal_year_to_date_gross_outlays_amount > 0 '
-        gov_outlays_4 = f'order by current_fiscal_year_to_date_gross_outlays_amount desc'
-        gov_outlays = gov_outlays_1 + gov_outlays_2 + gov_outlays_3 + gov_outlays_4
-        gov_outlays_df = pd.read_sql(gov_outlays, cnxn)
-        gov_outlays_jsn = gov_outlays_df.to_json(orient='records')
-
-        year_ttl_all_cls_1 = f"select sum(current_fiscal_year_to_date_gross_outlays_amount) as year_ttl_all_cls from gov_outlays_q4_w_helpers where fiscal_year = {year} and classification_description like 'Total--%' " 
-        year_ttl_all_cls_2 = f'and Sequence_Level_Number = 2 and current_fiscal_year_to_date_gross_outlays_amount > 0'
-        year_ttl_all_cls = year_ttl_all_cls_1 + year_ttl_all_cls_2
-        year_ttl_all_cls_df = pd.read_sql(year_ttl_all_cls, cnxn)
-        year_ttl_all_cls_jsn = year_ttl_all_cls_df.to_json(orient='records')
-        allObjs = [gov_outlays_jsn, year_ttl_all_cls_jsn]
-
-        cnxn.close()
-        return JsonResponse(allObjs, safe= False)
-    except:
-        if IS_HEROKU_APP:
-            response = render(request, 'handler500.html')
-            response.status_code = 500
-            return response
-
-async def gov_expend_plus(request, startDate, endDate):
-    
-    try:
-        cnxn = engine.connect()
-        gov_expend = f'select * from gov_expend_set where date between {startDate} and {endDate};' 
-        gov_expend_df = pd.read_sql(gov_expend, cnxn)
-        gov_expend_jsn = gov_expend_df.to_json(orient='records')
-        allObjs = [gov_expend_jsn]
-        cnxn.close()
-        return JsonResponse(allObjs, safe=False)
-    except:
-        if IS_HEROKU_APP:
-            response = render(request, 'handler500.html')
-            response.status_code = 500
-            return response
-
-async def price_index(request, startDate, endDate):
-
-    try:
-        if IS_HEROKU_APP:
-            raise('err')
-        cnxn = engine.connect()
-        price_index = f'select year(date) as yr, round(cpiaucsl, 2) as cpiaucsl, round(CSUSHPINSA, 2) as CSUSHPINSA, round(HLTHSCPIMEPS, 2) as HLTHSCPIMEPS, round(IPMAN, 2) as IPMAN, round(PPIACO , 2) as PPIACO from price_idx where year(date) between {startDate} and {endDate};'
-        price_index_df = pd.read_sql(price_index, cnxn)
-        price_index_jsn = price_index_df.to_json(orient='records')
-        allObjs = [price_index_jsn]
-        cnxn.close()
-        return JsonResponse(allObjs, safe=False)
-    except:
-        if IS_HEROKU_APP:
-            response = render(request, 'handler500.html')
-            response.status_code = 500
-            return response
-
-async def get_posts(request):
-
-    try:
-        cnxn = engine.connect()
-        my_posts_qry = """
-        select format(post_date, 'MM/dd/yyyy') as post_date, 
-        post_time,title, post_description, post, id, script_id from posts
-        order by post_date desc, post_time desc
-        """
-        get_posts_df = pd.read_sql(my_posts_qry, cnxn)
-        get_posts_jsn = get_posts_df.to_json(orient='records')
-        allObjs = [get_posts_jsn]
-        cnxn.close()
-        return JsonResponse(allObjs, safe=False)
-    except:
-        if IS_HEROKU_APP:
-            response = render(request, 'handler500.html')
-            response.status_code = 500
-            return response
-
-def handler404(request, exception):
-    response = render(request, 'handler404.html')
-    response.status_code = 404
-    return response
-
-def handler500(request):
-    response = render(request, 'handler500.html')
-    response.status_code = 500
-    return response
-
-def test(request):
-    if IS_HEROKU_APP:
-        response = render(request, 'handler500.html')
-        response.status_code = 500
-        return response
-    else:
-        return render(request, 'test.html')
-    
 def get_assoc_chts(request, scriptID):
 
     try:
@@ -252,6 +131,42 @@ def get_assoc_chts(request, scriptID):
             response.status_code = 500
             return response
 
+async def gov_expend_plus(request, startDate, endDate):
+    
+    try:
+        cnxn = engine.connect()
+        gov_expend = f'select * from gov_expend_set where date between {startDate} and {endDate};' 
+        gov_expend_df = pd.read_sql(gov_expend, cnxn)
+        gov_expend_jsn = gov_expend_df.to_json(orient='records')
+        allObjs = [gov_expend_jsn]
+        cnxn.close()
+        return JsonResponse(allObjs, safe=False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
+async def get_posts(request):
+
+    try:
+        cnxn = engine.connect()
+        my_posts_qry = """
+        select format(post_date, 'MM/dd/yyyy') as post_date, 
+        post_time,title, post_description, post, id, script_id from posts
+        order by post_date desc, post_time desc
+        """
+        get_posts_df = pd.read_sql(my_posts_qry, cnxn)
+        get_posts_jsn = get_posts_df.to_json(orient='records')
+        allObjs = [get_posts_jsn]
+        cnxn.close()
+        return JsonResponse(allObjs, safe=False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
 def gov_outlays_tbl_drilldown(request, classID):
 
     try:
@@ -269,3 +184,61 @@ def gov_outlays_tbl_drilldown(request, classID):
             response = render(request, 'handler500.html')
             response.status_code = 500
             return response
+
+def index(request):
+
+    try:
+        return render(request, 'main.html')
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
+async def update_outlays(request, year):
+
+    try:
+        cnxn = engine.connect()
+        
+        gov_outlays_1 = f'select fiscal_year, classification_description as clsdesc, parent_cls_desc, subclass_helper, current_fiscal_year_to_date_gross_outlays_amount '
+        gov_outlays_2 = f"as amt from gov_outlays_q4_w_helpers where fiscal_year = {year} and classification_description like 'Total--%' "
+        gov_outlays_3 = f'and Sequence_Level_Number = 2 and current_fiscal_year_to_date_gross_outlays_amount > 0 '
+        gov_outlays_4 = f'order by current_fiscal_year_to_date_gross_outlays_amount desc'
+        gov_outlays = gov_outlays_1 + gov_outlays_2 + gov_outlays_3 + gov_outlays_4
+        gov_outlays_df = pd.read_sql(gov_outlays, cnxn)
+        gov_outlays_jsn = gov_outlays_df.to_json(orient='records')
+
+        year_ttl_all_cls_1 = f"select sum(current_fiscal_year_to_date_gross_outlays_amount) as year_ttl_all_cls from gov_outlays_q4_w_helpers where fiscal_year = {year} and classification_description like 'Total--%' " 
+        year_ttl_all_cls_2 = f'and Sequence_Level_Number = 2 and current_fiscal_year_to_date_gross_outlays_amount > 0'
+        year_ttl_all_cls = year_ttl_all_cls_1 + year_ttl_all_cls_2
+        year_ttl_all_cls_df = pd.read_sql(year_ttl_all_cls, cnxn)
+        year_ttl_all_cls_jsn = year_ttl_all_cls_df.to_json(orient='records')
+        allObjs = [gov_outlays_jsn, year_ttl_all_cls_jsn]
+
+        cnxn.close()
+        return JsonResponse(allObjs, safe= False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
+# Error and Testing
+
+def handler404(request, exception):
+    response = render(request, 'handler404.html')
+    response.status_code = 404
+    return response
+
+def handler500(request):
+    response = render(request, 'handler500.html')
+    response.status_code = 500
+    return response
+
+def test(request):
+    if IS_HEROKU_APP:
+        response = render(request, 'handler500.html')
+        response.status_code = 500
+        return response
+    else:
+        return render(request, 'test.html')

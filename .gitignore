@@ -1,38 +1,20 @@
 #python files
 __pycache__
 .env
-qdev.py
-uqntdb.py
 venv
-xsettings.py
-xviews.py
-xurls.py
-wip.py
 
 # Django files
 db.sqlite3
 staticfiles/
 
-#HTML
-xindex.html
-xmain.html
-xprojects_generic.html
-
 # macOS files
 .DS_Store
 
-# windows
-qdev.bat
-
-# JavaScript
-xfiscalquery.js
-123.js
-
 #debugging
 .hintrc
+.vscode
 test.css
 test.html
 test.js
-.vscode
-
-#db scripts
+uqntdb.py
+wip.py
