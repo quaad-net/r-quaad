@@ -68,6 +68,7 @@ function hlprIconListn(){
       const tableHeader = document.querySelector('.aux-table-modal-header')
       dv.textContent = or.getOrigin(c.id).source
       dv.setAttribute('class', 'aux-table-modal-row')
+      dv.setAttribute('id', 'hlpr-info')
       rowSect.appendChild(dv)
       tableHeader.textContent = 'Source'
       auxModal.style.display = 'block'
@@ -142,7 +143,7 @@ for(const b of mbTabs){
         auxModal = document.querySelector('#aux-modal')
         hlprIcon =  document.querySelectorAll('.helper-icon')
         auxTableModal()
-        hlprIconListn() //codemark
+        hlprIconListn()
       }
     }
     if(b.id == 'mb-tab-2'){ //Posts

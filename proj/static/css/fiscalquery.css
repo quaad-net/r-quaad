@@ -523,7 +523,7 @@ input{
 
 .aux-table-modal-data{
     color: white;
-    max-width: 500px;
+    max-width: 350px;
     min-height: 350px;
     margin: auto;
     margin-top: 50px;
@@ -534,6 +534,15 @@ input{
 
 .aux-table-modal-data:hover{
     border: 1px solid white;
+}
+
+.aux-table-modal-row{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#hlpr-info{
+    overflow-wrap: break-word;
 }
 
 .aux-table-modal-close{
@@ -626,6 +635,10 @@ input{
 
 @media(max-width:500px){
 
+    .core-items{
+        margin-left: 0;
+    }
+
     .main-title{
         text-align: center;
     }
@@ -638,7 +651,11 @@ input{
         height: 250px;
     }
 
-    .options-modal-content{
+    .outlays-cht-container{
+        height: 250px;
+    }
+
+    .options-modal-content, .aux-table-modal-data{
         width: 75%;
     }
 
