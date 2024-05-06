@@ -32,7 +32,7 @@ export function assocCharts(scriptID, JSONdata, canvas, canvas2){
            //order items for stacked bar chart from largest to smallest
            const myStackedLabels = ['personal_consumption', 'personal_savings']
            const myStackedvals = [actualPersonalConsump, actualPersonalSav]
-           createStackedBar(myStackedLabels, normsYr, myStackedvals, canvas2, 'CONSUMPTION VS SAVING | in billions | USD')
+           createStackedBar(myStackedLabels, normsYr, myStackedvals, canvas2, 'CONSUMPTION AND SAVING | in billions | USD')
 
     }
 }

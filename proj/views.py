@@ -4,21 +4,18 @@ from django.http import JsonResponse, HttpResponse
 import pandas as pd
 import os
 from sklearn import preprocessing
+import sqlalchemy as db
 
 IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
-devEnv = False
 
-if(os.getenv('QUAAD_DEV')):
-        devEnv = True
-        from . import uqntdb as udb
-import sqlalchemy as db
-if devEnv == True:
-    engine = db.create_engine(f"mssql+pymssql://{udb.UQNT_USER}:{udb.UQNT_PASS}@{udb.UQNT_SERVER}:1433/{udb.UQNT_DB}")
+if IS_HEROKU_APP:
+   engine = db.create_engine(f"mssql+pymssql://{os.environ.get('UQNT_USER')}:{os.environ.get('UQNT_PASS')}@{os.environ.get('UQNT_SERVER')}:1433/{os.environ.get('UQNT_DB')}")
 else:
-    engine = db.create_engine(f"mssql+pymssql://{os.environ.get('UQNT_USER')}:{os.environ.get('UQNT_PASS')}@{os.environ.get('UQNT_SERVER')}:1433/{os.environ.get('UQNT_DB')}")
+    from . import uqntdb as udb
+    engine = db.create_engine(f"mssql+pymssql://{udb.UQNT_USER}:{udb.UQNT_PASS}@{udb.UQNT_SERVER}:1433/{udb.UQNT_DB}")
 
 def index(request):
-    """Returns current home page"""
+
     try:
         return render(request, 'main.html')
     except:
@@ -27,14 +24,12 @@ def index(request):
             response.status_code = 500
             return response
 
-# remove first if-statement in each function def when ready for production
-
 def projects(request):
 
     try:
         if IS_HEROKU_APP:
             raise('err')
-        return render(request, 'main.html')
+        return render(request, 'projects_generic.html')
     except:
         if IS_HEROKU_APP:
             response = render(request, 'handler500.html')

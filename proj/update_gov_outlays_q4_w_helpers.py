@@ -1,13 +1,8 @@
 import pandas as pd
 import sqlalchemy as db
+from . import uqntdb as udb
 
-my_user = ''
-my_pass = ''
-my_server = ''
-my_port = ''
-my_db = ''
-
-engine = db.create_engine(f"mssql+pymssql://{my_user}:{my_pass}@{my_server}:{my_port}/{my_db}")
+engine = db.create_engine(f"mssql+pymssql://{udb.UQNT_USER}:{udb.UQNT_PASS}@{udb.UQNT_SERVER}:1433/{udb.UQNT_DB}")
 
 #SQL query 
 cnxn = engine.connect()

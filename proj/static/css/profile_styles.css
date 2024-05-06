@@ -4,7 +4,7 @@ section.large {
   flex-wrap: wrap;
   min-height: 300px;
 }
-section.large div{ /*block area with headshot*/
+section.large div{ 
   margin: 5px;
   background-color: white;
   border-radius: 5px;
@@ -28,7 +28,7 @@ section.large div{ /*block area with headshot*/
 }
 
 
-.snapshot-grid .two{ /*first row of text below headshot*/
+.snapshot-grid .two{ 
   grid-column: 1;
   grid-row:2;
 }
@@ -37,12 +37,12 @@ section.large div{ /*block area with headshot*/
   font-weight: bold;
 }
 
-.snapshot-grid .three{ /*second row of text below headshot*/
+.snapshot-grid .three{ 
   grid-column: 1;
   grid-row: 3;
 }
 
-.contact{ /*footer*/
+.contact{ 
   grid-column: 1/3;
   grid-row: 4;
 }
@@ -64,7 +64,7 @@ section.large div{ /*block area with headshot*/
   font-size: smaller;
 }
 
-.snapshot-grid .four{ /*content to the right of text*/ 
+.snapshot-grid .four{ 
   grid-column: 2/4;
   grid-row: 1/4;
   padding: 5px;
@@ -89,7 +89,6 @@ section.large div:nth-child(2){
 
 .projects{
   display: flex;
-  /*background: url("../img/qa2.PNG") no-repeat left;*/
 }
 
 .projects h2{
@@ -187,7 +186,7 @@ section.medium div{
 
   .projects{
     background-image: none;
-    /*background: url("../img/qa3.PNG") no-repeat right;*/
+  
   }
 
 }
