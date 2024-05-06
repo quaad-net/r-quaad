@@ -593,6 +593,11 @@ input{
         border-bottom-right-radius: 5px;
     }
 
+    #main-series-2{
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
     .outlays-n-aux{ 
         display: block;
     }
