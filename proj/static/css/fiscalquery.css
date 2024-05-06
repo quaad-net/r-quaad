@@ -643,16 +643,12 @@ input{
         text-align: center;
     }
     
-    .chartcontainer{
-        height: 250px;
-    }
-    
-    .debt-chartcontainer{
+    .chartcontainer, .debt-chartcontainer, .outlays-cht-container{
         height: 250px;
     }
 
     .outlays-cht-container{
-        height: 250px;
+        width: 95%;
     }
 
     .options-modal-content, .aux-table-modal-data{
