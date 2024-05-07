@@ -15,6 +15,7 @@ var ht = document.querySelector('html')
 var getBaseURL = ht.baseURI
 var auxModal = document.querySelector('#aux-modal')
 var hlprIcon =  document.querySelectorAll('.helper-icon')
+var aboutBtn = document.querySelector('#about-btn')
 
 //non-DOM vars
 var startDate
@@ -60,12 +61,13 @@ function hlprIconListn(){
   for (const c of hlprIcon){
     c.addEventListener('click', function(){
 
+      const tableHeader = document.querySelector('.aux-table-modal-header')
+      tableHeader.textContent  = ''
       const rowSect = document.querySelector('.aux-table-modal-rows')
       while(rowSect.firstChild){
         rowSect.removeChild(rowSect.firstChild)
       }
       const dv = document.createElement('div')
-      const tableHeader = document.querySelector('.aux-table-modal-header')
       dv.textContent = or.getOrigin(c.id).source
       dv.setAttribute('class', 'aux-table-modal-row')
       dv.setAttribute('id', 'hlpr-info')
@@ -82,7 +84,7 @@ for(const b of mbTabs){
   b.addEventListener('click', async function(){
 
     //sets color of tabs in header
-    //returns Overview or Posts template
+    //returns "Overview" or "Posts"
 
     const t1 = document.querySelector("#mb-tab-1");
     const t2 = document.querySelector("#mb-tab-2");
@@ -144,6 +146,8 @@ for(const b of mbTabs){
         hlprIcon =  document.querySelectorAll('.helper-icon')
         auxTableModal()
         hlprIconListn()
+        aboutBtn = document.querySelector('#about-btn')
+        aboutFiscal()
       }
     }
     if(b.id == 'mb-tab-2'){ //Posts
@@ -182,6 +186,10 @@ for(const b of mbTabs){
           sideBar.style.display = "none";
           mobileHeader.style.display = "block";
         })
+        auxModal = document.querySelector('#aux-modal')
+        auxTableModal()
+        aboutBtn = document.querySelector('#about-btn')
+        aboutFiscal()
       }
       getPosts()
     }
@@ -196,6 +204,7 @@ outlayYearModal()
 document.querySelector("#mb-tab-1").style.backgroundColor = 'rgb(102, 1, 1)'
 auxTableModal()
 hlprIconListn()
+aboutFiscal()
 
 // Functions
 
@@ -646,7 +655,7 @@ function updateOutlaysLegend(year, classes, amounts){
     for(const i in classes){
       const dv = document.createElement("div");
 
-      //to account for no data avail
+      // To account for no data avail
       if(classes[0] == 'Other'){
         dv.textContent ='data not avail'
       }
@@ -685,7 +694,7 @@ function outlayYearModal(){
     modal.style.display = "block";
   }
 
-  //updates header text
+  // Update Header
   var hd = document.querySelector(".modal-header-text");
   var hd2 = document.querySelector(".modal-header");
   var sp = document.createElement('span');
@@ -817,9 +826,10 @@ function add_listn_to_outlays_table(){
 async function outlaysTblDrilldown(classID, otherOutlays){
 
   const tableHeader = document.querySelector('.aux-table-modal-header')
+  tableHeader.textContent = ''
   const rowSect = document.querySelector('.aux-table-modal-rows')
   let drilldown
-
+  
   while(rowSect.firstChild){
     rowSect.removeChild(rowSect.firstChild)
   }
@@ -911,3 +921,19 @@ function auxTableModal(){
   })
 
 };
+
+function aboutFiscal(){
+  aboutBtn.addEventListener('click', function(){
+    document.querySelector('.aux-table-modal-header').textContent  = ''
+    const rowSect = document.querySelector('.aux-table-modal-rows')
+    while(rowSect.firstChild){
+      rowSect.removeChild(rowSect.firstChild)
+    }
+    const dv = document.createElement('div')
+    dv.textContent = 'contact: eukoh@quaad.net'
+    dv.setAttribute('class', 'aux-table-modal-row')
+    rowSect.appendChild(dv)
+    auxModal.style.display = 'block'
+
+  })
+}

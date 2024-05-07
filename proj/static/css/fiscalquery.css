@@ -63,7 +63,29 @@ html{
     top: 7px;
 }
 
-.mb-tab-btn:hover, .mb-tab-btn:focus{
+.mb-tab-btn:hover, 
+.mb-tab-btn:focus{
+    background-color: rgb(102, 1, 1);
+    cursor: pointer;
+}
+
+#about-btn{
+    all: unset;
+    position: relative;
+    box-sizing: border-box;
+    width: 75px;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: small;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 3px;
+    color: white;
+    right: 20px;
+    top: 7px;
+}
+
+#about-btn:hover{
     background-color: rgb(102, 1, 1);
     cursor: pointer;
 }
@@ -108,6 +130,7 @@ html{
     width: 250px;
     height: 100rem;
     background-color: rgb(23, 23, 54);
+    border-radius: 5px;
     animation-name: slide-down;
     animation-duration: 0.5s;
     border-bottom-right-radius: 5px;

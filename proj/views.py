@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from pathlib import Path
 from django.http import JsonResponse, HttpResponse
 import pandas as pd
@@ -186,9 +186,11 @@ def gov_outlays_tbl_drilldown(request, classID):
             return response
 
 def index(request):
-
+    
     try:
-        return render(request, 'main.html')
+        response = redirect('/fiscal/')
+        return response
+    
     except:
         if IS_HEROKU_APP:
             response = render(request, 'handler500.html')
