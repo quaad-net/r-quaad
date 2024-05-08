@@ -40,6 +40,8 @@ async def fiscalquery(request, startDate, endDate):
     try:
         cnxn = engine.connect()
 
+        PrevYr = int(startDate) - 1
+
         fiscal_1 = f'select round(ttl_gov_expend, 1) as ttl_gov_expend, round(fygfd, 1) as federal_debt, date as yr ' 
         fiscal_2 = f'from cbo_annual_cy_plus where date between {startDate} and {endDate} order by yr;'
         fiscal_data = fiscal_1 + fiscal_2
@@ -60,7 +62,11 @@ async def fiscalquery(request, startDate, endDate):
         year_ttl_all_cls_df = pd.read_sql(year_ttl_all_cls, cnxn)
         year_ttl_all_cls_jsn = year_ttl_all_cls_df.to_json(orient='records')
 
-        allObjs = [fiscal_data_jsn, gov_outlays_jsn, year_ttl_all_cls_jsn]
+        prev_yr_ttl = f"select * from gov_outlays_q4_w_helpers where year = {PrevYr} and classification_description like 'Total--%' and Sequence_Level_Number = 2"
+        prev_yr_ttl_df = pd.read_sql(prev_yr_ttl, cnxn)
+        prev_yr_ttl_jsn = prev_yr_ttl_df.to_json(orient='records')
+
+        allObjs = [fiscal_data_jsn, gov_outlays_jsn, year_ttl_all_cls_jsn, prev_yr_ttl_jsn]
         cnxn.close()
         return JsonResponse(allObjs, safe= False)
         
@@ -196,11 +202,12 @@ def index(request):
             response = render(request, 'handler500.html')
             response.status_code = 500
             return response
-
+            
 async def update_outlays(request, year):
 
     try:
         cnxn = engine.connect()
+        PrevYr = int(year) - 1
         
         gov_outlays_1 = f'select fiscal_year, classification_description as clsdesc, parent_cls_desc, subclass_helper, current_fiscal_year_to_date_gross_outlays_amount '
         gov_outlays_2 = f"as amt from gov_outlays_q4_w_helpers where fiscal_year = {year} and classification_description like 'Total--%' "
@@ -215,7 +222,12 @@ async def update_outlays(request, year):
         year_ttl_all_cls = year_ttl_all_cls_1 + year_ttl_all_cls_2
         year_ttl_all_cls_df = pd.read_sql(year_ttl_all_cls, cnxn)
         year_ttl_all_cls_jsn = year_ttl_all_cls_df.to_json(orient='records')
-        allObjs = [gov_outlays_jsn, year_ttl_all_cls_jsn]
+
+        prev_yr_ttl = f"select * from gov_outlays_q4_w_helpers where year = {PrevYr} and classification_description like 'Total--%' and Sequence_Level_Number = 2"
+        prev_yr_ttl_df = pd.read_sql(prev_yr_ttl, cnxn)
+        prev_yr_ttl_jsn = prev_yr_ttl_df.to_json(orient='records')
+
+        allObjs = [gov_outlays_jsn, year_ttl_all_cls_jsn, prev_yr_ttl_jsn]
 
         cnxn.close()
         return JsonResponse(allObjs, safe= False)

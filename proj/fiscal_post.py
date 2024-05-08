@@ -16,7 +16,7 @@ class Post:
         self.scriptid = script_id
 
 my_title = 'Savings vs Consumption' # max 50 bytes
-my_description ='Personal Savings Decreasing in Relation To Consumption.' # max 200 bytes
+my_description ='The Growing Gap Between Personal Saving and Consumption.' # max 200 bytes
 my_post ="""
 As shown by the increasing spread between consumption and saving, data suggests that Americans are 
 spending more of their income as opposed to saving when compared to years past. The “normalized” 

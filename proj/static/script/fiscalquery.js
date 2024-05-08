@@ -32,26 +32,28 @@ const myEndYr = curYr - 1
 let myTopOutlaysClassID
 let myOtherOutlaysVals
 let myOtherOutlaysList
+let SubClassList
+let prevYearTtl = []
 
 // Event Listeners
 
 firstInput.addEventListener('click', function(){
-  firstInput.value = "";
+  firstInput.value = ""
 })
 secInput.addEventListener('click', function(){
-  secInput.value = "";
+  secInput.value = ""
 })
-firstInput.addEventListener('input', captureStartDate);
-secInput.addEventListener('input', caputureEndDate);
+firstInput.addEventListener('input', captureStartDate)
+secInput.addEventListener('input', caputureEndDate)
 
 mobileMenu.addEventListener("click", function(){ 
-  mobileHeader.style.display = "none";
-  sideBar.style.display = "block";
+  mobileHeader.style.display = "none"
+  sideBar.style.display = "block"
 })
 
 sidebarClose.addEventListener("click", function(){
-  sideBar.style.display = "none";
-  mobileHeader.style.display = "block";
+  sideBar.style.display = "none"
+  mobileHeader.style.display = "block"
 })
 
 function hlprIconListn(){
@@ -86,58 +88,58 @@ for(const b of mbTabs){
     //sets color of tabs in header
     //returns "Overview" or "Posts"
 
-    const t1 = document.querySelector("#mb-tab-1");
-    const t2 = document.querySelector("#mb-tab-2");
-    const coreElem = document.querySelector('.core');
+    const t1 = document.querySelector("#mb-tab-1")
+    const t2 = document.querySelector("#mb-tab-2")
+    const coreElem = document.querySelector('.core')
 
     if(b.id == 'mb-tab-1'){ //Overview - main
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
-        const response = await fetch(getBaseURL);
-        const responseTxt = await response.text();
-        var parser = new DOMParser();
-        var newDoc = parser.parseFromString(responseTxt, 'text/html');
-        var coreDiv = newDoc.querySelector('.core');
-        coreElem.innerHTML = coreDiv.innerHTML;
+        const response = await fetch(getBaseURL)
+        const responseTxt = await response.text()
+        var parser = new DOMParser()
+        var newDoc = parser.parseFromString(responseTxt, 'text/html')
+        var coreDiv = newDoc.querySelector('.core')
+        coreElem.innerHTML = coreDiv.innerHTML
 
-        b.style.backgroundColor = "rgb(102, 1, 1)";
-        t2.style.background = 'none';
+        b.style.backgroundColor = "rgb(102, 1, 1)"
+        t2.style.background = 'none'
 
         // // add style
-        // const headElem = document.querySelector('head');
-        // var myStyle = document.createElement("link");
-        // myStyle.rel = "stylesheet";
-        // myStyle.setAttribute('id', 'fiscal-styles');
-        // myStyle.href =  newDoc.querySelector('#fiscal-styles').href; //gets stylesheet from fetched document "/fiscalquery.css"
-        // headElem.appendChild(myStyle);
+        // const headElem = document.querySelector('head')
+        // var myStyle = document.createElement("link")
+        // myStyle.rel = "stylesheet"
+        // myStyle.setAttribute('id', 'fiscal-styles')
+        // myStyle.href =  newDoc.querySelector('#fiscal-styles').href //gets stylesheet from fetched document "/fiscalquery.css"
+        // headElem.appendChild(myStyle)
 
         //reassign elements
-        firstInput = document.querySelector('#input-1');
-        secInput = document.querySelector('#input-2');
-        qryBtn = document.querySelector("#qryBtn");
-        mobileMenu = document.querySelector(".mb-icon-menu");
-        sideBar = document.querySelector(".sidebar");
-        mobileHeader = document.querySelector(".mobile-header");
-        sidebarClose = document.querySelector(".sidebar-close");
-        mbTabs = document.querySelectorAll(".mb-tab-btn");
+        firstInput = document.querySelector('#input-1')
+        secInput = document.querySelector('#input-2')
+        qryBtn = document.querySelector("#qryBtn")
+        mobileMenu = document.querySelector(".mb-icon-menu")
+        sideBar = document.querySelector(".sidebar")
+        mobileHeader = document.querySelector(".mobile-header")
+        sidebarClose = document.querySelector(".sidebar-close")
+        mbTabs = document.querySelectorAll(".mb-tab-btn")
         firstInput.addEventListener('click', function(){
-          firstInput.value = "";
+          firstInput.value = ""
         })
         secInput.addEventListener('click', function(){
-          secInput.value = "";
+          secInput.value = ""
         })
-        firstInput.addEventListener('input', captureStartDate);
-        secInput.addEventListener('input', caputureEndDate);
+        firstInput.addEventListener('input', captureStartDate)
+        secInput.addEventListener('input', caputureEndDate)
 
         mobileMenu.addEventListener("click", function(){ 
-          mobileHeader.style.display = "none";
-          sideBar.style.display = "block";
+          mobileHeader.style.display = "none"
+          sideBar.style.display = "block"
         })
         sidebarClose.addEventListener("click", function(){
-          sideBar.style.display = "none";
-          mobileHeader.style.display = "block";
+          sideBar.style.display = "none"
+          mobileHeader.style.display = "block"
         })
-        MSeriesExists = false;
-        outlayYearModal();
+        MSeriesExists = false
+        outlayYearModal()
         qryBtn.addEventListener("click", function(){
           runQry()
         })
@@ -152,39 +154,39 @@ for(const b of mbTabs){
     }
     if(b.id == 'mb-tab-2'){ //Posts
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
-        const response = await fetch('posts');
-        const responseTxt = await response.text();
+        const response = await fetch('posts')
+        const responseTxt = await response.text()
 
-        var parser = new DOMParser();
-        var newDoc = parser.parseFromString(responseTxt, 'text/html');
-        var coreDiv = newDoc.querySelector('.core');
+        var parser = new DOMParser()
+        var newDoc = parser.parseFromString(responseTxt, 'text/html')
+        var coreDiv = newDoc.querySelector('.core')
         coreElem.innerHTML = coreDiv.innerHTML;
 
-        b.style.backgroundColor = "rgb(102, 1, 1)";
-        t1.style.background = 'none';
+        b.style.backgroundColor = "rgb(102, 1, 1)"
+        t1.style.background = 'none'
 
         // // add style
-        // const headElem = document.querySelector('head');
-        // var myStyle = document.createElement("link");
-        // myStyle.rel = "stylesheet";
-        // //myStyle.type = "text/css";
-        // myStyle.setAttribute('id', 'posts-styles');
-        // myStyle.href =  newDoc.querySelector('#posts-styles').href; //gets stylesheet from fetched document "/fiscal_posts.css"
-        // headElem.appendChild(myStyle);
+        // const headElem = document.querySelector('head')
+        // var myStyle = document.createElement("link")
+        // myStyle.rel = "stylesheet"
+        // //myStyle.type = "text/css"
+        // myStyle.setAttribute('id', 'posts-styles')
+        // myStyle.href =  newDoc.querySelector('#posts-styles').href //gets stylesheet from fetched document "/fiscal_posts.css"
+        // headElem.appendChild(myStyle)
 
         //reassign elements
-        mobileMenu = document.querySelector(".mb-icon-menu");
-        sideBar = document.querySelector(".sidebar");
-        mobileHeader = document.querySelector(".mobile-header");
-        sidebarClose = document.querySelector(".sidebar-close");
-        mbTabs = document.querySelectorAll(".mb-tab-btn");
+        mobileMenu = document.querySelector(".mb-icon-menu")
+        sideBar = document.querySelector(".sidebar")
+        mobileHeader = document.querySelector(".mobile-header")
+        sidebarClose = document.querySelector(".sidebar-close")
+        mbTabs = document.querySelectorAll(".mb-tab-btn")
         mobileMenu.addEventListener("click", function(){ 
-          mobileHeader.style.display = "none";
-          sideBar.style.display = "block";
+          mobileHeader.style.display = "none"
+          sideBar.style.display = "block"
         })
         sidebarClose.addEventListener("click", function(){
-          sideBar.style.display = "none";
-          mobileHeader.style.display = "block";
+          sideBar.style.display = "none"
+          mobileHeader.style.display = "block"
         })
         auxModal = document.querySelector('#aux-modal')
         auxTableModal()
@@ -209,10 +211,10 @@ aboutFiscal()
 // Functions
 
 function captureStartDate(e) {
-  startDate = e.target.value;
+  startDate = e.target.value
 }
 function caputureEndDate(e){
-    endDate = e.target.value;
+    endDate = e.target.value
 }
 
 async function runQry(startyear, endyear){
@@ -233,52 +235,52 @@ async function runQry(startyear, endyear){
   }
 
   if(userinp1 == 0){
-    window.alert('Please enter a start year.');
+    window.alert('Please enter a start year.')
   }
   else if(userinp2 == 0){
     window.alert('Please enter an end year.')
   }
   else if(userinp1 > userinp2){ 
-    window.alert('Invalid year range.');
+    window.alert('Invalid year range.')
   }
   else{
       if(userinp1 > userinp2){
-        window.alert('Invalid year range.');
+        window.alert('Invalid year range.')
       }
       else if(userinp1 < 1960){
-        window.alert('Data available 1960-2023.');
+        window.alert('Data available 1960-2023.')
       }
       else if(userinp2 > 2023){
-        window.alert('Data available 1960-2023.');
+        window.alert('Data available 1960-2023.')
       }
       else{
-        var getStartYr = 0;
-        var getEndYr = 0;
-        getStartYr += userinp1;
-        getEndYr += userinp2;
+        var getStartYr = 0
+        var getEndYr = 0
+        getStartYr += userinp1
+        getEndYr += userinp2
 
         //adjustment to produce range
         if(getStartYr == getEndYr){
-          getStartYr -=5;
+          getStartYr -=5
         }
       
-        const my_qry_btn_url = 'q-' + getStartYr + '/' + getEndYr;
-        const response = await fetch(my_qry_btn_url);
-        dataForChts = await response.text();  
-        formatJSN(dataForChts, getStartYr);
+        const my_qry_btn_url = 'q-' + getStartYr + '/' + getEndYr
+        const response = await fetch(my_qry_btn_url)
+        dataForChts = await response.text() 
+        formatJSN(dataForChts, getStartYr)
       
         //adds years of available data to modal (years available determined by initial query search)
-        var myYears = [];
-        var i = 0; 
+        var myYears = []
+        var i = 0
         if(getEndYr > getStartYr){
           while ((getStartYr + i) < getEndYr) {
-            myYears.push(getStartYr + i);
-            i++;
-          };
-          myYears.push(getEndYr);
+            myYears.push(getStartYr + i)
+            i++
+          }
+          myYears.push(getEndYr)
         }
-        else{myYears.push(getStartYr)};
-        update_outlayModal(myYears);
+        else{myYears.push(getStartYr)}
+        update_outlayModal(myYears)
       
         // Show intial years of query
         if(startyear){
@@ -296,13 +298,13 @@ async function runQry(startyear, endyear){
 
 qryBtn.addEventListener("click", function(){
   runQry()
-});
+})
 
 function extractContent(textcontent) {
-  var span = document.createElement('span');
-  span.innerHTML = textcontent;
+  var span = document.createElement('span')
+  span.innerHTML = textcontent
   return span.textContent
-};
+}
 
 function formatJSN(myJSNStr, start){
 
@@ -311,11 +313,15 @@ function formatJSN(myJSNStr, start){
     var fiscalData = JSON.parse(myData[0])
     var gov_outlays = JSON.parse(myData[1])
     var year_ttl_all_cls = JSON.parse(myData[2])
+    for(const idx in prevYearTtl){
+      prevYearTtl.pop()
+    }
+    prevYearTtl.push(JSON.parse(myData[3]))
 
     for (var idx in fiscalData){
-      gov_expd.push(fiscalData[idx]['ttl_gov_expend']);
+      gov_expd.push(fiscalData[idx]['ttl_gov_expend'])
       fedDebt.push(fiscalData[idx]['federal_debt'])
-      yr.push(fiscalData[idx]['yr']);
+      yr.push(fiscalData[idx]['yr'])
     };
 
     if(MSeriesExists){
@@ -350,20 +356,20 @@ const plugin = {
   beforeDraw: (chart, args, options) => {
     const {ctx} = chart;
     ctx.save();
-    ctx.globalCompositeOperation = 'destination-over';
-    ctx.fillStyle = options.color || '#99ffff';
-    ctx.fillRect(0, 0, chart.width, chart.height);
-    ctx.restore();
+    ctx.globalCompositeOperation = 'destination-over'
+    ctx.fillStyle = options.color || '#99ffff'
+    ctx.fillRect(0, 0, chart.width, chart.height)
+    ctx.restore()
   }
 };
 
 function createMainSeries(category, yrs, vals) {
   
-    Chart.defaults.font.family = "poppins, sans-serif";
-    Chart.defaults.font.size = 11;
-    Chart.defaults.elements.line.tension = 0.4;
-    Chart.defaults.color = 'white';
-    Chart.defaults.elements.point.radius = 3;
+    Chart.defaults.font.family = "poppins, sans-serif"
+    Chart.defaults.font.size = 11
+    Chart.defaults.elements.line.tension = 0.4
+    Chart.defaults.color = 'white'
+    Chart.defaults.elements.point.radius = 3
 
     MSeries = new Chart(
       document.getElementById("MainSeriesCht"),
@@ -458,16 +464,16 @@ function createMainSeries(category, yrs, vals) {
         }
       }
     );
-    MSeriesExists = true;
+    MSeriesExists = true
 };
 
 function createFedDebtSeries(category, yrs, vals){
   
-  Chart.defaults.font.family = "poppins, sans-serif";
-  Chart.defaults.font.size = 11;
-  Chart.defaults.elements.line.tension = 0.4;
-  Chart.defaults.color = 'white';
-  Chart.defaults.elements.point.radius = 3;
+  Chart.defaults.font.family = "poppins, sans-serif"
+  Chart.defaults.font.size = 11
+  Chart.defaults.elements.line.tension = 0.4
+  Chart.defaults.color = 'white'
+  Chart.defaults.elements.point.radius = 3
 
   fedDebtChart = new Chart(
     document.getElementById("debt-series-cht"),
@@ -646,14 +652,15 @@ function createOutlays(mylabels, mydata) {
   }
 };
 
-function updateOutlaysLegend(year, classes, amounts){
+async function  updateOutlaysLegend(year, classes, percentages, amounts){ 
 
-    const ax = document.querySelector(".aux1-table");
+    const ax = document.querySelector(".aux1-table")
+
     while (ax.firstChild) {
-      ax.removeChild(ax.firstChild);
+      ax.removeChild(ax.firstChild)
     }  
     for(const i in classes){
-      const dv = document.createElement("div");
+      const dv = document.createElement("div")
 
       // To account for no data avail
       if(classes[0] == 'Other'){
@@ -665,11 +672,19 @@ function updateOutlaysLegend(year, classes, amounts){
       };
       
       const dv2 = document.createElement("div")
-      dv2.textContent = amounts[i] + '%'; 
+      dv2.textContent = percentages[i] + '%'
+
+      // Get previous year total to determine change in total
+      for(const idx in prevYearTtl[0]){
+        if(classes[i] == (prevYearTtl[0][idx]['classification_description']).replace('Total--', '')){
+          dv2.textContent += (` | chg: ${(((amounts[i] - prevYearTtl[0][idx]['current_fiscal_year_to_date_gross_outlays_amount']) /
+          prevYearTtl[0][idx]['current_fiscal_year_to_date_gross_outlays_amount']) * 100).toFixed(2)}%`)
+        }
+      }
       dv2.setAttribute('class', 'outlay-perct')
       //dv2.style.color = myBkGrd[i]; //note: background color array is constant
-      ax.appendChild(dv);
-      ax.appendChild(dv2);
+      ax.appendChild(dv)
+      ax.appendChild(dv2)
     }
 
     const outlay_yr = document.querySelector('.outlays-yr')
@@ -686,32 +701,32 @@ function updateOutlaysLegend(year, classes, amounts){
 
 function outlayYearModal(){
 
-  var modal = document.getElementById("options-modal");
-  var btn = document.getElementById("tb2"); //year button @ outlays by class chart
-  var span = document.getElementsByClassName("close")[0];
+  var modal = document.getElementById("options-modal")
+  var btn = document.getElementById("tb2")
+  var span = document.getElementsByClassName("close")[0]
 
   btn.onclick = function() { 
-    modal.style.display = "block";
+    modal.style.display = "block"
   }
 
   // Update Header
-  var hd = document.querySelector(".modal-header-text");
-  var hd2 = document.querySelector(".modal-header");
-  var sp = document.createElement('span');
-  sp.textContent = 'Year';
-  var dv = document.createElement('div');
-  dv.setAttribute("class", "modal-subtitle");
+  var hd = document.querySelector(".modal-header-text")
+  var hd2 = document.querySelector(".modal-header")
+  var sp = document.createElement('span')
+  sp.textContent = 'Year'
+  var dv = document.createElement('div')
+  dv.setAttribute("class", "modal-subtitle")
   dv.textContent = "expenditures by class"
-  hd.appendChild(sp);
-  hd2.append(dv);
+  hd.appendChild(sp)
+  hd2.append(dv)
 
   span.onclick = function() {
-    modal.style.display = "none";
+    modal.style.display = "none"
   }
 
   window.onclick = function(event) {
     if (event.target == modal) {
-      modal.style.display = "none";
+      modal.style.display = "none"
     }
   }
 
@@ -721,39 +736,43 @@ function update_outlayModal(years){
 
   //Updates modal with "years" based on query
 
-  const modalContent = document.querySelector(".modal-body");
+  const modalContent = document.querySelector(".modal-body")
   while (modalContent.firstChild){
-    modalContent.removeChild(modalContent.firstChild);
+    modalContent.removeChild(modalContent.firstChild)
   }
   years.forEach((y)=>{
-    var bElem = document.createElement("button");
-    bElem.setAttribute("type", "button");
-    bElem.setAttribute("class", "outlay-yrs-btn-modal");
-    bElem.setAttribute("id", `yr${y}`);
-    bElem.textContent = y;
-    modalContent.appendChild(bElem);
+    var bElem = document.createElement("button")
+    bElem.setAttribute("type", "button")
+    bElem.setAttribute("class", "outlay-yrs-btn-modal")
+    bElem.setAttribute("id", `yr${y}`)
+    bElem.textContent = y
+    modalContent.appendChild(bElem)
   });
-  add_listn_to_years(years);
+  add_listn_to_years(years)
 }
 
 async function update_Outlays(date){
 
-  const myUrl = 'q-outlays-' + date;
-  const response = await fetch(myUrl); 
-  const outlaysJsn = await response.text();
+  const response = await fetch('q-outlays-' + date); 
+  const outlaysJsn = await response.text()
   const myOutlaysData = JSON.parse(outlaysJsn)
   const myOutlays = JSON.parse(myOutlaysData[0])
   const myOutlayYrTtl = JSON.parse(myOutlaysData[1])
+  for(const idx in prevYearTtl){
+    prevYearTtl.pop()
+  }
+  prevYearTtl.push(JSON.parse(myOutlaysData[2]))
   const destroy = true
-  format_outlays(myOutlays, myOutlayYrTtl, date, destroy);
+  format_outlays(myOutlays, myOutlayYrTtl, date, destroy)
    
 }
 
 function format_outlays(outlays, yeartotal, start, destroy){
 
-  var cls_desc = [], outly_amt = []
+  var cls_desc = []
+  var outly_amt = []
   var gov_outlays = outlays
-  
+  var outlayPerct = []
   var topTen = 0
   var otherOtlyTtls = 0
   var idxCount = 0
@@ -762,10 +781,11 @@ function format_outlays(outlays, yeartotal, start, destroy){
   myTopOutlaysClassID = new Map()
   myOtherOutlaysVals = []
   myOtherOutlaysList = []
+  SubClassList = []
 
   // Get year total
   for(var idx in yeartotal){
-    OutlayTtls += yeartotal[idx]['year_ttl_all_cls'];
+    OutlayTtls += yeartotal[idx]['year_ttl_all_cls']
   }
 
   // Get top 9 records
@@ -774,23 +794,25 @@ function format_outlays(outlays, yeartotal, start, destroy){
     idxCount += 1;
     if(topTen < 9){ 
       cls_desc.push(classDescr) 
-      outly_amt.push(Number((gov_outlays[idx]['amt'] / OutlayTtls) * 100).toFixed(2)) // percentage
-      myTopOutlaysClassID.set(classDescr, gov_outlays[idx]['subclass_helper'] ) // Used to fetch drill down data
+      outlayPerct.push(Number((gov_outlays[idx]['amt'] / OutlayTtls) * 100).toFixed(2)) 
+      outly_amt.push(gov_outlays[idx]['amt'])
+      myTopOutlaysClassID.set(classDescr, gov_outlays[idx]['subclass_helper'] ) // Used to fetch drill down data and year change %
+      SubClassList.push(gov_outlays[idx]['subclass_helper'])
       topTen += 1;
     }
     else{
-      otherOtlyTtls += gov_outlays[idx]['amt']; //adds non top 10 amounts into 'Other' category
+      otherOtlyTtls += gov_outlays[idx]['amt'] //adds non top 10 amounts into 'Other' category
       myOtherOutlaysVals.push(gov_outlays[idx]['amt']) //used for otherOutlays drilldown
       myOtherOutlaysList.push(gov_outlays[idx]['clsdesc']) // ...
     }
   }
 
   cls_desc.push('Other')
-  outly_amt.push(Number((otherOtlyTtls / OutlayTtls) * 100).toFixed(2)) // percentage
+  outlayPerct.push(Number((otherOtlyTtls / OutlayTtls) * 100).toFixed(2))
 
   if(destroy){outlaysCht.destroy()} 
-  createOutlays(cls_desc, outly_amt)
-  updateOutlaysLegend(start, cls_desc, outly_amt)
+  createOutlays(cls_desc, outlayPerct)
+  updateOutlaysLegend(start, cls_desc, outlayPerct, outly_amt)
 
 };
 
@@ -799,10 +821,10 @@ function add_listn_to_years(years){
     var xx = document.getElementsByClassName("close")[0];
     years.forEach((y)=>{
       document.querySelector(`#yr${y}`).addEventListener("click", function(){
-        update_Outlays(`${y}`);
-        xx.click();  
-      });
-    });
+        update_Outlays(`${y}`)
+        xx.click()
+      })
+    })
 }
 
 function add_listn_to_outlays_table(){
@@ -905,12 +927,12 @@ function auxTableModal(){
   })
 
   auxModalClose.onclick = function() {
-    modal.style.display = "none";
+    modal.style.display = "none"
   }
 
   window.onclick = function(event) {
     if (event.target == modal) {
-      modal.style.display = "none";
+      modal.style.display = "none"
     }
   }
 
