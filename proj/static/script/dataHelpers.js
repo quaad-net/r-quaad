@@ -12,10 +12,10 @@ export const origins = {
         hlprID: 'hlpr-USGovDebt'
     },
     USGovExpenditures:{
-        displayName: 'Expenditures',
-        originTable: 'W068RC1A027NBEA',
-        source: "U.S. Bureau of Economic Analysis, Government total expenditures [W068RC1A027NBEA], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/W068RC1A027NBEA, Feb 4, 2024.",
-        sourceDisplayName: "Government total expenditures",
+        displayName: 'Expenditures & Receipts',
+        originTable: 'gov_current_receipts_and_expenditures',
+        source: "U.S. Bureau of Economic Analysis, Table 3.1. Government Current Receipts and Expenditures, https://apps.bea.gov, Feb 4, 2024",
+        sourceDisplayName: "Government Current Receipts and Expenditures",
         about: "https://www.bea.gov/resources/methodologies/nipa-handbook/pdf/all-chapters.pdf",
         hlprID: 'hlpr-USGovExpenditures'
     },

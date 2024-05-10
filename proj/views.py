@@ -42,11 +42,17 @@ async def fiscalquery(request, startDate, endDate):
 
         PrevYr = int(startDate) - 1
 
-        fiscal_1 = f'select round(ttl_gov_expend, 1) as ttl_gov_expend, round(fygfd, 1) as federal_debt, date as yr ' 
-        fiscal_2 = f'from cbo_annual_cy_plus where date between {startDate} and {endDate} order by yr;'
-        fiscal_data = fiscal_1 + fiscal_2
-        fiscal_data_df = pd.read_sql(fiscal_data, cnxn)
-        fiscal_data_jsn = fiscal_data_df.to_json(orient='records')
+        # fiscal_1 = f'select round(ttl_gov_expend, 1) as ttl_gov_expend, round(fygfd, 1) as federal_debt, date as yr ' 
+        # fiscal_2 = f'from cbo_annual_cy_plus where date between {startDate} and {endDate} order by yr;'
+        # fiscal_data = fiscal_1 + fiscal_2
+        # fiscal_data_df = pd.read_sql(fiscal_data, cnxn)
+        # fiscal_data_jsn = fiscal_data_df.to_json(orient='records')
+
+        fed_debt_1 = f'select round(fygfd, 1) as federal_debt, year as yr ' 
+        fed_debt_2 = f'from fygfd where year between {startDate} and {endDate} order by yr;'
+        fed_debt = fed_debt_1 + fed_debt_2
+        fed_debt_df = pd.read_sql(fed_debt, cnxn)
+        fed_debt_jsn = fed_debt_df.to_json(orient='records')
 
         gov_outlays_1 = f'select fiscal_year, classification_description as clsdesc, parent_cls_desc, subclass_helper, current_fiscal_year_to_date_gross_outlays_amount '
         gov_outlays_2 = f"as amt from gov_outlays_q4_w_helpers where fiscal_year = {startDate} and classification_description like 'Total--%' "
@@ -66,7 +72,11 @@ async def fiscalquery(request, startDate, endDate):
         prev_yr_ttl_df = pd.read_sql(prev_yr_ttl, cnxn)
         prev_yr_ttl_jsn = prev_yr_ttl_df.to_json(orient='records')
 
-        allObjs = [fiscal_data_jsn, gov_outlays_jsn, year_ttl_all_cls_jsn, prev_yr_ttl_jsn]
+        expend_and_receipts = f'select * from expenditures_and_receipts where year between {startDate} and {endDate} order by year'
+        expend_and_receipts_df = pd.read_sql(expend_and_receipts, cnxn)
+        expend_and_receipts_jsn = expend_and_receipts_df.to_json(orient='records')
+
+        allObjs = [fed_debt_jsn, gov_outlays_jsn, year_ttl_all_cls_jsn, prev_yr_ttl_jsn, expend_and_receipts_jsn]
         cnxn.close()
         return JsonResponse(allObjs, safe= False)
         

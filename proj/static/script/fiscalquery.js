@@ -3,6 +3,8 @@ import { getPosts } from './fiscalPosts.js'
 import { origins as or } from './dataHelpers.js'
 
 //DOM vars
+var startDate
+var endDate
 var firstInput = document.querySelector('#input-1')
 var secInput = document.querySelector('#input-2')
 var qryBtn = document.querySelector("#qryBtn")
@@ -18,8 +20,6 @@ var hlprIcon =  document.querySelectorAll('.helper-icon')
 var aboutBtn = document.querySelector('#about-btn')
 
 //non-DOM vars
-var startDate
-var endDate
 var MSeries
 var MSeriesExists = false
 var fedDebtChart
@@ -86,13 +86,13 @@ for(const b of mbTabs){
   b.addEventListener('click', async function(){
 
     //sets color of tabs in header
-    //returns "Overview" or "Posts"
+    //returns "FiscalData" or "EconPosts"
 
     const t1 = document.querySelector("#mb-tab-1")
     const t2 = document.querySelector("#mb-tab-2")
     const coreElem = document.querySelector('.core')
 
-    if(b.id == 'mb-tab-1'){ //Overview - main
+    if(b.id == 'mb-tab-1'){ //FiscalData
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
         const response = await fetch(getBaseURL)
         const responseTxt = await response.text()
@@ -152,7 +152,7 @@ for(const b of mbTabs){
         aboutFiscal()
       }
     }
-    if(b.id == 'mb-tab-2'){ //Posts
+    if(b.id == 'mb-tab-2'){ //EconPosts
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
         const response = await fetch('posts')
         const responseTxt = await response.text()
@@ -308,46 +308,58 @@ function extractContent(textcontent) {
 
 function formatJSN(myJSNStr, start){
 
-    var cls_desc = [], outly_amt = [], gov_expd = [], fedDebt =[], yr = []
+    var gov_expd = [], gov_receipts = [], fedDebt =[], yr = []
     var myData = JSON.parse(myJSNStr);
-    var fiscalData = JSON.parse(myData[0])
+    var fedDebtData = JSON.parse(myData[0])
     var gov_outlays = JSON.parse(myData[1])
     var year_ttl_all_cls = JSON.parse(myData[2])
+    var expendituresAndReceipts = JSON.parse(myData[4])
+    
     for(const idx in prevYearTtl){
       prevYearTtl.pop()
     }
     prevYearTtl.push(JSON.parse(myData[3]))
 
-    for (var idx in fiscalData){
-      gov_expd.push(fiscalData[idx]['ttl_gov_expend'])
-      fedDebt.push(fiscalData[idx]['federal_debt'])
-      yr.push(fiscalData[idx]['yr'])
-    };
+    for (const idx in fedDebtData){
+      fedDebt.push(fedDebtData[idx]['federal_debt'])
+      yr.push(fedDebtData[idx]['yr'])
+    }
+
+    for (const idx in expendituresAndReceipts){
+      gov_expd.push(expendituresAndReceipts[idx]['total_expenditures'])
+      gov_receipts.push(expendituresAndReceipts[idx]['total_receipts'])
+    }
 
     if(MSeriesExists){
       MSeries.destroy()
       fedDebtChart.destroy()
-      createMainSeries('gov_expend', yr, gov_expd) 
+      createMainSeries('gov_expend', yr, gov_expd)
+      addDataSets(MSeries, 'gov_receipts', gov_receipts)
       createFedDebtSeries('federal_debt', yr, fedDebt)
       var destroy = true
       format_outlays(gov_outlays, year_ttl_all_cls, start, destroy)
     }
     else{
-      createMainSeries('gov_expend', yr, gov_expd)
+      createMainSeries('gov_expend', yr, gov_expd) 
+      addDataSets(MSeries, 'gov_receipts', gov_receipts)
       createFedDebtSeries('federal_debt', yr, fedDebt)
       format_outlays(gov_outlays, year_ttl_all_cls, start)
     }
 
 }
 
-function addDataSets(chart, label, newData, color) {
-  chart.data.datasets.push( 
-    {
-      label: label,
-      data: newData,
-      borderColor: color,
-    }
-  );
+function addDataSets(chart, label, newData) {
+
+    chart.data.datasets.push( 
+      {
+        label: label,
+        data: newData,
+        borderColor: mySeriesColor.get(label),
+        fill: 'origin',
+        backgroundColor: mySeriesColor.get(label)
+      }
+    )
+
   chart.update();
 }
 
@@ -387,7 +399,7 @@ function createMainSeries(category, yrs, vals) {
           plugins: {
             title: {
               display: true,
-              text: "[Expenditures]",
+              text: "[Expenditures & Receipts]",
               font: {
                 weight: 'bold',
                 family: 'georgia sans-serif',
@@ -458,6 +470,8 @@ function createMainSeries(category, yrs, vals) {
               data: vals,
               backgroundColor: 'transparent',
               borderColor: mySeriesColor.get(category),
+              fill: 1,
+              backgroundColor: mySeriesColor.get(category),
               //tension: 0.4
             }
           ],
@@ -563,6 +577,8 @@ function createFedDebtSeries(category, yrs, vals){
             data: vals, // y vals
             backgroundColor: 'transparent',
             borderColor: mySeriesColor.get(category),
+            fill: 'origin',
+            backgroundColor: 'rgb(23, 23, 54)'
             //tension: 0.4
           }
         ],
@@ -901,7 +917,7 @@ async function outlaysTblDrilldown(classID, otherOutlays){
         else{ 
           dv.textContent = drilldown[idx]['classification_description']
           if(colon.test(drilldown[idx]['classification_description'])){ // subclass headers
-              dv.style.color = 'rgb(188, 188, 0)'
+              dv.style.color = 'rgb(179, 179, 179)'
           }
         }
       }
@@ -955,6 +971,17 @@ function aboutFiscal(){
     dv.textContent = 'contact: eukoh@quaad.net'
     dv.setAttribute('class', 'aux-table-modal-row')
     rowSect.appendChild(dv)
+
+    const dv2 = document.createElement('div')
+    dv2.textContent = ''
+    dv2.setAttribute('class', 'aux-table-modal-row')
+    rowSect.appendChild(dv2)
+
+    const dv3 = document.createElement('div')
+    dv3.textContent = 'https://github.com/quaad-net/fiscal.git'
+    dv3.setAttribute('class', 'aux-table-modal-row')
+    rowSect.appendChild(dv3)
+
     auxModal.style.display = 'block'
 
   })
