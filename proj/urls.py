@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
 
-#handler500 = 'proj.views.handler500'
+handler500 = 'proj.views.handler500'
 
 urlpatterns = [
     path('', views.index, name='index'),

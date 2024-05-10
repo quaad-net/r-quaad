@@ -42,12 +42,6 @@ async def fiscalquery(request, startDate, endDate):
 
         PrevYr = int(startDate) - 1
 
-        # fiscal_1 = f'select round(ttl_gov_expend, 1) as ttl_gov_expend, round(fygfd, 1) as federal_debt, date as yr ' 
-        # fiscal_2 = f'from cbo_annual_cy_plus where date between {startDate} and {endDate} order by yr;'
-        # fiscal_data = fiscal_1 + fiscal_2
-        # fiscal_data_df = pd.read_sql(fiscal_data, cnxn)
-        # fiscal_data_jsn = fiscal_data_df.to_json(orient='records')
-
         fed_debt_1 = f'select round(fygfd, 1) as federal_debt, year as yr ' 
         fed_debt_2 = f'from fygfd where year between {startDate} and {endDate} order by yr;'
         fed_debt = fed_debt_1 + fed_debt_2
