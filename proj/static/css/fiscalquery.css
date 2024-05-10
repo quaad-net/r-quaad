@@ -375,6 +375,10 @@ input{
     padding: 5px;
 }
 
+.pre-title{
+    font-weight: bold;
+}
+
 #tb2{
     margin-top: 25px;
 }
