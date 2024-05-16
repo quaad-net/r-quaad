@@ -16,6 +16,7 @@ html{
     background-color: rgb(32, 32, 32);
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    
 }
 
 @keyframes slide-left {
@@ -425,11 +426,6 @@ input{
     border-radius: 2px;
 }
 
-.aux1-table div:nth-of-type(even){
-    background-color: #2a2a2a;
-}
-
-
 .aux1-table div:nth-of-type(odd){
     border: 1px solid rgb(78, 78, 78);
     font-weight: bold;
@@ -442,6 +438,31 @@ input{
 
 .outlay-perct{
     color: rgb(179, 179, 179);
+}
+
+.receipts-n-aux{
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+}
+
+.receipts-aux{
+    flex: 0.5;
+    font-size: medium;
+    margin-top: 10px;
+    border-top: 1px solid white;
+}
+
+.receipts-cht-container{
+    flex: 3.5;
+    height: 350px;
+    width: 95%;
+    border-top: 1px solid white;
+    margin-top: 10px;
+}
+
+#receipts-cht{
+    margin-left: 10px;
 }
 
 .modal {
@@ -669,6 +690,28 @@ input{
         border-top: 1px solid white;
         border-radius: 5px;
     }
+
+    .receipts-n-aux{
+        display: block;
+    }
+
+    .receipts-aux{
+        width: 100%;
+        margin-top: 0;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding-top: 10px;
+    }
+
+    .receipts-cht-container{
+        width: 100%;
+        margin-top: 0;
+        border: 0;
+        border-left: 1px solid white;
+        border-radius: 5px;
+    }
 }
 
 @media(max-width:700px){
@@ -698,7 +741,6 @@ input{
     .options-modal-content, .aux-table-modal-data{
         width: 75%;
     }
-
 }
 
 @media (max-height:800px){

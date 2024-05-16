@@ -21,31 +21,26 @@ mySeriesColor.set('money_supply_m1', 'rgb(72, 61, 139)')
 mySeriesColor.set('personal_savings', 'rgb(255, 20, 147)')
 mySeriesColor.set('CPI', 'black')
 mySeriesColor.set('gov_receipts', 'blue')
+
+// Receipts chart
+mySeriesColor.set('current_tax_receipts', '#380003')
+mySeriesColor.set('contributions_for_government_social_insurance', '#680106')
+mySeriesColor.set('income_receipts_on_assets', '#980209')
+mySeriesColor.set('current_transfer_receipts', '#c8030c')
+
 export { mySeriesColor }
+
 //mySeriesColor.get(category);
 
-// export const myBkGrd = [
+// export const mixBkGrd = [
 //     'rgb(138, 43, 226)', 'rgb(165, 42, 42)', 'rgb(220, 20, 60)', 'rgb(210, 105, 30)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)', 'rgb(85, 107, 47)',
 //     'rgb(72, 61, 139)', 'rgb(255, 20, 147)', 'rgb(255, 0, 255)'
 // ]
 
-// export const myBkGrd = [      
+// export const redBkGrd = [      
 //       '#380003', '#680106', '#980209', '#c8030c', '#f80410', '#fb323c', '#fc6269', '#fd9297', '#fec2c5', '#feeaeb',
 // ]
 
 export const myBkGrd = [      
       '#191970', '#000080', '#00008B', '#0000CD', '#0000FF', '#4169E1', '#4682B4', '#6495ED', '#1E90FF', '#B0C4DE',
 ]
-
-// export const myBkGrd = []
-// function redSat(){
-//     var h = 0, s = 50, l = 50
-//     for(var i = 1; i <=10; i++){
-//         myBkGrd.push(`hsl(${h}, ${s}%, ${l}%)`)
-//         h+=2
-//         s-=2
-//         l+=2
-
-//     }
-// }
-// redSat()

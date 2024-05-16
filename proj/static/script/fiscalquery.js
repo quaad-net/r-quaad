@@ -34,6 +34,7 @@ let myOtherOutlaysVals
 let myOtherOutlaysList
 let SubClassList
 let prevYearTtl = []
+let receiptsBarChart
 
 // Event Listeners
 
@@ -314,6 +315,9 @@ function formatJSN(myJSNStr, start){
     var gov_outlays = JSON.parse(myData[1])
     var year_ttl_all_cls = JSON.parse(myData[2])
     var expendituresAndReceipts = JSON.parse(myData[4])
+    var current_tax_receipts  = [], contributions_for_government_social_insurance = [], income_receipts_on_assets = [],
+    current_transfer_receipts = [], current_surplus_of_government_enterprises = []
+
     
     for(const idx in prevYearTtl){
       prevYearTtl.pop()
@@ -326,24 +330,45 @@ function formatJSN(myJSNStr, start){
     }
 
     for (const idx in expendituresAndReceipts){
+
+      // Data for main series
       gov_expd.push(expendituresAndReceipts[idx]['total_expenditures'])
       gov_receipts.push(expendituresAndReceipts[idx]['total_receipts'])
+
+      // Data for receipts chart
+      current_tax_receipts.push(expendituresAndReceipts[idx]['current_tax_receipts'])
+      contributions_for_government_social_insurance.push(expendituresAndReceipts[idx]['contributions_for_government_social_insurance'])
+      income_receipts_on_assets.push(expendituresAndReceipts[idx]['income_receipts_on_assets'])
+      current_transfer_receipts.push(expendituresAndReceipts[idx]['current_transfer_receipts'])
+      current_surplus_of_government_enterprises.push(expendituresAndReceipts[idx]['current_surplus_of_government_enterprises'])
     }
+
+    const receiptsCategories = ['current_tax_receipts', 'contributions_for_government_social_insurance', 
+      'income_receipts_on_assets', 'current_transfer_receipts'
+    ] // 'current_surplus_of_government_enterprises' not included 
+
+    const receiptsVals = [
+      current_tax_receipts, contributions_for_government_social_insurance, income_receipts_on_assets, 
+      current_transfer_receipts
+    ] // 'current_surplus_of_government_enterprises' not included 
 
     if(MSeriesExists){
       MSeries.destroy()
       fedDebtChart.destroy()
+      receiptsBarChart.destroy()
       createMainSeries('gov_expend', yr, gov_expd)
       addDataSets(MSeries, 'gov_receipts', gov_receipts)
       createFedDebtSeries('federal_debt', yr, fedDebt)
       var destroy = true
       format_outlays(gov_outlays, year_ttl_all_cls, start, destroy)
+      createReceiptsBarChart(receiptsCategories, yr, receiptsVals, document.querySelector('#receipts-cht'))
     }
     else{
       createMainSeries('gov_expend', yr, gov_expd) 
       addDataSets(MSeries, 'gov_receipts', gov_receipts)
       createFedDebtSeries('federal_debt', yr, fedDebt)
       format_outlays(gov_outlays, year_ttl_all_cls, start)
+      createReceiptsBarChart(receiptsCategories, yr, receiptsVals, document.querySelector('#receipts-cht'))
     }
 
 }
@@ -904,8 +929,8 @@ async function outlaysTblDrilldown(classID, otherOutlays){
       const ttl = /Total/
       const colon = /:/
       if(ttl.test(drilldown[idx]['classification_description'])){
-        dv.style.color = 'lightcoral'
-        dv2.style.color = 'lightcoral'
+        dv.style.color = 'brown'
+        dv2.style.color = 'brown'
         dv.textContent = drilldown[idx]['classification_description']
       }
       else {
@@ -985,4 +1010,79 @@ function aboutFiscal(){
     auxModal.style.display = 'block'
 
   })
+}
+
+function createReceiptsBarChart(categories, yrs, vals, canvas) {
+
+  Chart.defaults.font.family = "poppins, sans-serif";
+  Chart.defaults.font.size = 13;
+  Chart.defaults.color = 'white';
+
+  const data = {
+    labels: yrs,
+    datasets: [ 
+      // {
+      //   label: categories[4], 
+      //   data:  vals[4],
+      //   backgroundColor: mySeriesColor.get(categories[4]),
+      //   borderWidth: 1,
+      //   barThickness: 20
+      // },
+      {
+        label: categories[3],
+        data: vals[3],
+        backgroundColor: mySeriesColor.get(categories[3]),
+        borderWidth: 1,
+        barThickness: 20
+      },
+      {
+        label: categories[2], 
+        data:  vals[2],
+        backgroundColor: mySeriesColor.get(categories[2]),
+        borderWidth: 1,
+        barThickness: 20
+      },
+      {
+        label: categories[1],
+        data: vals[1],
+        backgroundColor: mySeriesColor.get(categories[1]),
+        borderWidth: 1,
+        barThickness: 20
+      },
+      {
+        label: categories[0],
+        data: vals[0],
+        backgroundColor: mySeriesColor.get(categories[0]),
+        borderWidth: 1,
+        barThickness: 20
+      },
+    ]
+  }
+
+receiptsBarChart = new Chart(
+
+      canvas,
+    {
+      type: 'bar',
+      data: data,
+      options: {
+        plugins: {
+          title: {
+            display: false,
+            text: ''
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+          }
+        }
+      }
+    }
+  )
 }

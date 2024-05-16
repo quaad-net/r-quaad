@@ -1,7 +1,7 @@
 
 export const origins = {
 
-    //note: html IDs = hlpr-objectName
+    // note: html tag IDs = hlpr-objectName
 
     USGovDebt: {
         displayName: 'Debt',
@@ -26,6 +26,14 @@ export const origins = {
         sourceDisplayName: 'Monthly Treasury Statement',
         about: '',
         hlprID: 'hlpr-USGovOutlays'
+    },
+    USGovReceipts: {
+        displayName: 'Receipts By Type',
+        originTable: 'gov_current_receipts_and_expenditures',
+        source: "U.S. Bureau of Economic Analysis, Table 3.1. Government Current Receipts and Expenditures, https://apps.bea.gov, Feb 4, 2024",
+        sourceDisplayName: "Government Current Receipts and Expenditures",
+        about: "https://www.bea.gov/resources/methodologies/nipa-handbook/pdf/all-chapters.pdf",
+        hlprID: 'hlpr-USGovReceipts'
     },
     getOrigin: function(id){
         for(const idx in origins){
