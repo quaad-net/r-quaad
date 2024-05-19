@@ -2,7 +2,14 @@
 export const origins = {
 
     // note: html tag IDs = hlpr-objectName
-
+    SelectEconData: {
+        displayName: 'Select Economic Data',
+        originTable: 'cbo_annual_cy',
+        source: "Congressional Budget Office (CBO), Historical Data and Economic Projections; https://www.cbo.gov/data/budget-economic-data#9, Feb 4, 2024.",
+        sourceDisplayName: 'Historical Data and Economic Projections',
+        about: '',
+        hlprID: 'hlpr-SelectEconData'
+    },
     USGovDebt: {
         displayName: 'Debt',
         originTable: 'FYGFD',
@@ -14,7 +21,7 @@ export const origins = {
     USGovExpenditures:{
         displayName: 'Expenditures & Receipts',
         originTable: 'gov_current_receipts_and_expenditures',
-        source: "U.S. Bureau of Economic Analysis, Table 3.1. Government Current Receipts and Expenditures, https://apps.bea.gov, Feb 4, 2024",
+        source: "U.S. Bureau of Economic Analysis, Table 3.1. Government Current Receipts and Expenditures; https://apps.bea.gov, Feb 4, 2024",
         sourceDisplayName: "Government Current Receipts and Expenditures",
         about: "https://www.bea.gov/resources/methodologies/nipa-handbook/pdf/all-chapters.pdf",
         hlprID: 'hlpr-USGovExpenditures'
@@ -22,7 +29,7 @@ export const origins = {
     USGovOutlays:{
         displayName: 'Expenditures By Class',
         originTable: 'Treasury_OutlyAgcy',
-        source: "Monthly Treasury Statement (MTS), https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/outlays-of-the-u-s-government, Feb 4, 2024",
+        source: "Monthly Treasury Statement (MTS); https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/outlays-of-the-u-s-government, Feb 4, 2024",
         sourceDisplayName: 'Monthly Treasury Statement',
         about: '',
         hlprID: 'hlpr-USGovOutlays'
@@ -30,7 +37,7 @@ export const origins = {
     USGovReceipts: {
         displayName: 'Receipts By Type',
         originTable: 'gov_current_receipts_and_expenditures',
-        source: "U.S. Bureau of Economic Analysis, Table 3.1. Government Current Receipts and Expenditures, https://apps.bea.gov, Feb 4, 2024",
+        source: "U.S. Bureau of Economic Analysis, Table 3.1. Government Current Receipts and Expenditures; https://apps.bea.gov, Feb 4, 2024",
         sourceDisplayName: "Government Current Receipts and Expenditures",
         about: "https://www.bea.gov/resources/methodologies/nipa-handbook/pdf/all-chapters.pdf",
         hlprID: 'hlpr-USGovReceipts'

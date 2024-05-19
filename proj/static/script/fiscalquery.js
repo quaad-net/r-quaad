@@ -2,7 +2,7 @@ import { mySeriesColor, myBkGrd } from './seriesColors.js'
 import { getPosts } from './fiscalPosts.js'
 import { origins as or } from './dataHelpers.js'
 
-//DOM vars
+// DOM vars
 var startDate
 var endDate
 var firstInput = document.querySelector('#input-1')
@@ -19,7 +19,7 @@ var auxModal = document.querySelector('#aux-modal')
 var hlprIcon =  document.querySelectorAll('.helper-icon')
 var aboutBtn = document.querySelector('#about-btn')
 
-//non-DOM vars
+// non-DOM vars
 var MSeries
 var MSeriesExists = false
 var fedDebtChart
@@ -35,6 +35,7 @@ let myOtherOutlaysList
 let SubClassList
 let prevYearTtl = []
 let receiptsBarChart
+let qryStart, qryEnd
 
 // Event Listeners
 
@@ -87,13 +88,13 @@ for(const b of mbTabs){
   b.addEventListener('click', async function(){
 
     //sets color of tabs in header
-    //returns "FiscalData" or "EconPosts"
+    //returns "Overview" or "Posts"
 
     const t1 = document.querySelector("#mb-tab-1")
     const t2 = document.querySelector("#mb-tab-2")
     const coreElem = document.querySelector('.core')
 
-    if(b.id == 'mb-tab-1'){ //FiscalData
+    if(b.id == 'mb-tab-1'){ //Overview
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
         const response = await fetch(getBaseURL)
         const responseTxt = await response.text()
@@ -151,9 +152,10 @@ for(const b of mbTabs){
         hlprIconListn()
         aboutBtn = document.querySelector('#about-btn')
         aboutFiscal()
+        selectEconData()
       }
     }
-    if(b.id == 'mb-tab-2'){ //EconPosts
+    if(b.id == 'mb-tab-2'){ //Posts
       if(b.style.backgroundColor!="rgb(102, 1, 1)"){
         const response = await fetch('posts')
         const responseTxt = await response.text()
@@ -208,6 +210,7 @@ document.querySelector("#mb-tab-1").style.backgroundColor = 'rgb(102, 1, 1)'
 auxTableModal()
 hlprIconListn()
 aboutFiscal()
+selectEconData()
 
 // Functions
 
@@ -218,7 +221,7 @@ function caputureEndDate(e){
     endDate = e.target.value
 }
 
-async function runQry(startyear, endyear){
+async function runQry(startyear, endyear){ 
 
   // For "search" button and intial page load
   // No parameters included when called on button click
@@ -293,6 +296,10 @@ async function runQry(startyear, endyear){
           sidebarClose.click()
           window.scrollTo(0, 0)
         }
+
+        // set years for selectEconomicData
+        qryStart = getStartYr
+        qryEnd = getEndYr
       }
   }
 }
@@ -1003,7 +1010,7 @@ function aboutFiscal(){
     rowSect.appendChild(dv2)
 
     const dv3 = document.createElement('div')
-    dv3.textContent = 'https://github.com/quaad-net/fiscal.git'
+    dv3.textContent = 'Github: https://github.com/quaad-net/fiscal.git'
     dv3.setAttribute('class', 'aux-table-modal-row')
     rowSect.appendChild(dv3)
 
@@ -1085,4 +1092,75 @@ receiptsBarChart = new Chart(
       }
     }
   )
+}
+
+function selectEconData(){
+
+  const econGroup = document.querySelectorAll('.econ-group')
+
+  function econTableModal(){ 
+
+     const modal = document.querySelector('#econ-table-modal')
+     const econModalClose = document.querySelector('.econ-table-modal-close')
+  
+     econModalClose.onclick = function() {
+     modal.style.display = "none"
+     }
+  
+     window.onclick = function(event) {
+     if (event.target == modal) {
+        modal.style.display = "none"
+     }
+     }
+  
+     document.addEventListener('click', (event)=>{
+     if(event.target == modal){
+        modal.style.display = "none"
+     }
+     })
+  
+  }
+
+  async function getEconData(elemID){
+     const header = document.querySelector('thead')
+     while(header.firstChild){header.removeChild(header.firstChild)}
+     const tbody = document.querySelector('tbody')
+     while(tbody.firstChild){tbody.removeChild(tbody.firstChild)}
+     const req = await fetch(`${elemID}/q-${qryStart}/${qryEnd}`)
+     const res  = await req.text()
+     const data = JSON.parse(res)
+     const econData = JSON.parse(data[0])
+     const obj = econData[0]  // Column headers/properties
+     const headerTr = document.createElement('tr')
+
+     // Add column headers 
+     for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+           const columnHeader  = document.createElement('th')
+           columnHeader.textContent = prop.replaceAll('_', ' ')
+           headerTr.appendChild(columnHeader)
+        }
+     }
+     header.appendChild(headerTr)
+
+     for(const idx in econData){ // Access obj/row data
+        const tr = document.createElement('tr')
+        for(const val in econData[idx]){ // Access values in obj/row data
+           const td = document.createElement('td')
+           td.textContent =  econData[idx][val]
+           tr.appendChild(td)   
+        }
+        tbody.appendChild(tr)
+     }
+
+  }
+
+  econTableModal()
+  econGroup.forEach((e)=>{
+     e.addEventListener('click', function(){
+        const modal = document.querySelector('#econ-table-modal')
+        modal.style.display = "block"
+        getEconData(e.id)
+     })
+  })
 }

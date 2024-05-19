@@ -14,7 +14,22 @@ else:
     from . import uqntdb as udb
     engine = db.create_engine(f"mssql+pymssql://{udb.UQNT_USER}:{udb.UQNT_PASS}@{udb.UQNT_SERVER}:1433/{udb.UQNT_DB}")
 
-   
+
+def EconData(request, startDate, endDate):
+    try:
+        cnxn = engine.connect()
+        econ_data = f'select * from select_economic_data where date between {startDate} and {endDate};' 
+        econ_data_df = pd.read_sql(econ_data, cnxn)
+        econ_data_jsn = econ_data_df.to_json(orient='records')
+        allObjs = [econ_data_jsn]
+        cnxn.close()
+        return JsonResponse(allObjs, safe=False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
 def fiscal(request):
 
     try:
@@ -206,7 +221,87 @@ def index(request):
             response = render(request, 'handler500.html')
             response.status_code = 500
             return response
-            
+        
+async def InterestRates(request, startDate, endDate):
+
+    try:
+        cnxn = engine.connect()
+        interest_rates = f'select * from interest_rates where year between {startDate} and {endDate};' 
+        interest_rates_df = pd.read_sql(interest_rates, cnxn)
+        interest_rates_jsn = interest_rates_df.to_json(orient='records')
+        allObjs = [interest_rates_jsn]
+        cnxn.close()
+        return JsonResponse(allObjs, safe=False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
+async def ImportsExports(request, startDate, endDate):
+
+    try:
+        cnxn = engine.connect()
+        imports_exports = f'select * from imports_and_exports where year between {startDate} and {endDate};' 
+        imports_exports_df = pd.read_sql(imports_exports, cnxn)
+        imports_exports_jsn = imports_exports_df.to_json(orient='records')
+        allObjs = [imports_exports_jsn]
+        cnxn.close()
+        return JsonResponse(allObjs, safe=False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+                
+async def Population(request, startDate, endDate):
+
+    try:
+        cnxn = engine.connect()
+        population = f'select * from population where year between {startDate} and {endDate};' 
+        population_df = pd.read_sql(population, cnxn)
+        population_jsn = population_df.to_json(orient='records')
+        allObjs = [population_jsn]
+        cnxn.close()
+        return JsonResponse(allObjs, safe=False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
+async def PriceIndices(request, startDate, endDate):
+    
+    try:
+        cnxn = engine.connect()
+        price_indices = f'select * from price_indices where year between {startDate} and {endDate};' 
+        price_indices_df = pd.read_sql(price_indices, cnxn)
+        price_indices_jsn = price_indices_df.to_json(orient='records')
+        allObjs = [price_indices_jsn]
+        cnxn.close()
+        return JsonResponse(allObjs, safe=False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
+async def ProductionConsumption(request, startDate, endDate):
+
+    try:
+        cnxn = engine.connect()
+        production_and_consumption = f'select * from production_and_consumption where year between {startDate} and {endDate};' 
+        production_and_consumption_df = pd.read_sql(production_and_consumption, cnxn)
+        production_and_consumption_jsn = production_and_consumption_df.to_json(orient='records')
+        allObjs = [production_and_consumption_jsn]
+        cnxn.close()
+        return JsonResponse(allObjs, safe=False)
+    except:
+        if IS_HEROKU_APP:
+            response = render(request, 'handler500.html')
+            response.status_code = 500
+            return response
+
 async def update_outlays(request, year):
 
     try:

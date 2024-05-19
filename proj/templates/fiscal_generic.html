@@ -16,8 +16,8 @@
         <img class="mb-icon-logo" src= "{% static '/img/icons8-us-dollar.svg' %}" width= 30px></img>
         <img class="mb-icon-menu" src= "{% static '/img/icons8-whitemenu.svg' %}" width= 30px></img>
         <span class="header-tabs">
-            <button type="button" class="mb-tab-btn" id="mb-tab-1">FiscalData</button>
-            <button type="button" class="mb-tab-btn" id="mb-tab-2">EconPosts</button>
+            <button type="button" class="mb-tab-btn" id="mb-tab-1">Overview</button>
+            <button type="button" class="mb-tab-btn" id="mb-tab-2">Posts</button>
             <button type="button" id="about-btn">About</button>
         </span>
     </div>
@@ -84,7 +84,7 @@
                     <div class="aux1-header">
                         <div class="aux1-header-items">
                             <img class="helper-icon" id="hlpr-USGovOutlays" src= "{% static '/img/icons8-help.svg' %}" width=25px/>
-                            <div id="aux1-title"><br/></br></div>
+                            <div id="aux1-title"></div>
                             <div class="subtitle" id="aux1-subtitle">Class Details</div>
                         </div>
                     </div>
@@ -97,6 +97,22 @@
                     </div>
                     <div class="receipts-cht-container">
                         <canvas id="receipts-cht"></canvas>
+                    </div>
+                </div>
+                <div class="select-econ-data">
+                    <div class="econ-title">Select</br>Economic</br>Data</br></br>
+                        <img class="helper-icon" id="hlpr-SelectEconData" src= "{% static '/img/icons8-help.svg' %}" width=25px/>
+                    </div>
+                    <div class="econ-data-groups">
+                        <div class="econ-group-1">
+                            <div class="econ-group" id="price-indices">Price Indices</div>
+                            <div class="econ-group" id="production-n-consumption">Production and Consumption</div>
+                        </div>
+                        <div class="econ-group-2">
+                            <div class="econ-group" id="population">Population</div>
+                            <div class="econ-group" id="interest-rates">Interest Rates</div>
+                            <div class="econ-group" id="imports-n-exports">Imports and Exports</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -122,6 +138,21 @@
                     <div class="aux-table-modal-header"></div>
                     <div class="aux-table-modal-rows">
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="econ-table-modal">
+            <div class="outer-container">
+                <span class="econ-table-modal-close">&times;</span>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

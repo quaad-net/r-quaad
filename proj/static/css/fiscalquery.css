@@ -314,9 +314,8 @@ input{
     flex-direction: row;
 }
 
-.helper-icon{
+#hlpr-USGovExpenditures, #hlpr-USGovDebt{
     position: absolute;
-    float: right;
 }
 
 .helper-icon:hover{
@@ -451,6 +450,7 @@ input{
     font-size: medium;
     margin-top: 10px;
     border-top: 1px solid white;
+    padding: 5px;
 }
 
 .receipts-cht-container{
@@ -463,6 +463,72 @@ input{
 
 #receipts-cht{
     margin-left: 10px;
+}
+
+.select-econ-data{
+    display: flex;
+    flex-direction: row;
+}
+
+.econ-title{
+    font-weight: bold;
+    flex: 0.5;
+    padding: 5px;
+}
+
+#hlpr-SelectEconData{
+    display: block;
+}
+
+.econ-data-groups{
+    width: 100%;
+    text-align: center;
+    flex: 3.5;
+}
+
+.econ-group{
+    font-weight: bold;
+}
+
+.econ-group-1{
+    display: flex;
+    flex-direction: row;
+}
+
+#price-indices, #production-n-consumption{
+    box-sizing: border-box;
+    flex: 1;
+    width: 50%;
+    height: 100px;
+    border: 2px solid rgb(78, 78, 78);
+    border-radius: 5px;
+    margin: 5px;
+    padding-top: 35px;
+}
+
+.econ-group-2{
+    display: flex;
+    flex-direction: row;
+}
+
+#population, #interest-rates, #imports-n-exports{
+    box-sizing: border-box;
+    flex: 1;
+    width: calc(100/3);
+    height: 100px;
+    border: 2px solid purple;
+    border-radius: 5px;
+    margin: 5px;
+    padding-top: 35px;
+}
+
+#price-indices:hover, 
+#production-n-consumption:hover, 
+#population:hover, 
+#interest-rates:hover, 
+#imports-n-exports:hover{
+    border-width: 3px;
+    cursor: pointer;
 }
 
 .modal {
@@ -643,6 +709,67 @@ input{
     border: 1px solid white
 }
 
+/* Econ Table Modal */
+
+#econ-table-modal{
+    background-color: rgba(0, 0, 0, 0.777)
+}
+
+.outer-container{
+    padding: 30px;
+    margin:auto;
+}
+
+.econ-table-modal-close{
+    float: right;
+    font-size: 28px;
+    font-weight:bolder;
+}
+
+.econ-table-modal-close:hover{
+    cursor: pointer;
+}
+
+.table-container{
+    position: relative;
+    top: 50px;
+    max-width: 800px;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: white rgb(32, 32, 32);
+    margin: auto;
+}
+
+table{
+    border: 1px solid rgb(68, 68, 68);
+    border-radius: 5px;
+    margin: auto;
+    background-color: black;
+    background-color: rgba(0, 0, 0, 0.544);
+}
+
+th{
+    font-size: small;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+th, td{
+    border: 1px solid rgb(68, 68, 68);
+    border-radius: 2px;
+}
+
+td{
+    font-family: 'Times New Roman', Times, serif;
+    padding: 5px;
+}
+
+tbody tr:hover{
+    background-color: rgb(79, 79, 79);
+}
+/* End - Econ Table Modal */
+
+
 @media(max-width:1000px) {
 
     .expd-n-debt{
@@ -696,13 +823,11 @@ input{
     }
 
     .receipts-aux{
-        width: 100%;
         margin-top: 0;
         border-right: 1px solid white;
         border-bottom: 1px solid white;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
-        padding-top: 10px;
     }
 
     .receipts-cht-container{
@@ -710,6 +835,19 @@ input{
         margin-top: 0;
         border: 0;
         border-left: 1px solid white;
+        border-radius: 5px;
+        border-bottom: 1px solid white;
+        border-bottom-right-radius: 0;
+    }
+
+    .select-econ-data{
+        display: block;
+    }
+
+    .econ-title{
+        border: 1px solid white;
+        border-left: 0;
+        border-top: 0;
         border-radius: 5px;
     }
 }
