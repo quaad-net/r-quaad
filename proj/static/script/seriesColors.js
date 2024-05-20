@@ -24,7 +24,7 @@ mySeriesColor.set('gov_receipts', 'blue')
 
 // Receipts chart
 mySeriesColor.set('current_tax_receipts', '#380003')
-mySeriesColor.set('contributions_for_government_social_insurance', '#680106')
+mySeriesColor.set('contrib_for_gov_social_insur', '#680106')
 mySeriesColor.set('income_receipts_on_assets', '#980209')
 mySeriesColor.set('current_transfer_receipts', '#c8030c')
 

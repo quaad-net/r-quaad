@@ -322,9 +322,8 @@ function formatJSN(myJSNStr, start){
     var gov_outlays = JSON.parse(myData[1])
     var year_ttl_all_cls = JSON.parse(myData[2])
     var expendituresAndReceipts = JSON.parse(myData[4])
-    var current_tax_receipts  = [], contributions_for_government_social_insurance = [], income_receipts_on_assets = [],
+    var current_tax_receipts  = [], contrib_for_gov_social_insur = [], income_receipts_on_assets = [],
     current_transfer_receipts = [], current_surplus_of_government_enterprises = []
-
     
     for(const idx in prevYearTtl){
       prevYearTtl.pop()
@@ -344,18 +343,18 @@ function formatJSN(myJSNStr, start){
 
       // Data for receipts chart
       current_tax_receipts.push(expendituresAndReceipts[idx]['current_tax_receipts'])
-      contributions_for_government_social_insurance.push(expendituresAndReceipts[idx]['contributions_for_government_social_insurance'])
+      contrib_for_gov_social_insur.push(expendituresAndReceipts[idx]['contrib_for_gov_social_insur'])
       income_receipts_on_assets.push(expendituresAndReceipts[idx]['income_receipts_on_assets'])
       current_transfer_receipts.push(expendituresAndReceipts[idx]['current_transfer_receipts'])
       current_surplus_of_government_enterprises.push(expendituresAndReceipts[idx]['current_surplus_of_government_enterprises'])
     }
 
-    const receiptsCategories = ['current_tax_receipts', 'contributions_for_government_social_insurance', 
+    const receiptsCategories = ['current_tax_receipts', 'contrib_for_gov_social_insur', 
       'income_receipts_on_assets', 'current_transfer_receipts'
     ] // 'current_surplus_of_government_enterprises' not included 
 
     const receiptsVals = [
-      current_tax_receipts, contributions_for_government_social_insurance, income_receipts_on_assets, 
+      current_tax_receipts, contrib_for_gov_social_insur, income_receipts_on_assets, 
       current_transfer_receipts
     ] // 'current_surplus_of_government_enterprises' not included 
 
@@ -410,7 +409,7 @@ const plugin = {
 function createMainSeries(category, yrs, vals) {
   
     Chart.defaults.font.family = "poppins, sans-serif"
-    Chart.defaults.font.size = 11
+    Chart.defaults.font.size = 12
     Chart.defaults.elements.line.tension = 0.4
     Chart.defaults.color = 'white'
     Chart.defaults.elements.point.radius = 3
@@ -516,7 +515,7 @@ function createMainSeries(category, yrs, vals) {
 function createFedDebtSeries(category, yrs, vals){
   
   Chart.defaults.font.family = "poppins, sans-serif"
-  Chart.defaults.font.size = 11
+  Chart.defaults.font.size = 12
   Chart.defaults.elements.line.tension = 0.4
   Chart.defaults.color = 'white'
   Chart.defaults.elements.point.radius = 3

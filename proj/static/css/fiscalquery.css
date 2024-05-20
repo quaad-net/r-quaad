@@ -287,9 +287,9 @@ input{
 }
 
 .subtitle{
-    color: white;
+    color: lightcoral;
     font-size: medium;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 .title-btn{
@@ -728,6 +728,7 @@ input{
 
 .econ-table-modal-close:hover{
     cursor: pointer;
+    color: rgb(107, 106, 106);
 }
 
 .table-container{
@@ -750,8 +751,8 @@ table{
 
 th{
     font-size: small;
-    text-align: left;
     text-transform: uppercase;
+    font-weight: normal;
 }
 
 th, td{
@@ -765,7 +766,7 @@ td{
 }
 
 tbody tr:hover{
-    background-color: rgb(79, 79, 79);
+    background-color: rgb(63, 63, 63);
 }
 /* End - Econ Table Modal */
 
@@ -837,7 +838,7 @@ tbody tr:hover{
         border-left: 1px solid white;
         border-radius: 5px;
         border-bottom: 1px solid white;
-        border-bottom-right-radius: 0;
+        border-bottom-right-radius: 5px;
     }
 
     .select-econ-data{
