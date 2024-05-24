@@ -1,4 +1,4 @@
-import { createStackedBar, createTimeSeries} from './jsCharts.js'
+import { createStackedBar, createTimeSeries, createScatterPlot} from './jsCharts.js'
 
 export function assocCharts(scriptID, JSONdata, canvas, canvas2){
 
@@ -33,7 +33,25 @@ export function assocCharts(scriptID, JSONdata, canvas, canvas2){
            const myStackedLabels = ['personal_consumption', 'personal_savings']
            const myStackedvals = [actualPersonalConsump, actualPersonalSav]
            createStackedBar(myStackedLabels, normsYr, myStackedvals, canvas2, 'CONSUMPTION AND SAVING | in billions | USD')
+        
+        case 2:
+            const expenditures = JSON.parse(JSONdata[0])
+            const prob_incr_expend_incr_rgdp = JSON.parse(JSONdata[1])
+            const prob_incr_expend_decr_unemp = JSON.parse(JSONdata[2])
+            const chg_expend_rgdp = []
+            const chg_expend_unemp  = []
+            
+            for(const idx in expenditures){
+                chg_expend_rgdp.push({x: `${expenditures[idx]['chg_in_expd_prev_yr']}`, y: `${expenditures[idx]['chg_in_real_gdp']}`})
+                chg_expend_unemp.push({x: `${expenditures[idx]['chg_in_expd_prev_yr']}`, y: `${expenditures[idx]['chg_in_unemp']}`})
+            }
 
+            createScatterPlot(canvas, 'yellow',  'Rate Chg{x: expend, y: real_GPD} (1962-2022)', chg_expend_rgdp)
+            createScatterPlot(canvas2, 'orange', 'Rate Chg{x: expend, y: non_cyclical_unemploy} (1962-2022)', chg_expend_unemp)
+
+            const chartFooter = document.querySelector('#cfd-4')
+            chartFooter.textContent = 'prob_incr_expend_incr_rgdp: ' + prob_incr_expend_incr_rgdp +' ' + '| prob_incr_expend_decr_unemp: ' + prob_incr_expend_decr_unemp
+            chartFooter.style.display = 'block'
     }
 }
 

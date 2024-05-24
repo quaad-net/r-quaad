@@ -6,11 +6,12 @@ export async function getPosts(){
     const allPostsTxt = await allPostsReq.text()
     const postsData = JSON.parse(allPostsTxt)
     const allPosts = JSON.parse(postsData[0])
-    let scriptID
+    let scriptID, postID
     const ht = document.querySelector('html')
     let appdPost = document.querySelector('.append-post')
+    let id = 0
 
-    // Loops through posts data and updates HTML
+    // Loops through posts data and updates DOM
     for (const idx in allPosts){
         const postDiv = document.createElement('div')
         const appendPostDiv = document.createElement('div')
@@ -31,20 +32,38 @@ export async function getPosts(){
         </div>
         <div class="chart-n-details">
             <div class="post-chart-container">
-                <canvas class="post-chart"></canvas>
             </div>
             <div class="post-chart-details-container">
-                <canvas class="post-chart-details"></canvas>
             </div>   
         </div>
+        <div class="chart-footer-data"></div>
         `
+
         // Adds element to append additional posts to 
         postDiv.append(appendPostDiv);
 
         scriptID = `${allPosts[idx]['script_id']}`
         let myScriptNum = parseInt(scriptID)
-        let canvasElem = postDiv.querySelector('.post-chart')
-        let canvasElem2 = postDiv.querySelector('.post-chart-details')
+        postID = `${allPosts[idx]['id']}`
+
+        const cv1 = document.createElement('canvas')
+        cv1.setAttribute('class', "post-chart")
+        id += 1
+        cv1.setAttribute('id', `cnvs-${id}`)
+        const canvasElem = cv1
+        
+        const cv2 = document.createElement('canvas')
+        cv2.setAttribute('class', 'post-chart-details')
+        id += 1
+        cv2.setAttribute('id', `cnvs-${id}`)
+        const canvasElem2 = cv2
+       
+        const cht_cont_1 = postDiv.querySelector('.post-chart-container')
+        cht_cont_1.appendChild(cv1)
+        const cht_cont_2 = postDiv.querySelector('.post-chart-details-container')
+        cht_cont_2.appendChild(cv2)
+
+        postDiv.querySelector('.chart-footer-data').setAttribute('id', `cfd-${postID}`)
 
         async function getChartScripts(scriptID, canvas, canvas2){
         const chartData = await fetch(`posts/charts-${scriptID}`)
@@ -52,9 +71,8 @@ export async function getPosts(){
             const chartDataJsn = JSON.parse(chartDataTxt)
             myCharts = assocCharts(scriptID, chartDataJsn, canvas, canvas2)
         }
-        getChartScripts(myScriptNum, canvasElem, canvasElem2)
 
-        // Appends postDiv to last appdPost. Reassigns appdPost.
+        getChartScripts(myScriptNum, canvasElem, canvasElem2)
         appdPost.append(postDiv)
         appdPost = postDiv.querySelector('.append-post')
     }

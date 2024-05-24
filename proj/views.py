@@ -99,6 +99,7 @@ def get_assoc_chts(request, scriptID):
 
     try:
         match int(scriptID):
+
             case 1:
             
                 cnxn = engine.connect()
@@ -150,6 +151,78 @@ def get_assoc_chts(request, scriptID):
 
                 allObjs = [norms_jsn, top_savings_jsn, dataset_jsn]
                 return JsonResponse(allObjs, safe=False)
+
+            case 2:
+
+                cnxn = engine.connect()
+                expend = 'select year, total_expenditures from expenditures_and_receipts where year between 1960 and 2023'
+                expend_df = pd.read_sql(expend, cnxn)
+                econ_data = 'select date, real_gdp, personal_income, noncyclical_rate_of_unemployment, cpiu from cbo_annual_cy where date between 1960 and 2023'
+                econ_data_df = pd.read_sql(econ_data, cnxn)
+                cnxn.close()
+
+                # Add change in expenditures 
+                for i in range(len(expend_df)):
+                    if (i != 0):
+                        expend_df.loc[i, 'change_in_expend'] =  ((expend_df['total_expenditures'][i] - expend_df['total_expenditures'][i- 1]) / expend_df['total_expenditures'][i -1]) * 100
+                        expend_df.loc[i, 'abs_change_in_expend'] = abs(expend_df['change_in_expend'][i])
+                        if(i != 1): expend_df.loc[i, 'chg_in_expd_prev_yr'] = expend_df['change_in_expend'][i-1]
+
+                        if(i != 1):
+                            if(expend_df['change_in_expend'][i] >  expend_df['change_in_expend'][i-1]):
+                                expend_df.loc[i, 'incr_rate_of_chg_expend'] = 1
+                            else:
+                                expend_df.loc[i, 'incr_rate_of_chg_expend'] = 0
+
+                # Add change in econ_data columns
+                for i in range(len(econ_data_df)):
+                    if (i != 0):
+                        econ_data_df.loc[i, 'chg_in_real_gdp'] =  ((econ_data_df['real_gdp'][i] - econ_data_df['real_gdp'][i- 1]) / econ_data_df['real_gdp'][i -1]) * 100
+                        econ_data_df.loc[i, 'chg_in_unemp'] =  ((econ_data_df['noncyclical_rate_of_unemployment'][i] - econ_data_df['noncyclical_rate_of_unemployment'][i - 1]) / econ_data_df['noncyclical_rate_of_unemployment'][i - 1]) * 100
+                    
+                        if(i != 1):
+                            if(econ_data_df['chg_in_real_gdp'][i] >  econ_data_df['chg_in_real_gdp'][i-1]):
+                                econ_data_df.loc[i, 'incr_rate_of_chg_rgdp'] = 1
+                            else:
+                                econ_data_df.loc[i, 'incr_rate_of_chg_rgdp'] = 0
+                            if(econ_data_df['chg_in_unemp'][i] >  econ_data_df['chg_in_unemp'][i-1]):
+                                econ_data_df.loc[i, 'incr_rate_of_chg_unemp'] = 1
+                            else:
+                                econ_data_df.loc[i, 'incr_rate_of_chg_unemp'] = 0
+
+                # Add change in econ data to expenditures df   
+                for i in range(len(expend_df)):
+                    expend_df.loc[i, 'chg_in_real_gdp'] =  econ_data_df['chg_in_real_gdp'][i]
+                    expend_df.loc[i, 'chg_in_unemp'] = econ_data_df['chg_in_unemp'][i]
+                    expend_df.loc[i, 'incr_rate_of_chg_rgdp'] =  econ_data_df['incr_rate_of_chg_rgdp'][i]
+                    expend_df.loc[i, 'incr_rate_of_chg_unemp'] = econ_data_df['incr_rate_of_chg_unemp'][i]
+
+                ttl_outcomes = len(expend_df - 2)
+                incr_expend_incr_rgdp = 0
+                incr_expend_decr_unemp = 0
+
+                # Compute probability that an increasing rate of change in expenditures leads to and increasing rate of change in rgdp / decreasing rate of change of unemployment
+                # the following year
+                for i in range(len(expend_df)-1):
+                        if(expend_df['incr_rate_of_chg_expend'][i] == 1 and expend_df['incr_rate_of_chg_rgdp'][i+1] == 1):
+                            expend_df.loc[i, 'incr_expend_incr_rgdp'] = 1
+                            incr_expend_incr_rgdp += 1
+                        if(expend_df['incr_rate_of_chg_expend'][i] == 1 and expend_df['incr_rate_of_chg_unemp'][i+1] == 0 ):
+                            expend_df.loc[i, 'incr_expend_incr_rgdp'] = 1
+                            incr_expend_decr_unemp += 1
+
+                prob_incr_expend_incr_rgdp = incr_expend_incr_rgdp / ttl_outcomes
+                prob_incr_expend_decr_unemp = incr_expend_decr_unemp / ttl_outcomes
+                expend_df = expend_df[2:-1]
+
+                #expend_top_decreases = (expend_df.sort_values('change_in_expend', ascending= True)).head(5)
+                #expend_top_increases = (expend_df.sort_values('change_in_expend', ascending= False)).head(5)
+                #expend_min_change = (expend_df.sort_values('abs_change_in_expend', ascending= True)).head(5)
+
+                expend_jsn = expend_df.to_json(orient='records')
+                allObjs = [expend_jsn, prob_incr_expend_incr_rgdp, prob_incr_expend_decr_unemp]
+                return JsonResponse(allObjs, safe=False)
+            
     except:
         if IS_HEROKU_APP:
             response = render(request, 'handler500.html')

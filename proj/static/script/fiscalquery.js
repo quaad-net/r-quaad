@@ -202,7 +202,6 @@ for(const b of mbTabs){
   })
 }
 
-
 // Startup
 runQry(myStartYr, myEndYr)
 outlayYearModal()
@@ -989,7 +988,7 @@ function auxTableModal(){
     }
   })
 
-};
+}
 
 function aboutFiscal(){
   aboutBtn.addEventListener('click', function(){

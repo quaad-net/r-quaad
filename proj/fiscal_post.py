@@ -15,17 +15,14 @@ class Post:
         self.post = post
         self.scriptid = script_id
 
-my_title = 'Savings vs Consumption' # max 50 bytes
-my_description ='The Growing Gap Between Personal Saving and Consumption.' # max 200 bytes
+my_title = "Gov't Spending and Economic Outcomes" # max 50 bytes
+my_description ="Examining Rate of Change in Gov't Expenditures, GDP, and Unemployment" # max 200 bytes
 my_post ="""
-As shown by the increasing spread between consumption and saving, data suggests that Americans are 
-spending more of their income as opposed to saving when compared to years past. The “normalized” 
-datasets below show savings, consumption, M1, and CPI on the same scale to give a better view of how 
-these move in relation to each other. M1 and CPI have been included due to their potential impacts on 
-consumption habits. It should be noted that consumption combined with spending does not account for 
-total income (income/property taxes, transfer payments, etc. are not included).
+The plots show rates of change in real GDP and umemployment in relation to rates of change in federal government 
+expenditures from the previous year. Also provided are the probabilities of increasing rates of change in expenditures occuring with 
+increasing rates of change in real GDP, decreasing rates of change in unemployment based on the data. 
 """
-my_script_id = 1
+my_script_id = 2
 
 new_post = Post(my_title, my_description, my_post, my_script_id)
 

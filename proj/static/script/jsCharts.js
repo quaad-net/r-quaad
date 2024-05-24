@@ -11,6 +11,53 @@ export function addDataSetsX(chart, label, newData) {
   chart.update();
 }
 
+export function createScatterPlot(canvas, backgroundColor, label, dataSet){
+  Chart.defaults.font.family = "poppins, sans-serif";
+  Chart.defaults.font.size = 13;
+  Chart.defaults.color = 'white';
+
+  const data = {
+    datasets: [{
+      label: label,
+      data: dataSet, // must be in x, y structure: data: [{x: 'value', y: 'value}, {}, {}, ...]
+      backgroundColor: backgroundColor
+    }],
+  }
+
+  const newChart = new Chart(
+    canvas,
+    {
+      type: 'scatter',
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            type: 'linear',
+            position: {
+              y: 0
+            },
+            beginAtZero: false,
+            border:{
+              color: 'brown'
+            }
+          },
+          y: {
+            position:{
+              x: 0
+            },
+            beginAtZero: false,
+            border:{
+              color: 'brown'
+            }
+          },
+        }
+      }
+    }
+  )
+}
+
 export function createStackedBar(categories, yrs, vals, canvas, title) {
 
   //two story stack bar
@@ -35,7 +82,7 @@ export function createStackedBar(categories, yrs, vals, canvas, title) {
         borderWidth: 1,
       },
     ]
-  };
+  }
 
   const newChart = new Chart(
 
