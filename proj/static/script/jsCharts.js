@@ -18,7 +18,7 @@ export function createScatterPlot(canvas, backgroundColor, label, dataSet){
 
   const data = {
     datasets: [{
-      label: label,
+      label: '',
       data: dataSet, // must be in x, y structure: data: [{x: 'value', y: 'value}, {}, {}, ...]
       backgroundColor: backgroundColor
     }],
@@ -52,6 +52,15 @@ export function createScatterPlot(canvas, backgroundColor, label, dataSet){
               color: 'brown'
             }
           },
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: label
+          },
+          legend: {
+            display: false,
+          }
         }
       }
     }

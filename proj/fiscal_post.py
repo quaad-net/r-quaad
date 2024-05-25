@@ -19,8 +19,8 @@ my_title = "Gov't Spending and Economic Outcomes" # max 50 bytes
 my_description ="Examining Rate of Change in Gov't Expenditures, GDP, and Unemployment" # max 200 bytes
 my_post ="""
 The plots show rates of change in real GDP and umemployment in relation to rates of change in federal government 
-expenditures from the previous year. Also provided are the probabilities of increasing rates of change in expenditures occuring with 
-increasing rates of change in real GDP, decreasing rates of change in unemployment based on the data. 
+expenditures from the previous year (from 1962-2022). Also provided are the probabilities of increasing rates of change in expenditures occuring with 
+increasing rates of change in real GDP, decreasing rates of change in unemployment. 
 """
 my_script_id = 2
 

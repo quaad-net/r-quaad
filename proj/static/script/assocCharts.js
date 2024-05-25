@@ -46,8 +46,8 @@ export function assocCharts(scriptID, JSONdata, canvas, canvas2){
                 chg_expend_unemp.push({x: `${expenditures[idx]['chg_in_expd_prev_yr']}`, y: `${expenditures[idx]['chg_in_unemp']}`})
             }
 
-            createScatterPlot(canvas, 'yellow',  'Rate Chg{x: expend, y: real_GPD} (1962-2022)', chg_expend_rgdp)
-            createScatterPlot(canvas2, 'orange', 'Rate Chg{x: expend, y: non_cyclical_unemploy} (1962-2022)', chg_expend_unemp)
+            createScatterPlot(canvas, 'yellow',  'Rate Chg{x: expend, y: real_GPD}', chg_expend_rgdp)
+            createScatterPlot(canvas2, 'orange', 'Rate Chg{x: expend, y: non_cyclical_unemploy}', chg_expend_unemp)
 
             const chartFooter = document.querySelector('#cfd-4')
             chartFooter.textContent = 'prob_incr_expend_incr_rgdp: ' + prob_incr_expend_incr_rgdp +' ' + '| prob_incr_expend_decr_unemp: ' + prob_incr_expend_decr_unemp
