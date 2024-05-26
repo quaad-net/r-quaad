@@ -39,7 +39,7 @@ export async function getPosts(){
         <div class="chart-footer-data"></div>
         `
 
-        // Adds element to append additional posts to 
+        // Add element to append additional posts to 
         postDiv.append(appendPostDiv);
 
         scriptID = `${allPosts[idx]['script_id']}`

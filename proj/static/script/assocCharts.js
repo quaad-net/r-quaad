@@ -50,7 +50,15 @@ export function assocCharts(scriptID, JSONdata, canvas, canvas2){
             createScatterPlot(canvas2, 'orange', 'Rate Chg{x: expend, y: non_cyclical_unemploy}', chg_expend_unemp)
 
             const chartFooter = document.querySelector('#cfd-4')
-            chartFooter.textContent = 'prob_incr_expend_incr_rgdp: ' + prob_incr_expend_incr_rgdp +' ' + '| prob_incr_expend_decr_unemp: ' + prob_incr_expend_decr_unemp
+            chartFooter.textContent = 'prob_incr_expend_incr_rgdp: ' + prob_incr_expend_incr_rgdp +' ' + '| prob_incr_expend_decr_unemp: ' + prob_incr_expend_decr_unemp + ' | '
+            
+            let dv = document.createElement('a')
+            dv.textContent = 'Datasets'
+            dv.setAttribute('href', 'https://1drv.ms/x/s!Ar6VAGa9JiSkjPd-syTq2Jk9FM1zGQ?e=381fBB')
+            dv.setAttribute('target', '_blank')
+            dv.setAttribute('rel','noopener noreferrer')
+            chartFooter.append(dv)
+            
             chartFooter.style.display = 'block'
     }
 }
