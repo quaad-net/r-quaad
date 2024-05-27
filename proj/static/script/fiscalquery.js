@@ -386,7 +386,9 @@ function addDataSets(chart, label, newData) {
         data: newData,
         borderColor: mySeriesColor.get(label),
         fill: 'origin',
-        backgroundColor: mySeriesColor.get(label)
+        backgroundColor: mySeriesColor.get(label),
+        pointStyle: 'circle',
+        pointBorderColor: 'blue'
       }
     )
 
@@ -448,27 +450,17 @@ function createMainSeries(category, yrs, vals) {
                 display: true,
                 text: "",
                 font: {
-                  //size: 10,
                   weight: 'bold',
                 }
               }
             },
             tooltip: {
               enabled: true,
-              usePointStyle: true,
+              usePointStyle: false,
               callbacks: {
-                // labelColor: function(context) {
-                //     return {
-                //         //borderColor: 'rgb(0, 0, 255)',
-                //         //backgroundColor: 'transparent',
-                //         borderWidth: 5,
-                //         //borderDash: [2, 2],
-                //         //borderRadius: 2,
-                //     };
-                // },
                 labelPointStyle: function(context) {
                   return {
-                      pointStyle: 'line',
+                      pointStyle: 'circle',
                   };
                 }
               }
@@ -502,6 +494,8 @@ function createMainSeries(category, yrs, vals) {
               borderColor: mySeriesColor.get(category),
               fill: 1,
               backgroundColor: mySeriesColor.get(category),
+              pointStyle: 'circle',
+              pointBorderColor: 'blueviolet',
               //tension: 0.4
             }
           ],
@@ -608,7 +602,7 @@ function createFedDebtSeries(category, yrs, vals){
             backgroundColor: 'transparent',
             borderColor: mySeriesColor.get(category),
             fill: 'origin',
-            backgroundColor: 'rgb(23, 23, 54)'
+            backgroundColor: 'rgb(23, 23, 54)',
             //tension: 0.4
           }
         ],

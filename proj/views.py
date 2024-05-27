@@ -159,6 +159,8 @@ def get_assoc_chts(request, scriptID):
                 expend_df = pd.read_sql(expend, cnxn)
                 econ_data = 'select date, real_gdp, personal_income, noncyclical_rate_of_unemployment, cpiu from cbo_annual_cy where date between 1960 and 2023'
                 econ_data_df = pd.read_sql(econ_data, cnxn)
+                population = 'select year, resident_population from us_population'
+                population_df = pd.read_sql(population, cnxn)
                 cnxn.close()
 
                 # Add change in expenditures 
@@ -174,10 +176,23 @@ def get_assoc_chts(request, scriptID):
                             else:
                                 expend_df.loc[i, 'incr_rate_of_chg_expend'] = 0
 
+                # Get population data to adjust real_gdp to real_gpd_per_cap
+                pops = {}
+                for i in range(len(population_df)):
+                    pops.update({population_df.loc[i, 'year']: population_df.loc[i, 'resident_population']})
+
+                # Access population data based on year of economic data and calculate real_gdp_per_cap.
+                for i in range(len(econ_data_df)): 
+                        yr = str(econ_data_df.loc[i, 'date'])
+                        yr = yr[0:3]
+                        yr += '0'
+                        intyr = int(yr) 
+                        econ_data_df.loc[i, 'real_gdp_per_cap'] = econ_data_df['real_gdp'][i] / pops[intyr]  
+
                 # Add change in econ_data columns
                 for i in range(len(econ_data_df)):
                     if (i != 0):
-                        econ_data_df.loc[i, 'chg_in_real_gdp'] =  ((econ_data_df['real_gdp'][i] - econ_data_df['real_gdp'][i- 1]) / econ_data_df['real_gdp'][i -1]) * 100
+                        econ_data_df.loc[i, 'chg_in_real_gdp'] =  ((econ_data_df['real_gdp_per_cap'][i] - econ_data_df['real_gdp_per_cap'][i- 1]) / econ_data_df['real_gdp_per_cap'][i - 1]) * 100
                         econ_data_df.loc[i, 'chg_in_unemp'] =  ((econ_data_df['noncyclical_rate_of_unemployment'][i] - econ_data_df['noncyclical_rate_of_unemployment'][i - 1]) / econ_data_df['noncyclical_rate_of_unemployment'][i - 1]) * 100
                     
                         if(i != 1):
@@ -214,10 +229,6 @@ def get_assoc_chts(request, scriptID):
                 prob_incr_expend_incr_rgdp = incr_expend_incr_rgdp / ttl_outcomes
                 prob_incr_expend_decr_unemp = incr_expend_decr_unemp / ttl_outcomes
                 expend_df = expend_df[2:-1]
-
-                #expend_top_decreases = (expend_df.sort_values('change_in_expend', ascending= True)).head(5)
-                #expend_top_increases = (expend_df.sort_values('change_in_expend', ascending= False)).head(5)
-                #expend_min_change = (expend_df.sort_values('abs_change_in_expend', ascending= True)).head(5)
 
                 expend_jsn = expend_df.to_json(orient='records')
                 allObjs = [expend_jsn, prob_incr_expend_incr_rgdp, prob_incr_expend_decr_unemp]

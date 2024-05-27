@@ -1,6 +1,7 @@
 const  mySeriesColor = new Map();
 mySeriesColor.set('year', 'rgb(255, 157, 255)')
 mySeriesColor.set('gov_expend', 'blueviolet')
+mySeriesColor.set('gov_expend', 'rgba(137, 43, 226, 0.589)') //blueviolet with transparency
 mySeriesColor.set('gdp', 'rgb(242, 138, 58)')
 mySeriesColor.set('real_gdp', 'rgb(91, 79, 91)')
 mySeriesColor.set('gross_domestic_income', 'rgb(52, 146, 146)')
@@ -21,6 +22,7 @@ mySeriesColor.set('money_supply_m1', 'rgb(72, 61, 139)')
 mySeriesColor.set('personal_savings', 'rgb(255, 20, 147)')
 mySeriesColor.set('CPI', 'black')
 mySeriesColor.set('gov_receipts', 'blue')
+mySeriesColor.set('gov_receipts', 'rgba(0, 0, 255, 0.589)') //blue with transparency
 
 // Receipts chart
 mySeriesColor.set('current_tax_receipts', '#380003')
@@ -32,15 +34,6 @@ export { mySeriesColor }
 
 //mySeriesColor.get(category);
 
-// export const mixBkGrd = [
-//     'rgb(138, 43, 226)', 'rgb(165, 42, 42)', 'rgb(220, 20, 60)', 'rgb(210, 105, 30)', 'rgb(0, 0, 139)', 'rgb(0, 100, 0)', 'rgb(85, 107, 47)',
-//     'rgb(72, 61, 139)', 'rgb(255, 20, 147)', 'rgb(255, 0, 255)'
-// ]
-
-// export const redBkGrd = [      
-//       '#380003', '#680106', '#980209', '#c8030c', '#f80410', '#fb323c', '#fc6269', '#fd9297', '#fec2c5', '#feeaeb',
-// ]
-
-export const myBkGrd = [      
+export const myBkGrd = [     // Used in expenditures/outlays doughnut chart  
       '#191970', '#000080', '#00008B', '#0000CD', '#0000FF', '#4169E1', '#4682B4', '#6495ED', '#1E90FF', '#B0C4DE',
 ]
