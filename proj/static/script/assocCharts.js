@@ -54,6 +54,7 @@ export function assocCharts(scriptID, JSONdata, canvas, canvas2){
             
             let dv = document.createElement('a')
             dv.textContent = 'Datasets'
+            dv.setAttribute('class', 'dataset-link')
             dv.setAttribute('href', 'https://1drv.ms/x/s!Ar6VAGa9JiSkjPd-syTq2Jk9FM1zGQ?e=381fBB')
             dv.setAttribute('target', '_blank')
             dv.setAttribute('rel','noopener noreferrer')

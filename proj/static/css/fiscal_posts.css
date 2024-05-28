@@ -109,6 +109,15 @@
     text-align: center;
 }
 
+.dataset-link{
+    all: unset;
+    text-decoration: underline;
+}
+
+.dataset-link:hover{
+    cursor: pointer;
+}
+
 @media(max-width:800px){
 
     .chart-n-details{
