@@ -1,7 +1,7 @@
 import { createStackedBar, createTimeSeries, createScatterPlot} from './jsCharts.js'
 
 export function assocCharts(scriptID, JSONdata, canvas, canvas2){
-
+    
     //scriptID = scriptID from SQL table. 
     //Functions written under each switch case below should be relevant to the record fetched from SQL table
 
@@ -52,14 +52,14 @@ export function assocCharts(scriptID, JSONdata, canvas, canvas2){
             const chartFooter = document.querySelector('#cfd-4')
             chartFooter.textContent = 'prob_incr_expend_incr_rgdp: ' + prob_incr_expend_incr_rgdp +' ' + '| prob_incr_expend_decr_unemp: ' + prob_incr_expend_decr_unemp + ' | '
             
-            let dv = document.createElement('a')
-            dv.textContent = 'Datasets'
-            dv.setAttribute('class', 'dataset-link')
-            dv.setAttribute('href', 'https://1drv.ms/x/s!Ar6VAGa9JiSkjPd-syTq2Jk9FM1zGQ?e=381fBB')
-            dv.setAttribute('target', '_blank')
-            dv.setAttribute('rel','noopener noreferrer')
-            chartFooter.append(dv)
-            
+            let a = document.createElement('a')
+            a.textContent = 'Datasets'
+            a.setAttribute('class', 'dataset-link')
+            a.setAttribute('href', 'https://1drv.ms/x/s!Ar6VAGa9JiSkjPd-syTq2Jk9FM1zGQ?e=381fBB')
+            a.setAttribute('target', '_blank')
+            a.setAttribute('rel','noopener noreferrer')
+            chartFooter.append(a)
+
             chartFooter.style.display = 'block'
     }
 }
