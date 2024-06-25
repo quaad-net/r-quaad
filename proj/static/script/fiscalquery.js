@@ -36,6 +36,7 @@ let SubClassList
 let prevYearTtl = []
 let receiptsBarChart
 let qryStart, qryEnd
+let curPage = 'Overview'
 
 // Event Listeners
 
@@ -95,7 +96,8 @@ for(const b of mbTabs){
     const coreElem = document.querySelector('.core')
 
     if(b.id == 'mb-tab-1'){ //Overview
-      if(b.style.backgroundColor!="rgb(102, 1, 1)"){
+      if(curPage != 'Overview'){
+        curPage = 'Overview'
         const response = await fetch(getBaseURL)
         const responseTxt = await response.text()
         var parser = new DOMParser()
@@ -156,7 +158,8 @@ for(const b of mbTabs){
       }
     }
     if(b.id == 'mb-tab-2'){ //Posts
-      if(b.style.backgroundColor!="rgb(102, 1, 1)"){
+      if(curPage != 'Posts'){
+        curPage = 'Posts'
         const response = await fetch('posts')
         const responseTxt = await response.text()
 
@@ -195,8 +198,8 @@ for(const b of mbTabs){
         auxTableModal()
         aboutBtn = document.querySelector('#about-btn')
         aboutFiscal()
+        getPosts()
       }
-      getPosts()
     }
 
   })

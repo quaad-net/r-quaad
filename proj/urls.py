@@ -16,6 +16,7 @@ urlpatterns = [
     re_path(r'fiscal/population/q-(?P<startDate>\d+)/' + r'(?P<endDate>\d+)', views.Population),
     path('fiscal/posts', views.fiscal_posts, name = 'posts'),
     re_path(r'^fiscal/posts/charts-(?P<scriptID>\d+)/', views.get_assoc_chts, name = 'get_assoc_chts'),
+    path('fiscal/posts/getcontainers', views.get_containers, name='getcontainers'),
     path('fiscal/posts/getposts', views.get_posts, name= 'getposts'), 
     re_path(r'fiscal/price-indices/q-(?P<startDate>\d+)/' + r'(?P<endDate>\d+)', views.PriceIndices),
     re_path(r'fiscal/production-n-consumption/q-(?P<startDate>\d+)/' + r'(?P<endDate>\d+)', views.ProductionConsumption),

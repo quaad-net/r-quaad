@@ -103,10 +103,15 @@
     max-width: 50%;
 }
 
+.posts-footer-icon{
+    float: left;
+}
+
 .chart-footer-data{
-    display: none;
     border-bottom: 1px solid white;
     text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .dataset-link{
@@ -133,6 +138,11 @@
         width: 100%;
         max-width: 100%;
     }
+
+    .chart-footer-data{
+        text-align: right;
+    }
+    
 
 }
 

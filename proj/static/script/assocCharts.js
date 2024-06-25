@@ -34,6 +34,8 @@ export function assocCharts(scriptID, JSONdata, canvas, canvas2){
            const myStackedvals = [actualPersonalConsump, actualPersonalSav]
            createStackedBar(myStackedLabels, normsYr, myStackedvals, canvas2, 'CONSUMPTION AND SAVING | in billions | USD')
         
+           document.querySelector('#cfd-2').textContent += '...'
+
         case 2:
             const expenditures = JSON.parse(JSONdata[0])
             const prob_incr_expend_incr_rgdp = JSON.parse(JSONdata[1])
@@ -50,17 +52,13 @@ export function assocCharts(scriptID, JSONdata, canvas, canvas2){
             createScatterPlot(canvas2, 'orange', 'Rate Chg{x: expend, y: non_cyclical_unemploy}', chg_expend_unemp)
 
             const chartFooter = document.querySelector('#cfd-4')
-            chartFooter.textContent = 'prob_incr_expend_incr_rgdp: ' + prob_incr_expend_incr_rgdp +' ' + '| prob_incr_expend_decr_unemp: ' + prob_incr_expend_decr_unemp + ' | '
+            chartFooter.textContent += 'prob incr expend incr rgdp: ' + prob_incr_expend_incr_rgdp +' ' + '| prob incr expend decr unemp: ' + prob_incr_expend_decr_unemp
             
-            let a = document.createElement('a')
-            a.textContent = 'Datasets'
-            a.setAttribute('class', 'dataset-link')
-            a.setAttribute('href', 'https://1drv.ms/x/s!Ar6VAGa9JiSkjPd-syTq2Jk9FM1zGQ?e=381fBB')
-            a.setAttribute('target', '_blank')
-            a.setAttribute('rel','noopener noreferrer')
-            chartFooter.append(a)
-
-            chartFooter.style.display = 'block'
+            //Add link to footer icon
+            const chartFooterIcon = document.querySelector('#fil-4')
+            chartFooterIcon.setAttribute('href', 'https://1drv.ms/x/s!Ar6VAGa9JiSkjPd-syTq2Jk9FM1zGQ?e=381fBB')
+            chartFooterIcon.setAttribute('target', '_blank')
+            chartFooterIcon.setAttribute('rel','noopener noreferrer')
     }
 }
 

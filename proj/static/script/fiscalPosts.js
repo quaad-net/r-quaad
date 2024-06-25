@@ -11,36 +11,24 @@ export async function getPosts(){
     let appdPost = document.querySelector('.append-post')
     let id = 0
 
-    // Loops through posts data and updates DOM
+    const containerReq = await fetch('posts/getcontainers')
+    const containerRes = await containerReq.text()
+    const parser = new DOMParser()
+    const containerDoc = parser.parseFromString(containerRes, 'text/html')
+    const postContainer = containerDoc.querySelector('.post-container')
+
+    // Loop through posts and update DOM
     for (const idx in allPosts){
+        let myCharts
         const postDiv = document.createElement('div')
         const appendPostDiv = document.createElement('div')
         appendPostDiv.setAttribute('class', 'append-post')
-        let myCharts
-        postDiv.innerHTML =`
-        <div class="post-details-container">
-            <div class="post-details">
-                <div class="post-date">Date:</br>${allPosts[idx]['post_date']}</div></br>
-            </div>
-            <div class="post-title-container">
-                <div class="post-title">${allPosts[idx]['title']}</div>
-                <div class="post-description">${allPosts[idx]['post_description']}</div>
-            </div>
-        </div>
-        <div class="content-container">
-            <div class="post-post">${allPosts[idx]['post']}</div>
-        </div>
-        <div class="chart-n-details">
-            <div class="post-chart-container">
-            </div>
-            <div class="post-chart-details-container">
-            </div>   
-        </div>
-        <div class="chart-footer-data"></div>
-        `
-
-        // Add element to append additional posts to 
-        postDiv.append(appendPostDiv);
+        postDiv.innerHTML = postContainer.innerHTML
+        postDiv.querySelector('.post-date').textContent += ' ' + allPosts[idx]['post_date']
+        postDiv.querySelector('.post-title').textContent += ' ' + allPosts[idx]['title']
+        postDiv.querySelector('.post-description').textContent += ' ' + allPosts[idx]['post_description']
+        postDiv.querySelector('.post-post').textContent += ' ' + allPosts[idx]['post']
+        postDiv.append(appendPostDiv) // Add element to append additional posts to
 
         scriptID = `${allPosts[idx]['script_id']}`
         let myScriptNum = parseInt(scriptID)
@@ -64,6 +52,7 @@ export async function getPosts(){
         cht_cont_2.appendChild(cv2)
 
         postDiv.querySelector('.chart-footer-data').setAttribute('id', `cfd-${postID}`)
+        postDiv.querySelector('.footer-icon-link').setAttribute('id', `fil-${postID}`)
 
         async function getChartScripts(scriptID, canvas, canvas2){
         const chartData = await fetch(`posts/charts-${scriptID}`)

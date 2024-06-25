@@ -255,6 +255,15 @@ async def gov_expend_plus(request, startDate, endDate):
             response = render(request, 'handler500.html')
             response.status_code = 500
             return response
+        
+async def get_containers(request):
+        try:
+            return render(request, 'post_container.html')
+        except:
+            if IS_HEROKU_APP:
+                response = render(request, 'handler500.html')
+                response.status_code = 500
+                return response
 
 async def get_posts(request):
 

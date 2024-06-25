@@ -1,0 +1,28 @@
+<!doctype html>
+{% load static %}
+<div class="post-container">
+    <div class="post-details-container">
+        <div class="post-details">
+            <div class="post-date">Date:</br><!--${allPosts[idx]['post_date']}--></div></br>
+        </div>
+        <div class="post-title-container">
+            <div class="post-title"><!--${allPosts[idx]['title']}--></div>
+            <div class="post-description"><!--${allPosts[idx]['post_description']}--></div>
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="post-post"><!--${allPosts[idx]['post']}--></div>
+    </div>
+    <div class="chart-n-details">
+        <div class="post-chart-container">
+        </div>
+        <div class="post-chart-details-container">
+        </div>   
+    </div>
+    <div class="footer-items">
+        <a class="footer-icon-link">
+            <img src="{% static '/img/icons8-spreadsheet.svg' %}" class="posts-footer-icon" width=20px />
+        </a>
+        <div class="chart-footer-data"></div>
+    </div>
+</div>
