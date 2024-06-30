@@ -11,6 +11,7 @@
 
 .post-details-container{
     display: flex;
+    border-top: 25px solid #2a2a2a;
 }
 
 .post-details{

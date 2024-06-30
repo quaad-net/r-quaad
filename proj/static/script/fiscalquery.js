@@ -767,11 +767,11 @@ function outlayYearModal(){
     modal.style.display = "none"
   }
 
-  window.onclick = function(event) {
-    if (event.target == modal) {
+  document.addEventListener('click', (event)=>{
+  if(event.target == modal){
       modal.style.display = "none"
-    }
   }
+  })
 
 };
 
@@ -931,8 +931,8 @@ async function outlaysTblDrilldown(classID, otherOutlays){
       const ttl = /Total/
       const colon = /:/
       if(ttl.test(drilldown[idx]['classification_description'])){
-        dv.style.color = 'brown'
-        dv2.style.color = 'brown'
+        dv.style.color = 'red'
+        dv2.style.color = 'red'
         dv.textContent = drilldown[idx]['classification_description']
       }
       else {
@@ -948,11 +948,15 @@ async function outlaysTblDrilldown(classID, otherOutlays){
           }
         }
       }
-      if(Number(drilldown[idx]['amt']) != 0){ // To exclude nulls
+      if(Number(drilldown[idx]['amt']) != 0){ 
           dv2.textContent = new Intl.NumberFormat().format(drilldown[idx]['amt'])  
       }
-      rowSect.appendChild(dv)
-      rowSect.appendChild(dv2)
+      if(dv.textContent != ''){
+        rowSect.appendChild(dv)
+      }
+      if(dv2.textContent != ''){
+        rowSect.appendChild(dv2)
+      }
     }
   }
 }
@@ -960,6 +964,7 @@ async function outlaysTblDrilldown(classID, otherOutlays){
 function auxTableModal(){ 
 
   const modal = document.querySelector('#aux-modal')
+  const outerModal = document.querySelector('.aux-table-modal')
   const parentOutlay = document.querySelectorAll('.parent-outlay')
   const auxModalClose = document.querySelector('.aux-table-modal-close')
   
@@ -973,14 +978,8 @@ function auxTableModal(){
     modal.style.display = "none"
   }
 
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none"
-    }
-  }
-
   document.addEventListener('click', (event)=>{
-    if(event.target == modal){
+    if(event.target == outerModal){
       modal.style.display = "none"
     }
   })
@@ -1100,12 +1099,6 @@ function selectEconData(){
   
      econModalClose.onclick = function() {
      modal.style.display = "none"
-     }
-  
-     window.onclick = function(event) {
-     if (event.target == modal) {
-        modal.style.display = "none"
-     }
      }
   
      document.addEventListener('click', (event)=>{
