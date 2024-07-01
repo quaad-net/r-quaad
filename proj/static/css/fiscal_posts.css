@@ -11,7 +11,7 @@
 
 .post-details-container{
     display: flex;
-    border-top: 25px solid #2a2a2a;
+    margin-top: 50px;
 }
 
 .post-details{
@@ -110,6 +110,8 @@
 
 .chart-footer-data{
     border-bottom: 1px solid white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     text-align: center;
     padding-top: 3px;
     padding-bottom: 3px;
